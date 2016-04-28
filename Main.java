@@ -1,4 +1,4 @@
-package testCases;
+package minesweeper;
 //import tester.*;
 
 public class Main {
@@ -6,7 +6,5 @@ public class Main {
 	
 	public static void main(String[] args) {
 		//Tester.run(E); //This runs the Examples class
-		Examples example = new Examples();
-		example.run();
 	}
 }

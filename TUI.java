@@ -2,7 +2,8 @@ package minesweeper;
 import java.util.Scanner;
 
 //Using Command Prompt, allows user to start new game or to quit
-public class TUI {
+public class TUI{
+
 	
 	public static void main (String args[]) {
 	
@@ -31,4 +32,22 @@ public class TUI {
 	ScanIn.close();
 	ScanIn2.close();
 	}
+	
+	
+	private String printField(){
+		StringBuilder result = new StringBuilder();
+		
+		for(int j = 0; j < 10; j++){
+			for(int i= 0; i < 10; i++){
+				result.append("x").append(" ");
+			}
+			result.append("\n");
+		}
+		
+		
+		return result.toString();
+	}
+
+
+
 }	
