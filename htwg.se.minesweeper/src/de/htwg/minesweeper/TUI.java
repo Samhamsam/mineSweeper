@@ -1,4 +1,4 @@
-package minesweeperpackage;
+package de.htwg.minesweeper;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;

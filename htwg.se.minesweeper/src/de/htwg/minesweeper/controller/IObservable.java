@@ -1,6 +1,6 @@
-package de.htwg.util.observer;
+package de.htwg.minesweeper.controller;
 
-public class IObservable {
+public interface IObservable {
 	void addObserver(IObserver s);
 
     void removeObserver(IObserver s);

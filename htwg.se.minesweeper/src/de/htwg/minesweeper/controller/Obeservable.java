@@ -1,4 +1,7 @@
-package de.htwg.util.observer;
+package de.htwg.minesweeper.controller;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Obeservable implements IObservable {
 	/* Fields */

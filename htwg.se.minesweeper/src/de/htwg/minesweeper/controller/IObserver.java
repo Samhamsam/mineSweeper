@@ -1,5 +1,5 @@
-package de.htwg.util.observer;
+package de.htwg.minesweeper.controller;
 
-public class IObserver {
+public interface IObserver {
 	void update( Event e);
 }

@@ -1,4 +1,4 @@
-package minesweeper;
+package de.htwg.minesweeper;
 //import tester.*;
 
 public class Main {

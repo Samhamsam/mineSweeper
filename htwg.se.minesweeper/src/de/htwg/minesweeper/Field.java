@@ -1,4 +1,4 @@
-package minesweeper;
+package de.htwg.minesweeper;
 import java.util.Random;
 
 
