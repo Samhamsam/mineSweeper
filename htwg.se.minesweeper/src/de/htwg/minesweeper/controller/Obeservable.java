@@ -1,4 +1,4 @@
-package de.htwg.util.observer
+package de.htwg.util.observer;
 
 public class Obeservable implements IObservable {
 	/* Fields */
