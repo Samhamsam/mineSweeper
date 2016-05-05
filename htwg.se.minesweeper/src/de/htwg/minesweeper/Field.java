@@ -6,6 +6,7 @@ public class Field {
 	
 	int row = 10;
 	int column = 10;
+	int numberOfMines = 10;
 	
 	//Main Field
 	private String filledField[][] = new String[column][row];
@@ -70,7 +71,7 @@ public class Field {
 		
 		Random rand = new Random();
 		
-		for(int i = 0; i < 11; i++){
+		for(int i = 0; i <= numberOfMines; i++){
 			int m = rand.nextInt(10);
 			int n = rand.nextInt(10);
 			fillWithMines[m][n] = "bad";

@@ -1,4 +1,4 @@
-package de.htwg.minesweeper.util.observer;
+package de.htwg.minesweeper;
 
 import java.util.ArrayList;
 import java.util.List;
