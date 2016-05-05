@@ -1,152 +1,216 @@
-package de.htwg.minesweeper.controller;
-import java.awt.Toolkit;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.StringSelection;
-import java.awt.datatransfer.Transferable;
-import java.awt.datatransfer.UnsupportedFlavorException;
-import java.io.IOException;
-import java.util.BitSet;
+package de.htwg.minesweeper.controller.logwrapper;
+
+import org.apache.log4j.Logger;
 
 //import com.google.inject.Inject;
 //import com.google.inject.Singleton;
 
 import de.htwg.minesweeper.controller.IMinesweeperController;
-import de.htwg.minesweeper.controller.SizeChangeEvent;
-import de.htwg.minesweeper.model.ICell;
 import de.htwg.minesweeper.model.IGrid;
 import de.htwg.minesweeper.model.IGridCreation;
 import de.htwg.minesweeper.util.observer.Event;
-import de.htwg.minesweeper.util.observer.Observable;
+import de.htwg.minesweeper.util.observer.IObservable;
+import de.htwg.minesweeper.util.observer.IObserver;
 
+//@Singleton
+public class SudokuController implements IObservable, ISudokuController {
 
+    private Logger logger = Logger
+            .getLogger("de.htwg.minesweeper.controller.wrappedimpl");
+    private ISudokuController realController;
+    private long startTime;
 
-public class MinesweeperController extends Observable implements IMinesweeperController {
-	
-	private String statusLine = "Welcome to HTWG Minesweeper!";
-    private IGrid grid;
-    private IGridCreation gridCreation;
-    private int highlighted = 0;
-    //private static final int NORMALGRID = 3;
+    @Inject
+    public SudokuController(IGridCreation gridCreation) {
+        realController = new de.htwg.minesweeper.controller.impl.SudokuController(
+                gridCreation);
+    }
 
-    //@Inject
-    public MinesweeperController(IGridCreation gridCreation) {
-        this.gridCreation = gridCreation;
-        //this.grid = gridCreation.create(NORMALGRID);
+    private void pre() {
+        logger.debug("Controller method " + getMethodName(1) + " was called.");
+        startTime = System.nanoTime();
+    }
+
+    private void post() {
+        long endTime = System.nanoTime();
+        long duration = endTime - startTime;
+        logger.debug("Controller method " + getMethodName(1)
+                + " was finished in " + duration + " nanoSeconds.");
+    }
+
+    private static String getMethodName(final int depth) {
+        final StackTraceElement[] stack = Thread.currentThread()
+                .getStackTrace();
+        return stack[2 + depth].getMethodName();
     }
 
     public void setValue(int row, int column, int value) {
-        ICell cell = grid.getICell(row, column);
-        if (cell.isUnSet()) {
-            cell.setValue(value);
-            statusLine = "The cell " + cell.mkString()
-                    + " was successfully set";
-        } else {
-            statusLine = "The cell " + cell.mkString() + " is already set";
-        }
-        notifyObservers();
+        pre();
+        realController.setValue(row, column, value);
+        post();
     }
 
-    public void show() {
-        boolean result;
-        result = grid.show();
-        if (result) {
-            statusLine = "The Minesweeper solution is as shown.";
-        } else {
-            statusLine = "Error ";
-        }
-        notifyObservers();
+    public void solve() {
+        pre();
+        realController.solve();
+        post();
     }
 
     public void reset() {
-        grid.reset();
-        statusLine = "Minesweeper was reset";
-        notifyObservers();
+        pre();
+        realController.reset();
+        post();
     }
 
     public void create() {
-        grid.create();
-        highlighted = 0;
-        statusLine = "New Minesweeper Puzzle created";
-        notifyObservers();
+        pre();
+        realController.create();
+        post();
     }
 
     public String getStatus() {
-        return statusLine;
+        return realController.getStatus();
     }
 
     public String getGridString() {
-        return grid.toString();
+        pre();
+        String result = realController.getGridString();
+        post();
+        return result;
+    }
+
+    public void undo() {
+        pre();
+        realController.undo();
+        post();
+    }
+
+    public void redo() {
+        pre();
+        realController.redo();
+        post();
     }
 
     public void copy() {
-        StringSelection gridString = new StringSelection(grid.toString("0"));
-        Toolkit.getDefaultToolkit().getSystemClipboard()
-                .setContents(gridString, null);
-        statusLine = "Copied Minesweeper";
-        notifyObservers();
+        pre();
+        realController.copy();
+        post();
     }
 
     public void paste() {
-        Transferable transferable = Toolkit.getDefaultToolkit()
-                .getSystemClipboard().getContents(null);
-        if (transferable != null
-                && transferable.isDataFlavorSupported(DataFlavor.stringFlavor)) {
-            String input;
-            try {
-                input = (String) transferable
-                        .getTransferData(DataFlavor.stringFlavor);
-                grid.parseStringToGrid(input);
-            } catch (UnsupportedFlavorException e1) {
-
-                statusLine = "Could not read from Clipboard";
-            } catch (IOException e1) {
-
-                statusLine = "Could not read from Clipboard";
-            }
-        }
-        statusLine = "Pasted Minesweeper";
-        notifyObservers();
+        pre();
+        realController.paste();
+        post();
     }
 
     public int getValue(int row, int column) {
-        return grid.getICell(row, column).getValue();
+        return realController.getValue(row, column);
+    }
+
+    public void showCandidates(int row, int column) {
+        pre();
+        realController.showCandidates(row, column);
+        post();
     }
 
     public void highlight(int value) {
-        highlighted = value;
-        notifyObservers();
+        pre();
+        realController.highlight(value);
+        post();
+    }
+
+    public int getCellsPerRow() {
+        return realController.getCellsPerRow();
+    }
+
+    public int getBlockSize() {
+        return realController.getBlockSize();
     }
 
     public int blockAt(int row, int column) {
-        return grid.blockAt(row, column);
+        return realController.blockAt(row, column);
     }
-        notifyObservers();
+
+    public void showAllCandidates() {
+        pre();
+        realController.showAllCandidates();
+        post();
+    }
+
+    public boolean isGiven(int row, int column) {
+        return realController.isGiven(row, column);
+    }
 
     public boolean isHighlighted(int row, int column) {
-        return grid.candidates(row, column).get(highlighted);
+        return realController.isHighlighted(row, column);
+    }
+
+    public boolean isSet(int row, int column) {
+        return realController.isSet(row, column);
+    }
+
+    public boolean isShowCandidates(int row, int column) {
+        return realController.isShowCandidates(row, column);
     }
 
     public boolean isCandidate(int row, int column, int candidate) {
-        return grid.candidates(row, column).get(candidate);
+        return realController.isCandidate(row, column, candidate);
     }
 
-    //@Override
-    //public void parseStringToGrid(String gridString) {
-      //  grid.parseStringToGrid(gridString);
-        //notifyObservers();
-
-    //}
+    @Override
+    public void parseStringToGrid(String gridString) {
+        pre();
+        realController.parseStringToGrid(gridString);
+        post();
+    }
 
     @Override
     public void resetSize(int newSize) {
-        this.grid = gridCreation.create(newSize);
-        reset();
-        Event event = new SizeChangeEvent();
-        notifyObservers(event);
+        pre();
+        realController.resetSize(newSize);
+        post();
     }
 
     public IGrid getGrid() {
-        return grid;
+        pre();
+        IGrid result = realController.getGrid();
+        post();
+        return result;
+    }
+
+    @Override
+    public void addObserver(IObserver s) {
+        pre();
+        realController.addObserver(s);
+        post();
+    }
+
+    @Override
+    public void removeObserver(IObserver s) {
+        pre();
+        realController.removeObserver(s);
+        post();
+    }
+
+    @Override
+    public void removeAllObservers() {
+        pre();
+        realController.removeAllObservers();
+        post();
+    }
+
+    @Override
+    public void notifyObservers() {
+        pre();
+        realController.notifyObservers();
+        post();
+    }
+
+    @Override
+    public void notifyObservers(Event e) {
+        pre();
+        realController.notifyObservers(e);
+        post();
     }
 
 }
