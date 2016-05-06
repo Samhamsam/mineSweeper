@@ -13,16 +13,16 @@ import de.htwg.minesweeper.util.observer.IObservable;
 import de.htwg.minesweeper.util.observer.IObserver;
 
 //@Singleton
-public class SudokuController implements IObservable, ISudokuController {
+public class MinesweeperController implements IObservable, IMinesweeperController {
 
     private Logger logger = Logger
             .getLogger("de.htwg.minesweeper.controller.wrappedimpl");
-    private ISudokuController realController;
+    private IMinesweeperController realController;
     private long startTime;
 
-    @Inject
-    public SudokuController(IGridCreation gridCreation) {
-        realController = new de.htwg.minesweeper.controller.impl.SudokuController(
+    //@Inject
+    public MinesweeperController(IGridCreation gridCreation) {
+        realController = new de.htwg.minesweeper.controller.impl.MinesweeperController(
                 gridCreation);
     }
 
@@ -44,15 +44,9 @@ public class SudokuController implements IObservable, ISudokuController {
         return stack[2 + depth].getMethodName();
     }
 
-    public void setValue(int row, int column, int value) {
+    public void show() {
         pre();
-        realController.setValue(row, column, value);
-        post();
-    }
-
-    public void solve() {
-        pre();
-        realController.solve();
+        realController.show();
         post();
     }
 
@@ -78,19 +72,7 @@ public class SudokuController implements IObservable, ISudokuController {
         post();
         return result;
     }
-
-    public void undo() {
-        pre();
-        realController.undo();
-        post();
-    }
-
-    public void redo() {
-        pre();
-        realController.redo();
-        post();
-    }
-
+  
     public void copy() {
         pre();
         realController.copy();
@@ -107,81 +89,14 @@ public class SudokuController implements IObservable, ISudokuController {
         return realController.getValue(row, column);
     }
 
-    public void showCandidates(int row, int column) {
-        pre();
-        realController.showCandidates(row, column);
-        post();
-    }
-
-    public void highlight(int value) {
-        pre();
-        realController.highlight(value);
-        post();
-    }
-
-    public int getCellsPerRow() {
-        return realController.getCellsPerRow();
-    }
-
-    public int getBlockSize() {
-        return realController.getBlockSize();
-    }
-
     public int blockAt(int row, int column) {
         return realController.blockAt(row, column);
-    }
-
-    public void showAllCandidates() {
-        pre();
-        realController.showAllCandidates();
-        post();
-    }
-
-    public boolean isGiven(int row, int column) {
-        return realController.isGiven(row, column);
-    }
-
-    public boolean isHighlighted(int row, int column) {
-        return realController.isHighlighted(row, column);
-    }
-
-    public boolean isSet(int row, int column) {
-        return realController.isSet(row, column);
-    }
-
-    public boolean isShowCandidates(int row, int column) {
-        return realController.isShowCandidates(row, column);
-    }
-
-    public boolean isCandidate(int row, int column, int candidate) {
-        return realController.isCandidate(row, column, candidate);
-    }
-
-    @Override
-    public void parseStringToGrid(String gridString) {
-        pre();
-        realController.parseStringToGrid(gridString);
-        post();
     }
 
     @Override
     public void resetSize(int newSize) {
         pre();
         realController.resetSize(newSize);
-        post();
-    }
-
-    public IGrid getGrid() {
-        pre();
-        IGrid result = realController.getGrid();
-        post();
-        return result;
-    }
-
-    @Override
-    public void addObserver(IObserver s) {
-        pre();
-        realController.addObserver(s);
         post();
     }
 
@@ -212,5 +127,23 @@ public class SudokuController implements IObservable, ISudokuController {
         realController.notifyObservers(e);
         post();
     }
+
+	@Override
+	public boolean isHighlighted(int row, int column) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public IGrid getGrid() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void addObserver(IObserver s) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
