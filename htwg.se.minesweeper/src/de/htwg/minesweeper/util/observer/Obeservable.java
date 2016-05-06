@@ -3,7 +3,7 @@ package de.htwg.minesweeper.util.observer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Obeservable implements IObservable {
+public class Observable implements IObservable {
 	/* Fields */
     private List<IObserver> subscribers = new ArrayList<IObserver>(2);
 
