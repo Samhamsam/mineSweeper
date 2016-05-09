@@ -1,5 +1,8 @@
 package de.htwg.minesweeper.aview.gui;
 
+// Imported from htwg.se.sudoku (markoboger)
+// Any edits by Lycoris1305
+
 import java.awt.GridLayout;
 
 import javax.swing.JPanel;
