@@ -1,45 +1,59 @@
 package de.htwg.minesweeper;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-//Using Command Prompt, allows user to start new game or to quit
 public class TUI {
+	
+	private static final Logger logger = Logger.getLogger(TUI.class.getName());
 	
 	private static String[][] filledField;
 	boolean gameover = true;
 	
 	public static void main (String args[]) {
 	
-	System.out.println("What would you like to do?"); //Prints to console
-	System.out.println("1. Start New Game");		//Prints to console
-	System.out.println ("2. Quit");					//Prints to console
-	System.out.println ("Type 1 or 2 below.");	//Prints to console
+	Handler consoleHandler = null;
+	try{
+		//creates consoleHandler
+		consoleHandler = new ConsoleHandler();
+		
+		//assign handlers to logger object
+		 logger.addHandler(consoleHandler);
+		
+		//sets levels to handlers and logger
+		consoleHandler.setLevel(Level.ALL);
+		logger.setLevel(Level.ALL);
+	} finally{	
+	}
 	
-	String answer = "";		//Initialized variable for user's inputed string
-	String newAnswer = "";	// Initialized variable for user's nth inputed string
+	logger.info("Welcome to Minesweeper!"
+			+ "To begin a new game, type 'new'."
+			+ "To quit, simply type 'quit'");
+	
+	String answer = "";
 	
 	Scanner ScanIn = new Scanner(System.in);  //Scanner setup
-	answer = ScanIn.nextLine();					// Scanner reads the inputed String and stores it as answer
+	answer = ScanIn.nextLine();	
 	
-	Scanner ScanIn2 = new Scanner(System.in); // Scanner setup for repeated inputs in case of error
-	
-	
-	if (answer.equals("1") || newAnswer.equals("1") ) {   // Checks that the input from user is equal exactly to the first option
+	if (answer.equals("new")) {   // Checks that the input from user is equal exactly to the first option
 		Field testfield = new Field();
 		TUI testTUI = new TUI();
 		filledField = testfield.setupField();
 		String testString = testTUI.printField(filledField);
 		System.out.println(testString);
 		while(testTUI.gameover){
-			System.out.println("Which field do you want to open? Type Example: 2,2");
+			logger.info("Type the size of the field you want to open. Example: 2,2");
 			answer = ScanIn.nextLine();
-			System.out.println(answer);
-			if(answer.equals("2")){
-				System.out.println("Thank you for playing this game!");
+			if(answer.equals("quit")){
+				logger.info("Thank you for playing this game!");
 				System.exit(0);
 			}else if(answer.length() != 3){
-				System.out.println("False!");
+				logger.info("False!");
 			} else{
 				List<String> list = Arrays.asList(answer.split(","));
 				int first = Integer.parseInt(list.get(0));
@@ -48,14 +62,12 @@ public class TUI {
 			}
 		}
 		
-	} else if (answer.equals("2") || newAnswer.equals("2")) {  //Checks that input from user is equal exactly to second option
-		System.out.println("Finished"); //Print to console
+	} else if (answer.equals("quit")) {  //Checks that input from user is equal exactly to second option
+		logger.info("Goodbye"); //Print to console
 	} else {
-		System.out.println("That is not a possible choice. Try again");  //If anything else, user must try again
-		newAnswer = ScanIn2.nextLine() ; // reads new input from user and stores it as a new answer to be compared
+		logger.info("That is not a possible choice. Try again");  //If anything else, user must try again
+		answer = ScanIn.nextLine() ; // reads new input from user and stores it as a new answer to be compared
 	}
-	ScanIn.close();
-	ScanIn2.close();
 	}
 	
 	/**
