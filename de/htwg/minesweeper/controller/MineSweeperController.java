@@ -48,7 +48,12 @@ public class MineSweeperController{
 		break;
 		
 		default:
-			System.out.println("??");
+			System.out.println("Not a valid answer. ");
+			System.out.println("1 starts the Game.");
+			System.out.println("2 quits this application.");
+			System.out.println("Please select 1 or 2.");			
+			setanswer();   //creates a cycle allowing user multiple chances to input acceptable answer
+			answerOptions(answer);
 		}
 	}
 	
