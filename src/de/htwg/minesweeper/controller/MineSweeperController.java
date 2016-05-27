@@ -104,7 +104,7 @@ public class MineSweeperController{
 	
 	private boolean IsItaBomb(int i, int j){
 		String[][] fi = field.getfilledField();
-		if(fi[firstNumber][secondNumber].equals("baad")){
+		if(fi[firstNumber][secondNumber].equals("b")){
 			return true;
 		}
 		field.setUserField(firstNumber,secondNumber);	

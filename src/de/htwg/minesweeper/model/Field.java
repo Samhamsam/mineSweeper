@@ -141,25 +141,43 @@ public StringBuilder printField(String[][] filledField){
 	}
 	
 	public void setUserField(int i, int j){
-		ichange = i;
-		jchange = j;
 		String stringnumber = String.valueOf(getNumberMinesNearField(i, j));
 		if(stringnumber.equals("0"))
 			openAllBlanks(i, j);
 		UserField[i][j] = stringnumber;
 	}
 	
-	int number = 0;
-	int ichange;
-	int jchange;
+
+	
 	private void openAllBlanks(int i, int j){
 		
 		String stringnumber = String.valueOf(getNumberMinesNearField(i, j));
 		
-		if(getfilledField()[i][j].equals("g")){
-			
-			UserField[i][j] = stringnumber;
+		UserField[i][j] = stringnumber;
+		
+		
+		if(i < 9){
+			String plusI = String.valueOf(getNumberMinesNearField(i+1,j));
+			if((plusI.equals("0")) && (getUserFieldSimple(i+1,j).equals("x")))
+				openAllBlanks(i+1,j);
 		}
+		if(i > 0){
+			String minusI = String.valueOf(getNumberMinesNearField(i-1,j));
+			if((minusI.equals("0")) && (getUserFieldSimple(i-1, j).equals("x")))
+				openAllBlanks(i-1,j);
+		}
+		if(j < 9){
+			String plusJ = String.valueOf(getNumberMinesNearField(i,j+1));
+			if((plusJ.equals("0")) && (getUserFieldSimple(i,j+1).equals("x")))
+				openAllBlanks(i,j+1);
+		}
+		if(j > 0){
+			String minusJ = String.valueOf(getNumberMinesNearField(i,j-1));
+			if((minusJ.equals("0")) && (getUserFieldSimple(i,j-1).equals("x")))
+				openAllBlanks(i,j-1);
+		}
+		else
+			return;
 
 	}
 
@@ -167,6 +185,10 @@ public StringBuilder printField(String[][] filledField){
 	
 	public String[][] getUserField(){
 		return UserField;
+	}
+	
+	public String getUserFieldSimple(int i, int j){
+		return UserField[i][j];
 	}
 	
 	
