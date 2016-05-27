@@ -94,6 +94,9 @@ public class MineSweeperController{
 		catch(NumberFormatException er){
 			System.out.println(answer + " is not a Number");
 		}
+		catch (ArrayIndexOutOfBoundsException ah ){
+			System.out.println("You forgot to input the second coordinate!");
+		}
 		i[0] = firstNumber;
 		i[1] = secondNumber;
 		return i;
