@@ -1,4 +1,4 @@
-package de.htwg.minesweeper.aview.tui;
+package src.de.htwg.minesweeper.aview.tui;
 
 
 import java.awt.event.ActionListener;
@@ -48,7 +48,6 @@ public class TUI implements Observer {
 	}
 	
 	
-	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
 		

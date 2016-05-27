@@ -1,10 +1,10 @@
-package de.htwg.minesweeper.controller;
+package src.de.htwg.minesweeper.controller;
 
 import java.util.*;
 
 
-import de.htwg.minesweeper.aview.tui.TUI;
-import de.htwg.minesweeper.model.Field;
+import src.de.htwg.minesweeper.aview.tui.TUI;
+import src.de.htwg.minesweeper.model.Field;
 
 public class MineSweeperController{
 	

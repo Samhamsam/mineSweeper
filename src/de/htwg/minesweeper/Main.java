@@ -1,8 +1,8 @@
-package de.htwg.minesweeper;
+package src.de.htwg.minesweeper;
 
-import de.htwg.minesweeper.aview.tui.TUI;
-import de.htwg.minesweeper.controller.MineSweeperController;
-import de.htwg.minesweeper.model.Field;
+import src.de.htwg.minesweeper.aview.tui.TUI;
+import src.de.htwg.minesweeper.controller.MineSweeperController;
+import src.de.htwg.minesweeper.model.Field;
 
 //import tester.*;
 

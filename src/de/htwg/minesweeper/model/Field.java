@@ -1,4 +1,4 @@
-package de.htwg.minesweeper.model;
+package src.de.htwg.minesweeper.model;
 import java.util.Observable;
 import java.util.Random;
 
@@ -46,7 +46,7 @@ public class Field extends Observable {
 	 */
 	public String[][] setupField(){
 
-		filledField = insertbaad(insertGood(filledField));
+		filledField = insertb(insertg(filledField));
 		UserField = UserField(UserField);
 		return UserField;
 	}
@@ -55,32 +55,32 @@ public class Field extends Observable {
 	/**
 	 * Fill with Blanks
 	 * @param fillWithBlanks
-	 * @return double array with value "good"
+	 * @return double array with value "g"
 	 */
-	private String[][] insertGood(String fillWithBlanks[][]){
+	private String[][] insertg(String fillWithBlanks[][]){
 		
 		for (int i = 0; i < column; i++)
 		{
 		    for (int j = 0; j < row; j++)
 		    {
-		    	fillWithBlanks[i][j] = "good";
+		    	fillWithBlanks[i][j] = "g";
 		    }
 		}
 		return fillWithBlanks;
 	}
 	/**
-	 * Fill 10 array fields with "baad"
+	 * Fill 10 array fields with "b"
 	 * @param fillWithMines
-	 * @return filledField with "good" and 10 times "baad"
+	 * @return filledField with "g" and 10 times "b"
 	 */
-	private String[][] insertbaad(String fillWithMines[][]){
+	private String[][] insertb(String fillWithMines[][]){
 		
 		Random rand = new Random();
 		
 		for(int i = 0; i <= numberOfMines; i++){
 			int m = rand.nextInt(10);
 			int n = rand.nextInt(10);
-			fillWithMines[m][n] = "baad";
+			fillWithMines[m][n] = "b";
 		}
 		
 		return fillWithMines;
@@ -156,27 +156,10 @@ public StringBuilder printField(String[][] filledField){
 		
 		String stringnumber = String.valueOf(getNumberMinesNearField(i, j));
 		
-		if(getfilledField()[i][j].equals("good")){
+		if(getfilledField()[i][j].equals("g")){
 			
 			UserField[i][j] = stringnumber;
 		}
-		
-		switch(number){
-			case 0:
-				openAllBlanks(ichange,jchange);
-			case 1:
-				openAllBlanks(ichange+zahl,jchange);
-			case
-		}
-
-		/*openAllBlanks(i+1, j);
-		openAllBlanks(i-1, j);
-		openAllBlanks(i, j+1);
-		openAllBlanks(i, j-1);
-		openAllBlanks(i+1, j+1);
-		openAllBlanks(i+1, j-1);
-		openAllBlanks(i-1, j+1);
-		openAllBlanks(i-1, j-1);*/
 
 	}
 
@@ -190,42 +173,42 @@ public StringBuilder printField(String[][] filledField){
 	private int getNumberMinesNearField(int i, int j){
 		int number = 0;
 		if((i>=0) && (i < 9) && (j>=0) && (j < 10)){
-			if(filledField[i+1][j].equals("baad")){
+			if(filledField[i+1][j].equals("b")){
 				number++;
 			}
 		}
 		if((i>=1) && (i < 10) && (j>=0) && (j < 10)){
-			 if(filledField[i-1][j].equals("baad")){
+			 if(filledField[i-1][j].equals("b")){
 				number++;
 			}
 		}
 		if((i>=0) && (i < 10) && (j>=0) && (j < 9)){
-			 if(filledField[i][j+1].equals("baad")){
+			 if(filledField[i][j+1].equals("b")){
 				number++;
 			}
 		}
 		if((i>=0) && (i < 10) && (j>=1) && (j < 10)){
-			 if(filledField[i][j-1].equals("baad")){
+			 if(filledField[i][j-1].equals("b")){
 				number++;
 			}
 		}
 		if((i>=0) && (i < 9) && (j>=0) && (j < 9)){
-			 if(filledField[i+1][j+1].equals("baad")){
+			 if(filledField[i+1][j+1].equals("b")){
 				number++;
 			}
 		}
 		if((i>=1) && (i < 10) && (j>=1) && (j < 10)){
-			 if(filledField[i-1][j-1].equals("baad")){
+			 if(filledField[i-1][j-1].equals("b")){
 				number++;
 			}
 		}
 		if((i>=0) && (i < 9) && (j>=1) && (j < 10)){
-			 if(filledField[i+1][j-1].equals("baad")){
+			 if(filledField[i+1][j-1].equals("b")){
 				number++;
 			}
 		}
 		if((i>=1) && (i < 10) && (j>=0) && (j < 9)){
-			 if(filledField[i-1][j+1].equals("baad")){
+			 if(filledField[i-1][j+1].equals("b")){
 				number++;
 			}
 		}
