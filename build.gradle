@@ -35,14 +35,14 @@ sourceSets {
 }
 
 jar {
-    manifest.attributes "Main-Class":"de.htwg.minesweeper"
+    manifest.attributes "Main-Class":"de.htwg.minesweeper.Main"
 }
   
 sonarqube {
     properties {
     property "sonar.projectName", "SE2016SS-11-MineSweeper"
-    property "sonar.projectKey", "de.htwg.se.minesweeper"
-    property "sonar.projectVersion", "1.0"
+    property "sonar.projectKey", "htwg.se.mineSweeper"
+    property "sonar.projectVersion", "2.0"
     property "sonar.binaries", "build/classes"
     property "sonar.java.coveragePlugin", "jacoco"
   }
