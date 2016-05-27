@@ -40,6 +40,14 @@ public class TUI implements Observer {
 		}
 	}
 
+	
+	public void playAgain() {
+		System.out.println("Would you like to play again?");
+		System.out.println("Input 1, if you would like to start a new game.");
+		System.out.println("Input 2, if you would like to quit.");
+	}
+	
+	
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
