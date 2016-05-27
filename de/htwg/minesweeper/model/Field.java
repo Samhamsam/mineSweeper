@@ -141,31 +141,46 @@ public StringBuilder printField(String[][] filledField){
 	}
 	
 	public void setUserField(int i, int j){
+		ichange = i;
+		jchange = j;
 		String stringnumber = String.valueOf(getNumberMinesNearField(i, j));
 		if(stringnumber.equals("0"))
 			openAllBlanks(i, j);
 		UserField[i][j] = stringnumber;
 	}
 	
+	int number = 0;
+	int ichange;
+	int jchange;
 	private void openAllBlanks(int i, int j){
+		
 		String stringnumber = String.valueOf(getNumberMinesNearField(i, j));
-		if(getfilledField()[i][j].equals("good"))
-			if(!stringnumber.equals("0")){
-				UserField[i][j] = stringnumber;
-				return;
-			} else
-				UserField[i][j] = "0";
-		/*openAllBlanks(i+1, j);*/
-	
+		
+		if(getfilledField()[i][j].equals("good")){
+			
+			UserField[i][j] = stringnumber;
+		}
+		
+		switch(number){
+			case 0:
+				openAllBlanks(ichange,jchange);
+			case 1:
+				openAllBlanks(ichange+zahl,jchange);
+			case
+		}
+
+		/*openAllBlanks(i+1, j);
 		openAllBlanks(i-1, j);
-		/*openAllBlanks(i, j+1);
+		openAllBlanks(i, j+1);
 		openAllBlanks(i, j-1);
 		openAllBlanks(i+1, j+1);
 		openAllBlanks(i+1, j-1);
 		openAllBlanks(i-1, j+1);
-		openAllBlanks(i-1, j-1);
-*/
+		openAllBlanks(i-1, j-1);*/
+
 	}
+
+	
 	
 	public String[][] getUserField(){
 		return UserField;
