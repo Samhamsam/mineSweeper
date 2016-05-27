@@ -73,7 +73,14 @@ public class MineSweeperController{
 			i = stringToNumber(answer);
 			isitaNumber = IsItaBomb(i[0],i[1]);
 		}
+		
+		//Ends the game when a mine is chosen.
+		//Gives the option to start a new game
+		//And input the players decision
 		tui.gameLost();
+		tui.playAgain();
+		setanswer();
+		answerOptions(answer);
 	}
 	
 	private int[] stringToNumber(String answer){
