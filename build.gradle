@@ -43,7 +43,6 @@ sonarqube {
     property "sonar.projectName", "SE2016SS-11-MineSweeper"
     property "sonar.projectKey", "htwg.se.mineSweeper"
     property "sonar.projectVersion", "2.0"
-    property "sonar.binaries", "build/classes"
     property "sonar.java.coveragePlugin", "jacoco"
   }
 }
