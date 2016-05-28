@@ -1,4 +1,4 @@
-package src.de.htwg.minesweeper.model;
+package de.htwg.minesweeper.model;
 import java.util.Observable;
 import java.util.Random;
 
@@ -112,26 +112,6 @@ public StringBuilder printField(String[][] filledField){
 			result.append("\n");
 		}
 		return result;
-	}
-	
-	/**
-	 * Prints the Field that was created on Field.java
-	 * @param filledField
-	 * @return String Field
-	 */
-	private String OriginalField(String[][] filledField){
-		StringBuilder result = new StringBuilder();
-		
-
-		for(int j = 0; j < 10; j++){
-			
-			for(int i= 0; i < 10; i++){
-				result.append(filledField[j][i]).append(" ");
-			}
-			result.append("\n");
-		}
-		
-		return result.toString();
 	}
 	
 	

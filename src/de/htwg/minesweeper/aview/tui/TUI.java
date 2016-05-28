@@ -1,12 +1,10 @@
-package src.de.htwg.minesweeper.aview.tui;
+package de.htwg.minesweeper.aview.tui;
 
 
-import java.awt.event.ActionListener;
-import java.util.Arrays;
-import java.util.List;
+
 import java.util.Observable;
 import java.util.Observer;
-import java.util.Scanner;
+
 
 //Using Command Prompt, allows user to start new game or to quit
 public class TUI implements Observer {
