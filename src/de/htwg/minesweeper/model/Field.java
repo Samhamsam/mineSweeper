@@ -140,21 +140,29 @@ public StringBuilder printField(String[][] filledField){
 			String plusI = String.valueOf(getNumberMinesNearField(i+1,j));
 			if((plusI.equals("0")) && (getUserFieldSimple(i+1,j).equals("x")))
 				openAllBlanks(i+1,j);
+			else if((stringnumber.equals("0")) && (!plusI.equals("0")) && (getUserFieldSimple(i+1,j).equals("x")))
+				UserField[i+1][j] = String.valueOf(getNumberMinesNearField(i+1, j));
 		}
 		if(i > 0){
 			String minusI = String.valueOf(getNumberMinesNearField(i-1,j));
 			if((minusI.equals("0")) && (getUserFieldSimple(i-1, j).equals("x")))
 				openAllBlanks(i-1,j);
+			else if((stringnumber.equals("0")) && (!minusI.equals("0")) && (getUserFieldSimple(i-1,j).equals("x")))
+				UserField[i-1][j] = String.valueOf(getNumberMinesNearField(i-1, j));
 		}
 		if(j < 9){
 			String plusJ = String.valueOf(getNumberMinesNearField(i,j+1));
 			if((plusJ.equals("0")) && (getUserFieldSimple(i,j+1).equals("x")))
 				openAllBlanks(i,j+1);
+			else if((stringnumber.equals("0")) && (!plusJ.equals("0")) && (getUserFieldSimple(i,j+1).equals("x")))
+				UserField[i][j+1] = String.valueOf(getNumberMinesNearField(i, j+1));
 		}
 		if(j > 0){
 			String minusJ = String.valueOf(getNumberMinesNearField(i,j-1));
 			if((minusJ.equals("0")) && (getUserFieldSimple(i,j-1).equals("x")))
 				openAllBlanks(i,j-1);
+			else if((stringnumber.equals("0")) && (!minusJ.equals("0")) && (getUserFieldSimple(i,j-1).equals("x")))
+				UserField[i][j-1] = String.valueOf(getNumberMinesNearField(i, j-1));
 		}
 		else
 			return;
