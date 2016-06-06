@@ -14,9 +14,11 @@ public class MineSweeperController{
 	private int firstNumber;
 	private int secondNumber;
 	
+	private int row, column, numberOfMines = 10;
+	
 	public MineSweeperController(){
 		this.tui = new TUI();
-		this.field = new Field();
+		this.field = new Field(row, column,numberOfMines);
 
 	}
 	private String setanswer(){

@@ -15,40 +15,26 @@ public class Field extends Observable {
 	private String filledField[][];
 	private String UserField[][];
 	
-	public Field(){
-		this.row=10;
-		this.column = 10;
-		this.numberOfMines = 10;
+	public Field(int i, int j, int k){
+		this.row=i;
+		this.column = j;
+		this.numberOfMines = k;
 		this.filledField = new String[column][row];
 		this.UserField = new String[column][row];
 	}
 	
-	/**
-	 * Test Method 
-	 * @param args
-	 */
 	public static void main(String[] args){
-		Field test = new Field();
-		test.filledField = test.setupField();
-		
-		for(String[] row: test.filledField){
-			for(String value: row){
-				
-				System.out.println(value);
-			}
-		}
+		Field field = new Field(10,10,10);
+		field.setupField();
 	}
 	
-
 	/**
 	 * Setup the Field and fill with Mines and Blanks
 	 * @return the filled Field
 	 */
-	public String[][] setupField(){
-
+	public void setupField(){
 		filledField = insertb(insertg(filledField));
 		UserField = UserField(UserField);
-		return UserField;
 	}
 	
 
@@ -116,9 +102,7 @@ public StringBuilder printField(String[][] filledField){
 	
 	
 	
-	public String[][] getfilledField(){
-		return filledField;
-	}
+
 	
 	public void setUserField(int i, int j){
 		String stringnumber = String.valueOf(getNumberMinesNearField(i, j));
@@ -224,6 +208,19 @@ public StringBuilder printField(String[][] filledField){
 		}
 		
 		return number;
+	}
+	
+	public int getRow(){
+		return row;
+	}
+	public int getColumn(){
+		return column;
+	}
+	public int getNumberOfMines(){
+		return numberOfMines;
+	}
+	public String[][] getfilledField(){
+		return filledField;
 	}
 	
 
