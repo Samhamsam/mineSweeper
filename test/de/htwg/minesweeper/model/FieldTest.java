@@ -37,7 +37,7 @@ public class FieldTest {
 		assertEquals(field.getfilledField().length, row);
 		assertEquals(field.getfilledField()[1].length, column);
 	}
-
+/*
 	@Test
 	public void testPrintField() {
 		fail("Not yet implemented");
@@ -62,5 +62,5 @@ public class FieldTest {
 	public void testGetUserFieldSimple() {
 		fail("Not yet implemented");
 	}
-
+*/
 }
