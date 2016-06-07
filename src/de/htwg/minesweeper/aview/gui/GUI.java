@@ -16,6 +16,7 @@ public class GUI extends JFrame {
 	private JButton[][] jb;
 	
 	public GUI(){
+		//Sets layout in a grid, with 10x10 buttons, with a separtion between buttons at 2 pixels
 		setLayout(new GridLayout (10,10,2,2));
 		buildGameField();
 		
@@ -23,9 +24,13 @@ public class GUI extends JFrame {
 	
 	private void buildGameField(){
 		jb = new JButton[10][10];
+		
+		//Should insert the userfield into each button
 		for (int y=0; y < 10; y++){
 			for (int x = 0; x < 10; x++){
 				jb[x][y] = new MineButton(x,y);
+				
+				//makes a button and prints on the button b or g, or the mines and numbers for the user
 				jb [x][y] = new JButton ("" + Field.getUserField());
 				add(jb[x][y]);
 			}
@@ -47,6 +52,8 @@ public class GUI extends JFrame {
 			addListeners();
 		}
 		
+		
+		//for future use of user, so they can click on the button and it will reveal what is underneath
 		private void addListeners(){
 			this.addMouseListener(new MouseAdapter(){
 				@Override
@@ -73,6 +80,8 @@ public class GUI extends JFrame {
 }
 	
 /*
+
+//sample main class, so this class can be run without running the entire game
 public static void main(String[] args){
 	JFrame frame = new JFrame();
 	frame.setResizable(false);
