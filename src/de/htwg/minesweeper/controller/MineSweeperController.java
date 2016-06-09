@@ -2,7 +2,7 @@ package de.htwg.minesweeper.controller;
 
 import java.util.*;
 
-
+import de.htwg.minesweeper.aview.gui.GUI;
 import de.htwg.minesweeper.aview.tui.TUI;
 import de.htwg.minesweeper.model.Field;
 
