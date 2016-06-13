@@ -1,9 +1,12 @@
 package de.htwg.minesweeper.model;
 
 import static org.junit.Assert.*;
+import java.lang.String;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import com.fasterxml.jackson.databind.ser.ContainerSerializer;
 
 import de.htwg.minesweeper.model.Field;
 
@@ -18,6 +21,7 @@ public class FieldTest {
 	@Before
 	public void setUp(){
 		field = new Field(row, column, numberOfMines);
+		field.setupField();
 	}
 
 	@Test
@@ -33,26 +37,25 @@ public class FieldTest {
 
 	@Test
 	public void testSetupField() {
-		field.setupField();
 		assertEquals(field.getfilledField().length, row);
 		assertEquals(field.getfilledField()[1].length, column);
 	}
-/*
-	@Test
+
+	@Test //Testing getFilledField
 	public void testPrintField() {
-		fail("Not yet implemented");
+		assertTrue((field.printField(field.getfilledField()).toString().contains("b")));
+		assertTrue((field.printField(field.getfilledField()).toString().contains("g")));
 	}
 
-	@Test
-	public void testGetfilledField() {
-		fail("Not yet implemented");
-	}
-
+	
 	@Test
 	public void testSetUserField() {
-		fail("Not yet implemented");
+		field.setUserField(2, 3);
+		String i = field.getUserFieldSimple(2, 3);
+		Boolean iBoolean = (i.equals("0") || i.equals("1") || i.equals("2") || i.equals("3") || i.equals("4") || i.equals("5") || i.equals("6") || i.equals("7") || i.equals("8") || i.equals("b"));
+		assertTrue(iBoolean);
 	}
-
+	/*
 	@Test
 	public void testGetUserField() {
 		fail("Not yet implemented");

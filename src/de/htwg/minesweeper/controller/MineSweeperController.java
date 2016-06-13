@@ -2,7 +2,7 @@ package de.htwg.minesweeper.controller;
 
 import java.util.*;
 
-import de.htwg.minesweeper.aview.gui.GUI;
+//import de.htwg.minesweeper.aview.gui.GUI;
 import de.htwg.minesweeper.aview.tui.TUI;
 import de.htwg.minesweeper.model.Field;
 
@@ -13,8 +13,10 @@ public class MineSweeperController{
 	private Field field;
 	private int firstNumber;
 	private int secondNumber;
+	private static final String startgame ="1";
+	private static final String exitgame = "2";
 	
-	private int row, column, numberOfMines = 10;
+	private int row = 10, column = 10, numberOfMines = 10;
 	
 	public MineSweeperController(){
 		this.tui = new TUI();
@@ -25,9 +27,9 @@ public class MineSweeperController{
 		@SuppressWarnings("resource")
 		Scanner ScanIn = new Scanner(System.in);  //Scanner setup
 		answer = ScanIn.nextLine();
-		if(answer.equals("2")){
+		if(answer.equals(exitgame)){
 			tui.printGoodby();
-			System.exit(0);
+			exitGame();
 		}
 		return answer;
 	}
@@ -40,19 +42,20 @@ public class MineSweeperController{
 	
 	private void answerOptions(String answer){
 		switch(answer){
-		case "1":
+		case startgame:
 			startgame();
 		break;
 		
-		case "2":
+		case exitgame:
 			tui.printGoodby();
-			System.exit(0);
+			exitGame();
 		break;
+		
 		
 		default:
 			System.out.println("Not a valid answer. ");
-			System.out.println("1 starts the Game.");
-			System.out.println("2 quits this application.");
+			System.out.println("\"start\" starts the Game.");
+			System.out.println("\"exit\" quits this application.");
 			System.out.println("Please select 1 or 2.");			
 			setanswer();   //creates a cycle allowing user multiple chances to input acceptable answer
 			answerOptions(answer);
@@ -94,10 +97,10 @@ public class MineSweeperController{
 			 secondNumber = Integer.parseInt(list.get(1));
 		}
 		catch(NumberFormatException er){
-			System.out.println(answer + " is not a Number");
+			System.out.println(answer + " is not a Number" + er.getMessage());
 		}
 		catch (ArrayIndexOutOfBoundsException ah ){
-			System.out.println("You forgot to input the second coordinate!");
+			System.out.println("You forgot to input the second coordinate!" + ah.getMessage());
 		}
 		i[0] = firstNumber;
 		i[1] = secondNumber;
@@ -111,5 +114,8 @@ public class MineSweeperController{
 		}
 		field.setUserField(firstNumber,secondNumber);	
 		return false;
+	}
+	private void exitGame(){
+		Runtime.getRuntime().halt(0);
 	}
 }

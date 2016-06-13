@@ -27,11 +27,13 @@ public class GUI extends JFrame implements ActionListener{
 	}
 	
 	//sample main class, so this class can be run without running the entire game
+	/*
 	public static void main(String[] args){
 		GUI start = new GUI("x");
 		start.setJButtonText("h", 9, 9);
 		System.out.println(start.getJButtonText(9, 9));
 	}
+	*/
 	
 	private void buildGameField(JFrame frame, String buttonStartStatus){
 		buttonForTheMineSweeperFields = new JButton[10][10];
@@ -57,7 +59,7 @@ public class GUI extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		System.out.println(e.getSource());
+		//System.out.println(e.getSource());
 		
 	}
 

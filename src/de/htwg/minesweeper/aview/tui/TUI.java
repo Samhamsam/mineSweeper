@@ -1,4 +1,6 @@
 package de.htwg.minesweeper.aview.tui;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 
@@ -8,24 +10,26 @@ import java.util.Observer;
 
 //Using Command Prompt, allows user to start new game or to quit
 public class TUI implements Observer {
-	
-	
+	private static final Logger log = LogManager.getLogger();
+
+	 
 	public void printConsole(){
-		System.out.println("What would you like to do?"); //Prints to console
-		System.out.println("1. Start New Game");		//Prints to console
-		System.out.println("2. Quit");					//Prints to console
-		System.out.println("Type 1 or 2 below.");	//Prints to console
+		log.info("What would you like to do?");
+		log.info("What would you like to do?"); //Prints to console
+		log.info("1. Start New Game");		//Prints to console
+		log.info("2. Quit");					//Prints to console
+		log.info("Type 1 or 2 below.");	//Prints to console
 	}
 	
 	public void printGoodby(){
-		System.out.println("Thanks and Goodby!");
+		log.info("Thanks and Goodby!");
 	}
 	
 	public void printTheAnswer(){
-		System.out.println("Type: x,x | x is a number between 0 and 9(column, row)");
+		log.info("Type: x,x | x is a number between 0 and 9(column, row)");
 	}
 	public void gameLost(){
-		System.out.println("You lost the Game!");
+		log.info("You lost the Game!");
 	}
 
 	public void printTheField(String filledField[][]){
@@ -33,16 +37,16 @@ public class TUI implements Observer {
 		for(String[] row: filledField){
 			for(String value: row){
 				
-				System.out.format("%-20s",value);
+				log.info("%-20s",value);
 			}
 		}
 	}
 
 	
 	public void playAgain() {
-		System.out.println("Would you like to play again?");
-		System.out.println("Input 1, if you would like to start a new game.");
-		System.out.println("Input 2, if you would like to quit.");
+		log.info("Would you like to play again?");
+		log.info("Input 1, if you would like to start a new game.");
+		log.info("Input 2, if you would like to quit.");
 	}
 	
 	
