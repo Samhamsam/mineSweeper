@@ -2,6 +2,8 @@ package de.htwg.minesweeper.aview.gui;
 
 import javax.swing.*;
 
+import de.htwg.minesweeper.model.Field;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,7 +19,7 @@ public class GUI extends JFrame implements ActionListener{
 		//Sets layout in a grid, with 10x10 buttons, with a separtion between buttons at 2 pixels
 		JFrame frame = new JFrame("Minesweeper");
 		frame.setLayout(new GridLayout (10,10,2,2));
-		buildGameField(frame, buttonStartStatus);
+		buildGameField(frame);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    frame.setPreferredSize(new Dimension(550, 500));
 	    frame.pack();
@@ -27,23 +29,22 @@ public class GUI extends JFrame implements ActionListener{
 	}
 	
 	//sample main class, so this class can be run without running the entire game
-	/*
-	public static void main(String[] args){
-		GUI start = new GUI("x");
-		start.setJButtonText("h", 9, 9);
-		System.out.println(start.getJButtonText(9, 9));
-	}
-	*/
-	
-	private void buildGameField(JFrame frame, String buttonStartStatus){
+	public static void run(){
+		new GUI("");
+		}
+		
+	private void buildGameField(JFrame frame){
 		buttonForTheMineSweeperFields = new JButton[10][10];
 		
-		//Should insert the userfield into each button
+		String aa = Field.printField(Field.filledField).toString();
+		String items [] = aa.split(" ");
+		
+		
+		//Should insert the field into each button
 		for (int y=0; y < 10; y++){
 			for (int x = 0; x < 10; x++){
-				buttonForTheMineSweeperFields [x][y] = new JButton (buttonStartStatus);
+				buttonForTheMineSweeperFields [x][y] = new JButton ("" + items[x]);
 				frame.add(buttonForTheMineSweeperFields[x][y]);
-				buttonForTheMineSweeperFields [x][y].addActionListener(this);
 			}
 		}
 	}
