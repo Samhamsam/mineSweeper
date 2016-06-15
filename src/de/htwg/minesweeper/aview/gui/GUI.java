@@ -43,7 +43,7 @@ public class GUI extends JFrame implements ActionListener{
 		//Should insert the field into each button
 		for (int y=0; y < 10; y++){
 			for (int x = 0; x < 10; x++){
-				buttonForTheMineSweeperFields [x][y] = new JButton ("" + items[x]);
+				buttonForTheMineSweeperFields [x][y] = new JButton ("" + items[x+ 10*y]);
 				frame.add(buttonForTheMineSweeperFields[x][y]);
 			}
 		}
