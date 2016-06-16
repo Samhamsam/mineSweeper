@@ -13,6 +13,7 @@ public class Field extends Observable {
 	private int row;;
 	private int column;
 	private int numberOfMines;
+	
 	private String bomb = "b";
 	private String freeField = "g";
 	private String userHiddenField = "x";
@@ -21,10 +22,6 @@ public class Field extends Observable {
 	private int sizeOfxAndfWithBomb = 0;
 	private int sizeOfxAndfWithoutBomb = 0;
 	
-	
-
-	
-	//Main Field
 	private String filledField[][];
 	private String UserField[][];
 	
@@ -36,24 +33,12 @@ public class Field extends Observable {
 		this.UserField = new String[column][row];
 	}
 
-	
-	/**
-	 * Setup the Field and fill with Mines and Blanks
-	 * @return the filled Field
-	 */
 	public void setupField(){
 		filledField = insertb(insertg(filledField));
 		UserField = UserField(UserField);
 	}
 	
-
-	/**
-	 * Fill with Blanks
-	 * @param fillWithBlanks
-	 * @return double array with value "g"
-	 */
 	private String[][] insertg(String fillWithBlanks[][]){
-		
 		for (int i = 0; i < column; i++)
 		{
 		    for (int j = 0; j < row; j++)
@@ -63,31 +48,26 @@ public class Field extends Observable {
 		}
 		return fillWithBlanks;
 	}
-	/**
-	 * Fill 10 array fields with "b"
-	 * @param fillWithMines
-	 * @return filledField with "g" and 10 times "b"
-	 */
+
 	private String[][] insertb(String fillWithMines[][]){
-		
 		Random rand = new Random();
-		try{
-			for(int i = 0; i < numberOfMines; i++){
+		try {
+			for(int i = 0; i < numberOfMines; i++) {
 				int mrow = rand.nextInt(row);
 				int ncolumn = rand.nextInt(column);
 				fillWithMines[mrow][ncolumn] = bomb;
 			}
-		}catch(IllegalArgumentException er){
+		}
+		catch(IllegalArgumentException er){
 			log.error("Error: ",er.getMessage());
-		}catch(ArrayIndexOutOfBoundsException er){
+		}
+		catch(ArrayIndexOutOfBoundsException er){
 			log.error("Error: " +er.getMessage());
 		}
-		
 		return fillWithMines;
 	}
 	
 	private String[][] UserField(String t[][]){
-		
 		for (int i = 0; i < column; i++)
 		{
 		    for (int j = 0; j < row; j++)
@@ -100,12 +80,9 @@ public class Field extends Observable {
 
 
 
-public StringBuilder printField(String[][] field){
-		
+	public StringBuilder printField(String[][] field){
 		StringBuilder result = new StringBuilder();
-	
 		for(int j = 0; j < 10; j++){
-			
 			for(int i= 0; i < 10; i++){
 				result.append(field[i][j]).append(" ");
 				if((field[i][j].equals("x") && filledField[i][j].equals("b")) || (field[i][j].equals("f") && filledField[i][j].equals("b")))
@@ -118,9 +95,6 @@ public StringBuilder printField(String[][] field){
 		return result;
 	}
 
-	
-
-	
 	public void setUserField(int i, int j){
 		String stringnumber = String.valueOf(getNumberMinesNearField(i, j));
 		if(stringnumber.equals(userBombField))
@@ -132,14 +106,9 @@ public StringBuilder printField(String[][] field){
 		UserField[i][j] = "f";
 	}
 	
-
-	
 	private void openAllBlanks(int i, int j){
-		
 		String stringnumber = openAllBlanksHelper(i, j);
-		
 		UserField[i][j] = stringnumber;
-
 		if(i < 9){
 			openAllBlanksI9(i,j,stringnumber);
 		}
@@ -154,8 +123,8 @@ public StringBuilder printField(String[][] field){
 		}
 		else
 			return;
-
 	}
+	
 	private void openAllBlanksI9(int i, int j, String stringnumber){
 		String plusI = openAllBlanksHelper(i+1,j);
 		if((plusI.equals(userBombField)) && (getUserFieldSimple(i+1,j).equals(userHiddenField)))
@@ -163,6 +132,7 @@ public StringBuilder printField(String[][] field){
 		else if((stringnumber.equals(userBombField)) && (!plusI.equals(userBombField)) && (getUserFieldSimple(i+1,j).equals("x")))
 			UserField[i+1][j] = openAllBlanksHelper(i+1, j);
 	}
+	
 	private void openAllBlanksI0(int i, int j, String stringnumber){
 		String minusI = openAllBlanksHelper(i-1,j);
 		if((minusI.equals(userBombField)) && (getUserFieldSimple(i-1, j).equals(userHiddenField)))
@@ -170,6 +140,7 @@ public StringBuilder printField(String[][] field){
 		else if((stringnumber.equals(userBombField)) && (!minusI.equals(userBombField)) && (getUserFieldSimple(i-1,j).equals("x")))
 			UserField[i-1][j] = openAllBlanksHelper(i-1, j);
 	}
+	
 	private void openAllBlanksJ9(int i, int j, String stringnumber){
 		String plusJ = openAllBlanksHelper(i,j+1);
 		if((plusJ.equals(userBombField)) && (getUserFieldSimple(i,j+1).equals(userHiddenField)))
@@ -177,6 +148,7 @@ public StringBuilder printField(String[][] field){
 		else if((stringnumber.equals(userBombField)) && (!plusJ.equals(userBombField)) && (getUserFieldSimple(i,j+1).equals("x")))
 			UserField[i][j+1] = openAllBlanksHelper(i, j+1);
 	}
+	
 	private void openAllBlanksJ0(int i, int j, String stringnumber){
 		String minusJ = openAllBlanksHelper(i,j-1);
 		if((minusJ.equals(userBombField)) && (getUserFieldSimple(i,j-1).equals(userHiddenField)))
@@ -200,7 +172,6 @@ public StringBuilder printField(String[][] field){
 					number += getNumberMinesNearFieldHelper(ii,jj);
 			}
 		}
-		
 		return number;
 	}
 	
@@ -216,23 +187,26 @@ public StringBuilder printField(String[][] field){
 		int length = filledField.length -1; //9
 		boolean inBounds = false;
 		if((i>=0)&&(i<=length)&&(j>=0)&&(j<=length))
-			inBounds = true;
-			
+			inBounds = true;	
 		return inBounds;		
 	}
 	
 	public int getRow(){
 		return row;
 	}
+	
 	public int getColumn(){
 		return column;
 	}
+	
 	public int getNumberOfMines(){
 		return numberOfMines;
 	}
+	
 	public String[][] getfilledField(){
 		return filledField;
 	}
+	
 	public String[][] getUserField(){
 		return UserField;
 	}
@@ -244,6 +218,7 @@ public StringBuilder printField(String[][] field){
 	public int getsizeOfxAndfWithBomb(){
 		return sizeOfxAndfWithBomb;
 	}
+	
 	public int getsizeOfxAndfWithoutBomb(){
 		return sizeOfxAndfWithoutBomb;
 	}
@@ -252,7 +227,4 @@ public StringBuilder printField(String[][] field){
 		sizeOfxAndfWithoutBomb = 0;
 		sizeOfxAndfWithBomb = 0;
 	}
-
-
-
 }

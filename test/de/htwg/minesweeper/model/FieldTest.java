@@ -6,8 +6,6 @@ import java.lang.String;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.fasterxml.jackson.databind.ser.ContainerSerializer;
-
 import de.htwg.minesweeper.model.Field;
 
 
@@ -47,7 +45,6 @@ public class FieldTest {
 		assertTrue((field.printField(field.getfilledField()).toString().contains("g")));
 	}
 
-	
 	@Test
 	public void testSetUserField() {
 		field.setUserField(2, 3);
@@ -55,15 +52,4 @@ public class FieldTest {
 		Boolean iBoolean = (i.equals("0") || i.equals("1") || i.equals("2") || i.equals("3") || i.equals("4") || i.equals("5") || i.equals("6") || i.equals("7") || i.equals("8") || i.equals("b"));
 		assertTrue(iBoolean);
 	}
-	/*
-	@Test
-	public void testGetUserField() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetUserFieldSimple() {
-		fail("Not yet implemented");
-	}
-*/
 }
