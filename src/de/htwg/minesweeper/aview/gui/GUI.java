@@ -2,7 +2,7 @@ package de.htwg.minesweeper.aview.gui;
 
 import javax.swing.*;
 
-import de.htwg.minesweeper.model.Field;
+import de.htwg.minesweeper.aview.Iview;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 
 //import de.htwg.
 
-public class GUI extends JFrame implements ActionListener{
+public class GUI extends JFrame implements Iview, ActionListener{
 	private static final long serialVersionUID = 1L;
 	private JButton[][] buttonForTheMineSweeperFields;
 	
@@ -61,6 +61,29 @@ public class GUI extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		
 		//System.out.println(e.getSource());
+		
+	}
+
+	@Override
+	public void start() {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void wonGame(long time) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void lostGame() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void endGame() {
+		// TODO Auto-generated method stub
 		
 	}
 
