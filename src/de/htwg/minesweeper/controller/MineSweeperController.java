@@ -1,6 +1,10 @@
 package de.htwg.minesweeper.controller;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 //import de.htwg.minesweeper.aview.gui.GUI;
 import de.htwg.minesweeper.aview.tui.TUI;
@@ -8,36 +12,29 @@ import de.htwg.minesweeper.model.Field;
 
 public class MineSweeperController{
 	
+	private static final Logger log = LogManager.getLogger();
+	
 	private String answer;
 	private TUI tui;
 	private Field field;
+	
 	private int firstNumber;
 	private int secondNumber;
+	
 	private static final String startgame ="1";
 	private static final String exitgame = "2";
 	
-	private int row = 10, column = 10, numberOfMines = 10;
+	private int row = 10, column = 10, numberOfMines = 2;
 	
 	public MineSweeperController(){
 		this.tui = new TUI();
 		this.field = new Field(row, column,numberOfMines);
 
 	}
-	private String setanswer(){
-		@SuppressWarnings("resource")
-		Scanner ScanIn = new Scanner(System.in);  //Scanner setup
-		answer = ScanIn.nextLine();
-		if(answer.equals(exitgame)){
-			tui.printGoodby();
-			exitGame();
-		}
-		return answer;
-	}
 	
 	public void run(){
 		tui.printConsole();
-		answer = setanswer();
-		answerOptions(answer);
+		answerOptions(tui.scanner());
 	}
 	
 	private void answerOptions(String answer){
@@ -53,58 +50,97 @@ public class MineSweeperController{
 		
 		
 		default:
-			System.out.println("Not a valid answer. ");
-			System.out.println("\"start\" starts the Game.");
-			System.out.println("\"exit\" quits this application.");
-			System.out.println("Please select 1 or 2.");			
-			setanswer();   //creates a cycle allowing user multiple chances to input acceptable answer
+			log.info("Not a valid answer. ");
+			log.info("\"start\" starts the Game.");
+			log.info("\"exit\" quits this application.");
+			log.info("Please select 1 or 2.");			
+			answerOptions(tui.scanner());   //creates a cycle allowing user multiple chances to input acceptable answer
 			answerOptions(answer);
 		}
 	}
 	
 	
 	private void startgame(){
+		long timestart = System.nanoTime();
 		field.setupField();
-		int[] i;
-		boolean isitaNumber = false;
+		int[] AnswerList = {};
+		boolean isItABomb = false;
 		StringBuilder tt = field.printField(field.getfilledField());
 		System.out.println(tt.toString());
 		
-		while(!isitaNumber){
-			StringBuilder t = field.printField(field.getUserField());
-			System.out.println(t.toString());
+		while(!isItABomb){
+
 			tui.printTheAnswer();
-			answer = setanswer();
-			i = stringToNumber(answer);
-			isitaNumber = IsItaBomb(i[0],i[1]);
+			List<String> list = Arrays.asList(tui.scanner().split(","));
+			if(list.size() == 2){
+				AnswerList = stringToNumber(list);
+			}
+			else if(list.size() == 3){
+				setFlag(list);
+			}
+			else{
+				tui.NotCorrectInput();
+			}
+			if(list.size() == 2)
+				isItABomb = IsItaBomb(AnswerList[0],AnswerList[1]);
+			
+			StringBuilder t = field.printField(field.getUserField());
+			log.info(t.toString());
+			
+			if(checkIfGameIsWon()){
+				long timeEnd = System.nanoTime();
+				long elapsedTime = timeEnd-timestart;
+				long time = TimeUnit.SECONDS.convert(elapsedTime, TimeUnit.NANOSECONDS);
+				tui.gameWon(time);
+				return;
+			}
+			
+
+
 		}
 		
-		//Ends the game when a mine is chosen.
-		//Gives the option to start a new game
-		//And input the players decision
-		tui.gameLost();
+
+		if(isItABomb){
+			tui.gameLost();
+		}
+		
 		tui.playAgain();
-		setanswer();
-		answerOptions(answer);
+		answerOptions(tui.scanner());
 	}
 	
-	private int[] stringToNumber(String answer){
+	private boolean checkIfGameIsWon(){
+		boolean gameWon = false;
+		if (field.getsizeOfxAndfWithBomb() == field.getsizeOfxAndfWithoutBomb() ){
+			gameWon = true;
+		}
+		field.resetSizeOFBoMB();
+		return gameWon;
+	}
+	
+	private int[] stringToNumber(List<String> list){
 		int[] i;
 		i = new int[2];
 		try{
-			List<String> list = Arrays.asList(answer.split(","));
-			 firstNumber = Integer.parseInt(list.get(0));
-			 secondNumber = Integer.parseInt(list.get(1));
+			firstNumber = Integer.parseInt(list.get(0));
+			secondNumber = Integer.parseInt(list.get(1));
 		}
 		catch(NumberFormatException er){
-			System.out.println(answer + " is not a Number" + er.getMessage());
+			log.error(answer + " is not a Number" + er.getMessage());
 		}
 		catch (ArrayIndexOutOfBoundsException ah ){
-			System.out.println("You forgot to input the second coordinate!" + ah.getMessage());
+			log.error("You forgot to input the second coordinate!" + ah.getMessage());
 		}
 		i[0] = firstNumber;
 		i[1] = secondNumber;
 		return i;
+	}
+	
+	private void setFlag(List<String> flag){
+		int numberi = Integer.parseInt(flag.get(0));
+		int numberj = Integer.parseInt(flag.get(1));
+		String testField = field.getUserFieldSimple(numberi, numberj);
+		if(testField.equals("x"))
+			field.setFlag(numberi, numberj);
 	}
 	
 	private boolean IsItaBomb(int i, int j){
@@ -117,5 +153,13 @@ public class MineSweeperController{
 	}
 	private void exitGame(){
 		Runtime.getRuntime().halt(0);
+	}
+	
+	public int getRow(){
+		return row;
+	}
+	
+	public void setRow(int i){
+		i= row;
 	}
 }

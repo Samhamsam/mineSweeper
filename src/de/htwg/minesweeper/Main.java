@@ -1,5 +1,6 @@
 package de.htwg.minesweeper;
 
+
 import de.htwg.minesweeper.controller.MineSweeperController;
 
 class Main {
@@ -9,5 +10,8 @@ class Main {
 		MineSweeperController control = new MineSweeperController();
 		control.run();
 		
-		}
+		
+	}
+	
+	
 }

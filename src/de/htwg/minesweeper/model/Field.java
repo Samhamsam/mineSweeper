@@ -15,8 +15,12 @@ public class Field extends Observable {
 	private int numberOfMines;
 	private String bomb = "b";
 	private String freeField = "g";
-	private String userHidenField = "x";
+	private String userHiddenField = "x";
 	private String userBombField = "0";
+	
+	private int sizeOfxAndfWithBomb = 0;
+	private int sizeOfxAndfWithoutBomb = 0;
+	
 	
 
 	
@@ -68,7 +72,7 @@ public class Field extends Observable {
 		
 		Random rand = new Random();
 		try{
-			for(int i = 0; i <= numberOfMines; i++){
+			for(int i = 0; i < numberOfMines; i++){
 				int mrow = rand.nextInt(row);
 				int ncolumn = rand.nextInt(column);
 				fillWithMines[mrow][ncolumn] = bomb;
@@ -88,7 +92,7 @@ public class Field extends Observable {
 		{
 		    for (int j = 0; j < row; j++)
 		    {
-		    	t[i][j] = userHidenField;
+		    	t[i][j] = userHiddenField;
 		    }
 		}
 		return t;
@@ -96,14 +100,18 @@ public class Field extends Observable {
 
 
 
-public StringBuilder printField(String[][] filledField){
+public StringBuilder printField(String[][] field){
 		
 		StringBuilder result = new StringBuilder();
 	
 		for(int j = 0; j < 10; j++){
 			
 			for(int i= 0; i < 10; i++){
-				result.append(filledField[i][j]).append(" ");
+				result.append(field[i][j]).append(" ");
+				if((field[i][j].equals("x") && filledField[i][j].equals("b")) || (field[i][j].equals("f") && filledField[i][j].equals("b")))
+					sizeOfxAndfWithBomb++;
+				if(field[i][j].equals("x") || field[i][j].equals("f"))
+					sizeOfxAndfWithoutBomb++;
 			}
 			result.append("\n");
 		}
@@ -120,93 +128,97 @@ public StringBuilder printField(String[][] filledField){
 		UserField[i][j] = stringnumber;
 	}
 	
+	public void setFlag(int i, int j){
+		UserField[i][j] = "f";
+	}
+	
 
 	
 	private void openAllBlanks(int i, int j){
 		
-		String stringnumber = String.valueOf(getNumberMinesNearField(i, j));
+		String stringnumber = openAllBlanksHelper(i, j);
 		
 		UserField[i][j] = stringnumber;
-		
-		
+
 		if(i < 9){
-			String plusI = String.valueOf(getNumberMinesNearField(i+1,j));
-			if((plusI.equals(userBombField)) && (getUserFieldSimple(i+1,j).equals(userHidenField)))
-				openAllBlanks(i+1,j);
-			else if((stringnumber.equals(userBombField)) && (!plusI.equals(userBombField)) && (getUserFieldSimple(i+1,j).equals("x")))
-				UserField[i+1][j] = String.valueOf(getNumberMinesNearField(i+1, j));
+			openAllBlanksI9(i,j,stringnumber);
 		}
 		if(i > 0){
-			String minusI = String.valueOf(getNumberMinesNearField(i-1,j));
-			if((minusI.equals(userBombField)) && (getUserFieldSimple(i-1, j).equals(userHidenField)))
-				openAllBlanks(i-1,j);
-			else if((stringnumber.equals(userBombField)) && (!minusI.equals(userBombField)) && (getUserFieldSimple(i-1,j).equals("x")))
-				UserField[i-1][j] = String.valueOf(getNumberMinesNearField(i-1, j));
+			openAllBlanksI0(i,j,stringnumber);
 		}
 		if(j < 9){
-			String plusJ = String.valueOf(getNumberMinesNearField(i,j+1));
-			if((plusJ.equals(userBombField)) && (getUserFieldSimple(i,j+1).equals(userHidenField)))
-				openAllBlanks(i,j+1);
-			else if((stringnumber.equals(userBombField)) && (!plusJ.equals(userBombField)) && (getUserFieldSimple(i,j+1).equals("x")))
-				UserField[i][j+1] = String.valueOf(getNumberMinesNearField(i, j+1));
+			openAllBlanksJ9(i,j,stringnumber);
 		}
 		if(j > 0){
-			String minusJ = String.valueOf(getNumberMinesNearField(i,j-1));
-			if((minusJ.equals(userBombField)) && (getUserFieldSimple(i,j-1).equals(userHidenField)))
-				openAllBlanks(i,j-1);
-			else if((stringnumber.equals(userBombField)) && (!minusJ.equals(userBombField)) && (getUserFieldSimple(i,j-1).equals("x")))
-				UserField[i][j-1] = String.valueOf(getNumberMinesNearField(i, j-1));
+			openAllBlanksJ0(i,j,stringnumber);
 		}
 		else
 			return;
 
 	}
-
+	private void openAllBlanksI9(int i, int j, String stringnumber){
+		String plusI = openAllBlanksHelper(i+1,j);
+		if((plusI.equals(userBombField)) && (getUserFieldSimple(i+1,j).equals(userHiddenField)))
+			openAllBlanks(i+1,j);
+		else if((stringnumber.equals(userBombField)) && (!plusI.equals(userBombField)) && (getUserFieldSimple(i+1,j).equals("x")))
+			UserField[i+1][j] = openAllBlanksHelper(i+1, j);
+	}
+	private void openAllBlanksI0(int i, int j, String stringnumber){
+		String minusI = openAllBlanksHelper(i-1,j);
+		if((minusI.equals(userBombField)) && (getUserFieldSimple(i-1, j).equals(userHiddenField)))
+			openAllBlanks(i-1,j);
+		else if((stringnumber.equals(userBombField)) && (!minusI.equals(userBombField)) && (getUserFieldSimple(i-1,j).equals("x")))
+			UserField[i-1][j] = openAllBlanksHelper(i-1, j);
+	}
+	private void openAllBlanksJ9(int i, int j, String stringnumber){
+		String plusJ = openAllBlanksHelper(i,j+1);
+		if((plusJ.equals(userBombField)) && (getUserFieldSimple(i,j+1).equals(userHiddenField)))
+			openAllBlanks(i,j+1);
+		else if((stringnumber.equals(userBombField)) && (!plusJ.equals(userBombField)) && (getUserFieldSimple(i,j+1).equals("x")))
+			UserField[i][j+1] = openAllBlanksHelper(i, j+1);
+	}
+	private void openAllBlanksJ0(int i, int j, String stringnumber){
+		String minusJ = openAllBlanksHelper(i,j-1);
+		if((minusJ.equals(userBombField)) && (getUserFieldSimple(i,j-1).equals(userHiddenField)))
+			openAllBlanks(i,j-1);
+		else if((stringnumber.equals(userBombField)) && (!minusJ.equals(userBombField)) && (getUserFieldSimple(i,j-1).equals("x")))
+			UserField[i][j-1] = openAllBlanksHelper(i, j-1);
+	}
+	
+	private String openAllBlanksHelper(int i, int j){
+		return String.valueOf(getNumberMinesNearField(i,j));
+	}
 
 	private int getNumberMinesNearField(int i, int j){
 		int number = 0;
-		if((i>=0) && (i < 9) && (j>=0) && (j < 10)){
-			if(filledField[i+1][j].equals(bomb)){
-				number++;
-			}
-		}
-		if((i>=1) && (i < 10) && (j>=0) && (j < 10)){
-			 if(filledField[i-1][j].equals(bomb)){
-				number++;
-			}
-		}
-		if((i>=0) && (i < 10) && (j>=0) && (j < 9)){
-			 if(filledField[i][j+1].equals(bomb)){
-				number++;
-			}
-		}
-		if((i>=0) && (i < 10) && (j>=1) && (j < 10)){
-			 if(filledField[i][j-1].equals(bomb)){
-				number++;
-			}
-		}
-		if((i>=0) && (i < 9) && (j>=0) && (j < 9)){
-			 if(filledField[i+1][j+1].equals(bomb)){
-				number++;
-			}
-		}
-		if((i>=1) && (i < 10) && (j>=1) && (j < 10)){
-			 if(filledField[i-1][j-1].equals(bomb)){
-				number++;
-			}
-		}
-		if((i>=0) && (i < 9) && (j>=1) && (j < 10)){
-			 if(filledField[i+1][j-1].equals(bomb)){
-				number++;
-			}
-		}
-		if((i>=1) && (i < 10) && (j>=0) && (j < 9)){
-			 if(filledField[i-1][j+1].equals(bomb)){
-				number++;
+		int[] Ii = {i,i-1,i+1};
+		int[] Jj = {j,j-1,j+1};
+		
+		for(int ii: Ii){
+			for(int jj: Jj){
+				if(inBoundsHelper(ii,jj))
+					number += getNumberMinesNearFieldHelper(ii,jj);
 			}
 		}
 		
 		return number;
+	}
+	
+	private int getNumberMinesNearFieldHelper(int ii, int jj){
+		int number = 0;
+		if(filledField[ii][jj].equals(bomb)){
+			number = 1;
+		}
+		return number;
+	}
+	
+	private boolean inBoundsHelper(int i, int j){
+		int length = filledField.length -1; //9
+		boolean inBounds = false;
+		if((i>=0)&&(i<=length)&&(j>=0)&&(j<=length))
+			inBounds = true;
+			
+		return inBounds;		
 	}
 	
 	public int getRow(){
@@ -228,6 +240,19 @@ public StringBuilder printField(String[][] filledField){
 	public String getUserFieldSimple(int i, int j){
 		return UserField[i][j];
 	}
+	
+	public int getsizeOfxAndfWithBomb(){
+		return sizeOfxAndfWithBomb;
+	}
+	public int getsizeOfxAndfWithoutBomb(){
+		return sizeOfxAndfWithoutBomb;
+	}
+	
+	public void resetSizeOFBoMB(){
+		sizeOfxAndfWithoutBomb = 0;
+		sizeOfxAndfWithBomb = 0;
+	}
+
 
 
 }

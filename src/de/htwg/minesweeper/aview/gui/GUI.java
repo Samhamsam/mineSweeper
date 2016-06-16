@@ -36,14 +36,14 @@ public class GUI extends JFrame implements ActionListener{
 	private void buildGameField(JFrame frame){
 		buttonForTheMineSweeperFields = new JButton[10][10];
 		
-		String aa = Field.printField(Field.filledField).toString();
-		String items [] = aa.split(" ");
+		//String aa = Field.printField(Field.filledField).toString(); SORRY
+		//String items [] = aa.split(" "); SORRY
 		
 		
 		//Should insert the field into each button
 		for (int y=0; y < 10; y++){
 			for (int x = 0; x < 10; x++){
-				buttonForTheMineSweeperFields [x][y] = new JButton ("" + items[x+ 10*y]);
+		//		buttonForTheMineSweeperFields [x][y] = new JButton ("" + items[x+ 10*y]); SORRY
 				frame.add(buttonForTheMineSweeperFields[x][y]);
 			}
 		}
