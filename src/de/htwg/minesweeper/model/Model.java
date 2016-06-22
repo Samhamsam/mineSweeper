@@ -6,7 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 
-public class Field extends Observable {
+public class Model extends Observable {
 	
 	private static final Logger log = LogManager.getLogger();
 	
@@ -25,18 +25,16 @@ public class Field extends Observable {
 	private String filledField[][];
 	private String UserField[][];
 	
-	public Field(int i, int j, int k){
+	public Model(int i, int j, int k){
 		this.row=i;
 		this.column = j;
 		this.numberOfMines = k;
 		this.filledField = new String[column][row];
 		this.UserField = new String[column][row];
-	}
-
-	public void setupField(){
 		filledField = insertb(insertg(filledField));
 		UserField = UserField(UserField);
 	}
+
 	
 	private String[][] insertg(String fillWithBlanks[][]){
 		for (int i = 0; i < column; i++)
@@ -67,7 +65,7 @@ public class Field extends Observable {
 		return fillWithMines;
 	}
 	
-	private String[][] UserField(String t[][]){
+	public String[][] UserField(String t[][]){
 		for (int i = 0; i < column; i++)
 		{
 		    for (int j = 0; j < row; j++)
@@ -79,23 +77,27 @@ public class Field extends Observable {
 	}
 
 
-
-	public StringBuilder printField(String[][] field){
-		StringBuilder result = new StringBuilder();
+	public void countIfGameIsWon(){
 		for(int j = 0; j < 10; j++){
 			for(int i= 0; i < 10; i++){
-				result.append(field[i][j]).append(" ");
-				if((field[i][j].equals("x") && filledField[i][j].equals("b")) || (field[i][j].equals("f") && filledField[i][j].equals("b")))
-					sizeOfxAndfWithBomb++;
-				if(field[i][j].equals("x") || field[i][j].equals("f"))
-					sizeOfxAndfWithoutBomb++;
+				if((UserField[i][j].equals("x") && getfilledField()[i][j].equals("b")) || (UserField[i][j].equals("f") && getfilledField()[i][j].equals("b")))
+					setsizeOfxAndfWithBomb(getsizeOfxAndfWithBomb()+1);
+
+				if(UserField[i][j].equals("x") || UserField[i][j].equals("f"))
+					setsizeOfxAndfWithoutBomb(getsizeOfxAndfWithoutBomb() +1);
 			}
-			result.append("\n");
 		}
-		return result;
 	}
+	/*
+	if((field[i][j].equals("x") && ff.getfilledField()[i][j].equals("b")) || (field[i][j].equals("f") && ff.getfilledField()[i][j].equals("b")))
+		ff.setsizeOfxAndfWithBomb(ff.getsizeOfxAndfWithBomb()+1);
+
+	if(field[i][j].equals("x") || field[i][j].equals("f"))
+		ff.setsizeOfxAndfWithoutBomb(ff.getsizeOfxAndfWithoutBomb() +1);
+		*/
 
 	public void setUserField(int i, int j){
+		countIfGameIsWon();
 		String stringnumber = String.valueOf(getNumberMinesNearField(i, j));
 		if(stringnumber.equals(userBombField))
 			openAllBlanks(i, j);
@@ -203,10 +205,18 @@ public class Field extends Observable {
 		return numberOfMines;
 	}
 	
+	/**
+	 * 
+	 * @return the Field with b and g
+	 */
 	public String[][] getfilledField(){
 		return filledField;
 	}
 	
+	/**
+	 * 
+	 * @return the field with x
+	 */
 	public String[][] getUserField(){
 		return UserField;
 	}
@@ -215,8 +225,16 @@ public class Field extends Observable {
 		return UserField[i][j];
 	}
 	
+	public void setsizeOfxAndfWithBomb(int sizeOfXAndWithBomb){
+		this.sizeOfxAndfWithBomb = sizeOfXAndWithBomb;
+	}
+	
 	public int getsizeOfxAndfWithBomb(){
 		return sizeOfxAndfWithBomb;
+	}
+	
+	public void setsizeOfxAndfWithoutBomb(int sizeOfxAndfWithoutBomb) {
+		this.sizeOfxAndfWithoutBomb = sizeOfxAndfWithoutBomb;
 	}
 	
 	public int getsizeOfxAndfWithoutBomb(){

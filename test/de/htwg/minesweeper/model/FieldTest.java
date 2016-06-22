@@ -6,19 +6,19 @@ import java.lang.String;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.htwg.minesweeper.model.Field;
+import de.htwg.minesweeper.model.Model;
 
 
 
 public class FieldTest {
 	
-	Field field;
+	Model field;
 	
 	private int row = 10, column = 10, numberOfMines = 10;
 	
 	@Before
 	public void setUp(){
-		field = new Field(row, column, numberOfMines);
+		field = new Model(row, column, numberOfMines);
 		field.setupField();
 	}
 
@@ -27,7 +27,7 @@ public class FieldTest {
 		int desiredlenghtofRow = 10;
 		int desiredlenghtofColumn = 10;
 		int desiredlenghtofMines = 10;
-		Field fieldTest = new Field(desiredlenghtofRow,desiredlenghtofColumn,desiredlenghtofMines);
+		Model fieldTest = new Model(desiredlenghtofRow,desiredlenghtofColumn,desiredlenghtofMines);
 		assertEquals(fieldTest.getRow(),desiredlenghtofRow);
 		assertEquals(fieldTest.getColumn(),desiredlenghtofColumn);
 		assertEquals(fieldTest.getNumberOfMines(),desiredlenghtofMines);
