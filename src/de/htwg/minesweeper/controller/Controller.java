@@ -24,7 +24,7 @@ public class Controller extends Observable{
 	
 	private long timestart;
 	
-	private int row = 10, column = 10, numberOfMines = 7;
+	private int row = 10, column = 10, numberOfMines = 3;
 	
 	public Controller(){
 		field = new Model(row, column, numberOfMines);
@@ -48,15 +48,15 @@ public class Controller extends Observable{
 		
 		if(list.size() == 2){
 			AnswerList = stringToNumber(list);
+			boolean ItsABomb = IsItaBomb(AnswerList[0],AnswerList[1]);
 			
-			if(IsItaBomb(AnswerList[0],AnswerList[1])){
+			if(ItsABomb){
 				//iview.lostGame();
 				statusText = "Game lost";
 				gameNotlost = false;
 			}
-
 			
-			if(checkIfGameIsWon()){
+			else if(checkIfGameIsWon()){
 				long timeEnd = System.nanoTime();
 				long elapsedTime = timeEnd-timestart;
 				long time = TimeUnit.SECONDS.convert(elapsedTime, TimeUnit.NANOSECONDS);
@@ -81,6 +81,8 @@ public class Controller extends Observable{
 	
 	boolean checkIfGameIsWon(){
 		boolean gameWon = false;
+		System.out.println(field.getsizeOfxAndfWithBomb());
+		System.out.println(field.getsizeOfxAndfWithoutBomb());
 		if (field.getsizeOfxAndfWithBomb() == field.getsizeOfxAndfWithoutBomb() ){
 			gameWon = true;
 		}

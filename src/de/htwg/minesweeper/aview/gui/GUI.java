@@ -63,11 +63,14 @@ public class GUI extends JFrame implements ActionListener,IObserver{
 			for (int x = 0; x < 10; x++){
 				buttonForTheMineSweeperFields [x][y] = new JButton (FieldString[y][x]); 
 				frame.add(buttonForTheMineSweeperFields[x][y]);
+				buttonForTheMineSweeperFields [x][y].addActionListener(this);
+				/*
 				buttonForTheMineSweeperFields[x][y].addMouseListener(new MouseAdapter() {
 		            public void mouseClicked(MouseEvent e) {
-		                System.out.println(e.getSource());
+
 		            }
 		        });
+		        */
 			}
 		}
 	}
@@ -91,7 +94,14 @@ public class GUI extends JFrame implements ActionListener,IObserver{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		//System.out.println(e.getSource());
+		for (int y=0; y < 10; y++){
+			for (int x = 0; x < 10; x++){
+				if(e.getSource().equals(buttonForTheMineSweeperFields[y][x])){
+					controller.startgame(String.valueOf(y)+","+String.valueOf(x));
+				}
+			}
+		}
+
 		
 	}
 
