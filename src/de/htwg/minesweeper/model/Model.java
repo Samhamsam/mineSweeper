@@ -97,11 +97,11 @@ public class Model extends Observable {
 		*/
 
 	public void setUserField(int i, int j){
-		countIfGameIsWon();
 		String stringnumber = String.valueOf(getNumberMinesNearField(i, j));
 		if(stringnumber.equals(userBombField))
 			openAllBlanks(i, j);
 		UserField[i][j] = stringnumber;
+		countIfGameIsWon();
 	}
 	
 	public void setFlag(int i, int j){
@@ -223,6 +223,10 @@ public class Model extends Observable {
 	
 	public String getUserFieldSimple(int i, int j){
 		return UserField[i][j];
+	}
+	
+	public void setUserFieldSimple(int i, int j, String a){
+		UserField[i][j] = a;
 	}
 	
 	public void setsizeOfxAndfWithBomb(int sizeOfXAndWithBomb){

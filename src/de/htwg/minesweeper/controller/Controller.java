@@ -1,6 +1,5 @@
 package de.htwg.minesweeper.controller;
 
-import java.lang.reflect.Field;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -23,7 +22,9 @@ public class Controller extends Observable{
 	private String statusText;
 	private String FeldText[][]; 
 	
-	private int row = 10, column = 10, numberOfMines = 100;
+	private long timestart;
+	
+	private int row = 10, column = 10, numberOfMines = 7;
 	
 	public Controller(){
 		field = new Model(row, column, numberOfMines);
@@ -31,7 +32,7 @@ public class Controller extends Observable{
 
 	
 	public void spielFeld() {
-		FeldText = field.getUserField();
+		setFeldText(field.getUserField());
 	}
 	
 	
@@ -39,7 +40,6 @@ public class Controller extends Observable{
 	public boolean startgame(String answer) {
 		long timestart = System.nanoTime();
 		int[] AnswerList = {};
-		boolean isItABomb = false;
 		boolean gameNotlost = true;
 		
 		statusText = "Type: x,x | x is a number between 0 and 9(column, row):";
@@ -48,23 +48,25 @@ public class Controller extends Observable{
 		
 		if(list.size() == 2){
 			AnswerList = stringToNumber(list);
-			isItABomb = IsItaBomb(AnswerList[0],AnswerList[1]);
-			/*
-			if(checkIfGameIsWon()){
-				long timeEnd = System.nanoTime();
-				long elapsedTime = timeEnd-timestart;
-				long time = TimeUnit.SECONDS.convert(elapsedTime, TimeUnit.NANOSECONDS);
-				statusText = "Game Won";
-				notifyObservers();
-				//iview.wonGame(time);
-				return;
-			}
-			*/
-			if(isItABomb){
+			
+			if(IsItaBomb(AnswerList[0],AnswerList[1])){
 				//iview.lostGame();
 				statusText = "Game lost";
 				gameNotlost = false;
 			}
+
+			
+			if(checkIfGameIsWon()){
+				long timeEnd = System.nanoTime();
+				long elapsedTime = timeEnd-timestart;
+				long time = TimeUnit.SECONDS.convert(elapsedTime, TimeUnit.NANOSECONDS);
+				System.out.println(time);
+				statusText = "Game Won! You have " + String.valueOf(time) + " Points.";
+				
+				notifyObservers();
+			}
+			
+
 		}
 		else if(list.size() == 3){
 			setFlag(list);
@@ -79,8 +81,6 @@ public class Controller extends Observable{
 	
 	boolean checkIfGameIsWon(){
 		boolean gameWon = false;
-		System.out.println(field.getsizeOfxAndfWithBomb());
-		System.out.println(field.getsizeOfxAndfWithoutBomb());
 		if (field.getsizeOfxAndfWithBomb() == field.getsizeOfxAndfWithoutBomb() ){
 			gameWon = true;
 		}
@@ -114,6 +114,7 @@ public class Controller extends Observable{
 	boolean IsItaBomb(int i, int j){
 		String[][] fi = field.getfilledField();
 		if(fi[firstNumber][secondNumber].equals("b")){
+			field.setUserFieldSimple(firstNumber, secondNumber, "b");
 			return true;
 		}
 		field.setUserField(firstNumber,secondNumber);	
@@ -129,9 +130,7 @@ public class Controller extends Observable{
 	{
 		return statusText;
 	}
-	public String[][] getFeldText(){
-		return FeldText;
-	}
+
 	
 	
 	public void exitGame(){
@@ -144,5 +143,13 @@ public class Controller extends Observable{
 	
 	public void setRow(int i){
 		row = i;
+	}
+
+	public String[][] getFeldText(){
+		return field.getUserField();
+	}
+	
+	public void setFeldText(String feldText[][]) {
+		FeldText = feldText;
 	}
 }

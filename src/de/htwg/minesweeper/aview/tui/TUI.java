@@ -16,7 +16,6 @@ public class TUI implements IObserver {
 	
 	
 	private Controller controller;
-	private de.htwg.minesweeper.model.Model ff;
 	
 	
 	public TUI(Controller controller){
@@ -43,8 +42,6 @@ public class TUI implements IObserver {
 			break;
 			
 			case "q":
-				//iview.endGame();
-				//exitGame();
 				continu = false;
 				controller.exitGame();
 			break;
@@ -68,7 +65,7 @@ public class TUI implements IObserver {
 
 	@Override
 	public void update(Event e) {
-		printTui();	
+		printTui();
 	}
 
 	

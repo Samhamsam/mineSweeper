@@ -2,20 +2,44 @@ package de.htwg.minesweeper.aview.gui;
 
 import javax.swing.*;
 
+import de.htwg.minesweeper.controller.Controller;
+import util.observer.Event;
+import util.observer.IObserver;
+
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
 
 //import de.htwg.
 
-public class GUI extends JFrame implements ActionListener{
+public class GUI extends JFrame implements ActionListener,IObserver{
 	private static final long serialVersionUID = 1L;
 	private JButton[][] buttonForTheMineSweeperFields;
+	private Controller controller;
 	
-	public GUI(String buttonStartStatus){
-		//Sets layout in a grid, with 10x10 buttons, with a separtion between buttons at 2 pixels
-		JFrame frame = new JFrame("Minesweeper");
+	JFrame frame;
+	JMenuBar menuBar;
+	JMenu menu, submenu;
+	JMenuItem menuItem1;
+	JMenuItem menuItem2;
+	
+	public GUI(Controller controller){
+		this.controller = controller;
+		controller.addObserver(this);
+		
+		frame = new JFrame("Minesweeper");
+		
+		menuBar = new JMenuBar();
+		menu = new JMenu("Menu");
+		menuBar.add(menu);
+		menuItem1 = new JMenuItem("New Game");
+		menuItem2 = new JMenuItem("Quit");
+		menu.add(menuItem1);
+		menu.add(menuItem2);
+		
+		
+		frame.setJMenuBar(menuBar);
+		
 		frame.setLayout(new GridLayout (10,10,2,2));
 		buildGameField(frame);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -23,26 +47,35 @@ public class GUI extends JFrame implements ActionListener{
 	    frame.pack();
 	    frame.setLocationRelativeTo(null);
 	    frame.setVisible(true);
-		
 	}
+
 	
-	//sample main class, so this class can be run without running the entire game
-	public static void run(){
-		new GUI("");
-		}
-		
 	private void buildGameField(JFrame frame){
 		buttonForTheMineSweeperFields = new JButton[10][10];
 		
-		//String aa = Field.printField(Field.filledField).toString(); SORRY
-		//String items [] = aa.split(" "); SORRY
+		String FieldString[][] = getFeldText();
 		
-		
-		//Should insert the field into each button
+		setStringInButton(frame,FieldString);
+	}
+	
+	private void setStringInButton(JFrame frame, String[][] FieldString){
 		for (int y=0; y < 10; y++){
 			for (int x = 0; x < 10; x++){
-		//		buttonForTheMineSweeperFields [x][y] = new JButton ("" + items[x+ 10*y]); SORRY
+				buttonForTheMineSweeperFields [x][y] = new JButton (FieldString[y][x]); 
 				frame.add(buttonForTheMineSweeperFields[x][y]);
+				buttonForTheMineSweeperFields[x][y].addMouseListener(new MouseAdapter() {
+		            public void mouseClicked(MouseEvent e) {
+		                System.out.println(e.getSource());
+		            }
+		        });
+			}
+		}
+	}
+	
+	private void setStringInButton(String[][] FieldString){
+		for (int y=0; y < 10; y++){
+			for (int x = 0; x < 10; x++){
+				setJButtonText(FieldString[y][x], y, x);
 			}
 		}
 	}
@@ -57,9 +90,18 @@ public class GUI extends JFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
+
 		//System.out.println(e.getSource());
 		
+	}
+
+	@Override
+	public void update(Event e) {
+		setStringInButton(getFeldText());
+	}
+	
+	public String[][] getFeldText(){
+		return controller.getFeldText();
 	}
 
 
