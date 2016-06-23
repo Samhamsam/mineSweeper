@@ -85,7 +85,13 @@ public class TUI implements IObserver {
 		StringBuilder stringBuilder;
 		stringBuilder = printField(controller.getFeldText());
 		log.info(stringBuilder.toString());
-		log.info(controller.getStatusText());
+		if(controller.getStatusText() == 1)
+			log.info("Type: x,x | x is a number between 0 and 9(column, row):");
+		if(controller.getStatusText() == 2)
+			log.info("You Lost!");
+		if(controller.getStatusText() == 3)
+			log.info("You Won!");
+		
 		//printTheAnswer();
 
 	}

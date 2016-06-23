@@ -125,10 +125,20 @@ public class GUI extends JFrame implements ActionListener,IObserver{
 	@Override
 	public void update(Event e) {
 		setStringInButton(getFeldText());
+		if(controller.getStatusText() == 1);
+		
+		if(controller.getStatusText() == 2)
+			messageDialog("You Lost!");
+		if(controller.getStatusText() == 3)
+			messageDialog("You Won!");
 	}
 	
 	public String[][] getFeldText(){
 		return controller.getFeldText();
+	}
+	
+	private void messageDialog(String text){
+		JOptionPane.showMessageDialog(frame, text);
 	}
 
 

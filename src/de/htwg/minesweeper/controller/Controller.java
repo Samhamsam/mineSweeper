@@ -19,7 +19,7 @@ public class Controller extends Observable{
 	private int firstNumber;
 	private int secondNumber;
 	
-	private String statusText;
+	private int statusCode;
 	private String FeldText[][]; 
 	
 	private long timestart;
@@ -42,7 +42,7 @@ public class Controller extends Observable{
 		int[] AnswerList = {};
 		boolean gameNotlost = true;
 		
-		statusText = "Type: x,x | x is a number between 0 and 9(column, row):";
+		statusCode = 1;
 
 		List<String> list = Arrays.asList(answer.split(","));
 		
@@ -52,18 +52,18 @@ public class Controller extends Observable{
 			
 			if(ItsABomb){
 				//iview.lostGame();
-				statusText = "Game lost";
+				statusCode = 2;
 				gameNotlost = false;
 			}
 			
 			else if(checkIfGameIsWon()){
+				/*
 				long timeEnd = System.nanoTime();
 				long elapsedTime = timeEnd-timestart;
 				long time = TimeUnit.SECONDS.convert(elapsedTime, TimeUnit.NANOSECONDS);
 				System.out.println(time);
-				statusText = "Game Won! You have " + String.valueOf(time) + " Points.";
-				
-				notifyObservers();
+				*/
+				statusCode = 3;
 			}
 			
 
@@ -128,9 +128,9 @@ public class Controller extends Observable{
 	
 	
 	
-	public String getStatusText()
+	public int getStatusText()
 	{
-		return statusText;
+		return statusCode;
 	}
 
 	
