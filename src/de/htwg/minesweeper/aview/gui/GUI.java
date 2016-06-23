@@ -79,9 +79,26 @@ public class GUI extends JFrame implements ActionListener,IObserver{
 		for (int y=0; y < 10; y++){
 			for (int x = 0; x < 10; x++){
 				setJButtonText(FieldString[y][x], y, x);
+				if(getJButtonText(y,x).equals("0")){
+					setJButtonColor(y,x,Color.GREEN);
+				}
+				else if(getJButtonText(y,x).equals("x")){
+					setJButtonColor(y,x,Color.GRAY);
+				}
+				else if(getJButtonText(y,x).equals("b")){
+					setJButtonColor(y,x,Color.RED);
+				}
+				else{
+					setJButtonColor(y,x,Color.WHITE);
+				}
 			}
 		}
 	}
+	
+	public void setJButtonColor(int i, int j, Color color){
+		buttonForTheMineSweeperFields[i][j].setBackground(color);;
+	}
+
 	
 	public void setJButtonText(String text, int i, int j){
 		buttonForTheMineSweeperFields[i][j].setText(text);
