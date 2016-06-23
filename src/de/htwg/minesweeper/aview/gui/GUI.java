@@ -36,6 +36,8 @@ public class GUI extends JFrame implements ActionListener,IObserver{
 		menuItem2 = new JMenuItem("Quit");
 		menu.add(menuItem1);
 		menu.add(menuItem2);
+		menuItem1.addActionListener(this);
+		menuItem2.addActionListener(this);
 		
 		
 		frame.setJMenuBar(menuBar);
@@ -96,6 +98,14 @@ public class GUI extends JFrame implements ActionListener,IObserver{
 		}
 	}
 	
+	private void setEnableButtons(String[][] FieldString, boolean status){
+		for (int y=0; y < 10; y++){
+			for (int x = 0; x < 10; x++){
+				buttonForTheMineSweeperFields [x][y].setEnabled(status);
+			}
+		}
+	}
+	
 	public void setJButtonColor(int i, int j, Color color){
 		buttonForTheMineSweeperFields[i][j].setBackground(color);;
 	}
@@ -111,16 +121,27 @@ public class GUI extends JFrame implements ActionListener,IObserver{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
+		if(e.getSource()==menuItem1){
+			controller.newGame();
+			setStringInButton(getFeldText());
+			setEnableButtons(getFeldText(), true);
 
-		for (int y=0; y < 10; y++){
-			for (int x = 0; x < 10; x++){
-				if(e.getSource().equals(buttonForTheMineSweeperFields[y][x])){
-					controller.startgame(String.valueOf(y)+","+String.valueOf(x));
+		}
+		else if(e.getSource()==menuItem2){
+			System.exit(0);
+		}
+		else {
+			for (int y=0; y < 10; y++){
+				for (int x = 0; x < 10; x++){
+					if(e.getSource().equals(buttonForTheMineSweeperFields[y][x])){
+						controller.startgame(String.valueOf(y)+","+String.valueOf(x));
+					}
+	
 				}
 			}
-		}
 
-		
+		}
 	}
 
 	@Override
@@ -128,8 +149,11 @@ public class GUI extends JFrame implements ActionListener,IObserver{
 		setStringInButton(getFeldText());
 		if(controller.getStatusText() == 1);
 		
-		if(controller.getStatusText() == 2)
+		if(controller.getStatusText() == 2){
 			messageDialog("You Lost!");
+			setEnableButtons(getFeldText(), false);
+		}
+
 		if(controller.getStatusText() == 3)
 			messageDialog("You Won! "+controller.getTimeWon()+" Points!");
 	}

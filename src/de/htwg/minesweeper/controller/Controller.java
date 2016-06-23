@@ -71,7 +71,6 @@ public class Controller extends Observable{
 				//iview.lostGame();
 				statusCode = 2;
 				gameNotlost = false;
-				newGame();
 			}
 			
 			else if(checkIfGameIsWon()){
@@ -149,7 +148,6 @@ public class Controller extends Observable{
 
 	private void setStartTime(long time){
 		timestart = time;
-		log.info(time);
 	}
 	
 	public void exitGame(){

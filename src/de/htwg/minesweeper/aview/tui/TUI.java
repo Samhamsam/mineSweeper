@@ -88,7 +88,5 @@ public class TUI implements IObserver {
 		if(controller.getStatusText() == 3){
 			log.info("You Won! "+controller.getTimeWon()+" Points!");
 		}
-		//printTheAnswer();
-
 	}
 }	
