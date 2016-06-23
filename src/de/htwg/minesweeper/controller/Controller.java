@@ -3,8 +3,11 @@ package de.htwg.minesweeper.controller;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
+import javax.management.loading.PrivateClassLoader;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.omg.CORBA.PRIVATE_MEMBER;
 
 import de.htwg.minesweeper.model.FieldTest;
 import de.htwg.minesweeper.model.Model;
@@ -19,15 +22,24 @@ public class Controller extends Observable{
 	private int firstNumber;
 	private int secondNumber;
 	
+	private boolean firstStart = true;
+	
 	private int statusCode;
 	private String FeldText[][]; 
 	
 	private long timestart;
+	private long timeEnd;
+	private long Wontime;
 	
-	private int row = 10, column = 10, numberOfMines = 3;
+	private int row = 10, column = 10, numberOfMines = 4;
 	
 	public Controller(){
 		field = new Model(row, column, numberOfMines);
+	}
+	
+	public void newGame(){
+		field = new Model(row, column, numberOfMines);
+		firstStart = true;
 	}
 
 	
@@ -38,7 +50,12 @@ public class Controller extends Observable{
 	
 	
 	public boolean startgame(String answer) {
-		long timestart = System.nanoTime();
+
+		if(firstStart == true){
+			setStartTime(System.nanoTime());
+		}
+		firstStart = false;
+
 		int[] AnswerList = {};
 		boolean gameNotlost = true;
 		
@@ -54,15 +71,14 @@ public class Controller extends Observable{
 				//iview.lostGame();
 				statusCode = 2;
 				gameNotlost = false;
+				newGame();
 			}
 			
 			else if(checkIfGameIsWon()){
-				/*
-				long timeEnd = System.nanoTime();
-				long elapsedTime = timeEnd-timestart;
-				long time = TimeUnit.SECONDS.convert(elapsedTime, TimeUnit.NANOSECONDS);
-				System.out.println(time);
-				*/
+				timeEnd = System.nanoTime();
+				long elapsedTime = timeEnd - timestart;
+				Wontime = TimeUnit.SECONDS.convert(elapsedTime, TimeUnit.NANOSECONDS);
+
 				statusCode = 3;
 			}
 			
@@ -81,8 +97,6 @@ public class Controller extends Observable{
 	
 	boolean checkIfGameIsWon(){
 		boolean gameWon = false;
-		System.out.println(field.getsizeOfxAndfWithBomb());
-		System.out.println(field.getsizeOfxAndfWithoutBomb());
 		if (field.getsizeOfxAndfWithBomb() == field.getsizeOfxAndfWithoutBomb() ){
 			gameWon = true;
 		}
@@ -133,7 +147,10 @@ public class Controller extends Observable{
 		return statusCode;
 	}
 
-	
+	private void setStartTime(long time){
+		timestart = time;
+		log.info(time);
+	}
 	
 	public void exitGame(){
 		Runtime.getRuntime().halt(0);
@@ -153,5 +170,9 @@ public class Controller extends Observable{
 	
 	public void setFeldText(String feldText[][]) {
 		FeldText = feldText;
+	}
+	
+	public String getTimeWon(){
+		return String.valueOf(Wontime);
 	}
 }

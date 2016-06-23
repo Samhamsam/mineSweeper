@@ -37,10 +37,6 @@ public class TUI implements IObserver {
 	public boolean answerOptions(String answer){
 		boolean continu = true;
 		switch(answer){
-			case "s":
-				controller.startgame(answer);
-			break;
-			
 			case "q":
 				continu = false;
 				controller.exitGame();
@@ -89,9 +85,9 @@ public class TUI implements IObserver {
 			log.info("Type: x,x | x is a number between 0 and 9(column, row):");
 		if(controller.getStatusText() == 2)
 			log.info("You Lost!");
-		if(controller.getStatusText() == 3)
-			log.info("You Won!");
-		
+		if(controller.getStatusText() == 3){
+			log.info("You Won! "+controller.getTimeWon()+" Points!");
+		}
 		//printTheAnswer();
 
 	}

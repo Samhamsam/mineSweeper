@@ -63,6 +63,7 @@ public class GUI extends JFrame implements ActionListener,IObserver{
 			for (int x = 0; x < 10; x++){
 				buttonForTheMineSweeperFields [x][y] = new JButton (FieldString[y][x]); 
 				frame.add(buttonForTheMineSweeperFields[x][y]);
+				buttonForTheMineSweeperFields[x][y].setBackground(Color.GRAY);
 				buttonForTheMineSweeperFields [x][y].addActionListener(this);
 				/*
 				buttonForTheMineSweeperFields[x][y].addMouseListener(new MouseAdapter() {
@@ -130,7 +131,7 @@ public class GUI extends JFrame implements ActionListener,IObserver{
 		if(controller.getStatusText() == 2)
 			messageDialog("You Lost!");
 		if(controller.getStatusText() == 3)
-			messageDialog("You Won!");
+			messageDialog("You Won! "+controller.getTimeWon()+" Points!");
 	}
 	
 	public String[][] getFeldText(){
