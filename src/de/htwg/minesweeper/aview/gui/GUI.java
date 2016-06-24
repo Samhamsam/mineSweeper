@@ -23,6 +23,7 @@ public class GUI extends JFrame implements ActionListener,IObserver{
 	JMenuItem menuItem1;
 	JMenuItem menuItem2;
 	
+	
 	public GUI(Controller controller){
 		this.controller = controller;
 		controller.addObserver(this);
@@ -38,6 +39,7 @@ public class GUI extends JFrame implements ActionListener,IObserver{
 		menu.add(menuItem2);
 		menuItem1.addActionListener(this);
 		menuItem2.addActionListener(this);
+		
 		
 		
 		frame.setJMenuBar(menuBar);

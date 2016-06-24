@@ -9,7 +9,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.omg.CORBA.PRIVATE_MEMBER;
 
-import de.htwg.minesweeper.model.FieldTest;
 import de.htwg.minesweeper.model.Model;
 import util.observer.Observable;
 

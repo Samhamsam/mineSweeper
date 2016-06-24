@@ -17,6 +17,8 @@ public class Model extends Observable {
 	private String bomb = "b";
 	private String freeField = "g";
 	private String userHiddenField = "x";
+
+
 	private String userBombField = "0";
 	
 	private int sizeOfxAndfWithBomb = 0;
@@ -30,9 +32,8 @@ public class Model extends Observable {
 		this.column = j;
 		this.numberOfMines = k;
 		this.filledField = new String[column][row];
-		this.UserField = new String[column][row];
 		filledField = insertb(insertg(filledField));
-		UserField = UserField(UserField);
+		UserField = UserField();
 	}
 
 	
@@ -49,23 +50,18 @@ public class Model extends Observable {
 
 	private String[][] insertb(String fillWithMines[][]){
 		Random rand = new Random();
-		try {
-			for(int i = 0; i < numberOfMines; i++) {
-				int mrow = rand.nextInt(row);
-				int ncolumn = rand.nextInt(column);
-				fillWithMines[mrow][ncolumn] = bomb;
-			}
+
+		for(int i = 0; i < numberOfMines; i++) {
+			int mrow = rand.nextInt(row);
+			int ncolumn = rand.nextInt(column);
+			fillWithMines[mrow][ncolumn] = bomb;
 		}
-		catch(IllegalArgumentException er){
-			log.error("Error: ",er.getMessage());
-		}
-		catch(ArrayIndexOutOfBoundsException er){
-			log.error("Error: " +er.getMessage());
-		}
+
 		return fillWithMines;
 	}
 	
-	public String[][] UserField(String t[][]){
+	public String[][] UserField(){
+		String t[][] = new String[column][row];
 		for (int i = 0; i < column; i++)
 		{
 		    for (int j = 0; j < row; j++)
@@ -75,7 +71,6 @@ public class Model extends Observable {
 		}
 		return t;
 	}
-
 
 	public void countIfGameIsWon(){
 		for(int j = 0; j < 10; j++){
@@ -88,13 +83,6 @@ public class Model extends Observable {
 			}
 		}
 	}
-	/*
-	if((field[i][j].equals("x") && ff.getfilledField()[i][j].equals("b")) || (field[i][j].equals("f") && ff.getfilledField()[i][j].equals("b")))
-		ff.setsizeOfxAndfWithBomb(ff.getsizeOfxAndfWithBomb()+1);
-
-	if(field[i][j].equals("x") || field[i][j].equals("f"))
-		ff.setsizeOfxAndfWithoutBomb(ff.getsizeOfxAndfWithoutBomb() +1);
-		*/
 
 	public void setUserField(int i, int j){
 		String stringnumber = String.valueOf(getNumberMinesNearField(i, j));
@@ -108,7 +96,7 @@ public class Model extends Observable {
 		UserField[i][j] = "f";
 	}
 	
-	private void openAllBlanks(int i, int j){
+	void openAllBlanks(int i, int j){
 		String stringnumber = openAllBlanksHelper(i, j);
 		UserField[i][j] = stringnumber;
 		if(i < 9){
@@ -127,7 +115,7 @@ public class Model extends Observable {
 			return;
 	}
 	
-	private void openAllBlanksI9(int i, int j, String stringnumber){
+	void openAllBlanksI9(int i, int j, String stringnumber){
 		String plusI = openAllBlanksHelper(i+1,j);
 		if((plusI.equals(userBombField)) && (getUserFieldSimple(i+1,j).equals(userHiddenField)))
 			openAllBlanks(i+1,j);
@@ -135,7 +123,7 @@ public class Model extends Observable {
 			UserField[i+1][j] = openAllBlanksHelper(i+1, j);
 	}
 	
-	private void openAllBlanksI0(int i, int j, String stringnumber){
+	void openAllBlanksI0(int i, int j, String stringnumber){
 		String minusI = openAllBlanksHelper(i-1,j);
 		if((minusI.equals(userBombField)) && (getUserFieldSimple(i-1, j).equals(userHiddenField)))
 			openAllBlanks(i-1,j);
@@ -143,7 +131,7 @@ public class Model extends Observable {
 			UserField[i-1][j] = openAllBlanksHelper(i-1, j);
 	}
 	
-	private void openAllBlanksJ9(int i, int j, String stringnumber){
+	void openAllBlanksJ9(int i, int j, String stringnumber){
 		String plusJ = openAllBlanksHelper(i,j+1);
 		if((plusJ.equals(userBombField)) && (getUserFieldSimple(i,j+1).equals(userHiddenField)))
 			openAllBlanks(i,j+1);
@@ -151,7 +139,7 @@ public class Model extends Observable {
 			UserField[i][j+1] = openAllBlanksHelper(i, j+1);
 	}
 	
-	private void openAllBlanksJ0(int i, int j, String stringnumber){
+	void openAllBlanksJ0(int i, int j, String stringnumber){
 		String minusJ = openAllBlanksHelper(i,j-1);
 		if((minusJ.equals(userBombField)) && (getUserFieldSimple(i,j-1).equals(userHiddenField)))
 			openAllBlanks(i,j-1);
@@ -248,5 +236,14 @@ public class Model extends Observable {
 	public void resetSizeOFBoMB(){
 		sizeOfxAndfWithoutBomb = 0;
 		sizeOfxAndfWithBomb = 0;
+	}
+	
+	public String getUserHiddenField() {
+		return userHiddenField;
+	}
+
+
+	public void setUserHiddenField(String userHiddenField) {
+		this.userHiddenField = userHiddenField;
 	}
 }
