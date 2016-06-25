@@ -24,7 +24,7 @@ public class TUI implements IObserver {
 	}
 
 
-	public void printTheField(String filledField[][]){
+	public void printTheField(String[][] filledField){
 		for(String[] row: filledField){
 			for(String value: row){
 				log.info("%-20s",value);
@@ -52,16 +52,6 @@ public class TUI implements IObserver {
 		}
 		return continu;
 	}
-	
-
-	
-	public String scanner(InputStream in){
-		@SuppressWarnings("resource")
-		Scanner keyboard = new Scanner(in);
-		String input = keyboard.nextLine();
-	    return input;
-	}
-
 
 	@Override
 	public void update(Event e) {

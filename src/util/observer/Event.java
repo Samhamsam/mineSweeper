@@ -1,3 +1,5 @@
 package util.observer;
 
-public abstract class Event { }
+public abstract class Event {
+	
+}

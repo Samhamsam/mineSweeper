@@ -57,15 +57,15 @@ public class GUI extends JFrame implements ActionListener,IObserver{
 	private void buildGameField(JFrame frame){
 		buttonForTheMineSweeperFields = new JButton[10][10];
 		
-		String FieldString[][] = getFeldText();
+		String[][] fieldString= getFeldText();
 		
-		setStringInButton(frame,FieldString);
+		setStringInButton(frame,fieldString);
 	}
 	
-	private void setStringInButton(JFrame frame, String[][] FieldString){
+	private void setStringInButton(JFrame frame, String[][] fieldString){
 		for (int y=0; y < 10; y++){
 			for (int x = 0; x < 10; x++){
-				buttonForTheMineSweeperFields [x][y] = new JButton (FieldString[y][x]); 
+				buttonForTheMineSweeperFields [x][y] = new JButton (fieldString[y][x]); 
 				frame.add(buttonForTheMineSweeperFields[x][y]);
 				buttonForTheMineSweeperFields[x][y].setBackground(Color.GRAY);
 				buttonForTheMineSweeperFields [x][y].addActionListener(this);
@@ -73,10 +73,10 @@ public class GUI extends JFrame implements ActionListener,IObserver{
 		}
 	}
 	
-	private void setStringInButton(String[][] FieldString){
+	private void setStringInButton(String[][] fieldString){
 		for (int y=0; y < 10; y++){
 			for (int x = 0; x < 10; x++){
-				setJButtonText(FieldString[y][x], y, x);
+				setJButtonText(fieldString[y][x], y, x);
 				if("0".equals(getJButtonText(y,x))){
 					setJButtonColor(y,x,Color.GREEN);
 				}
@@ -102,7 +102,7 @@ public class GUI extends JFrame implements ActionListener,IObserver{
 	}
 	
 	public void setJButtonColor(int i, int j, Color color){
-		buttonForTheMineSweeperFields[i][j].setBackground(color);;
+		buttonForTheMineSweeperFields[i][j].setBackground(color);
 	}
 
 	
@@ -130,7 +130,7 @@ public class GUI extends JFrame implements ActionListener,IObserver{
 				for (int x = 0; x < 10; x++){
 					Object buttonText = e.getSource();
 					if(buttonText.equals(buttonForTheMineSweeperFields[y][x])){
-						controller.startgame(String.valueOf(y)+","+String.valueOf(x));
+						controller.startgame(y+","+x);
 					}
 	
 				}
@@ -142,7 +142,6 @@ public class GUI extends JFrame implements ActionListener,IObserver{
 	@Override
 	public void update(Event e) {
 		setStringInButton(getFeldText());
-		if(controller.getStatusCode() == 1);
 		
 		if(controller.getStatusCode() == 2){
 			messageDialog("You Lost!");
