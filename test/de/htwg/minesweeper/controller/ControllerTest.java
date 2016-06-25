@@ -19,11 +19,6 @@ public class ControllerTest {
 	}
 
 	@Test
-	public void testController() {
-		fail("Not yet implemented");
-	}
-
-	@Test
 	public void testNewGame() {
 		control.newGame();
 		assertTrue(control.isFirstStart());
@@ -48,26 +43,6 @@ public class ControllerTest {
 	}
 
 	@Test
-	public void testCheckIfGameIsWon() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testStringToNumber() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetFlag() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testIsItaBomb() {
-		fail("Not yet implemented");
-	}
-
-	@Test
 	public void testGetStatusText() {
 		control.setStatusCode(0);
 		assertEquals(0,control.getStatusCode());
@@ -81,34 +56,9 @@ public class ControllerTest {
 	}
 
 	@Test
-	public void testExitGame() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetRow() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetFeldText() {
-		fail("Not yet implemented");
-	}
-
-	@Test
 	public void testSetStatusCode() {
 		control.setStatusCode(0);
 		assertEquals(0,control.getStatusCode());
-	}
-
-	@Test
-	public void testSetFeldText() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetTimeWon() {
-		fail("Not yet implemented");
 	}
 
 }
