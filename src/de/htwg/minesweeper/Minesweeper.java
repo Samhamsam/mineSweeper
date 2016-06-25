@@ -11,6 +11,9 @@ public class Minesweeper {
 	private static TUI tui;
 	private static Controller controller;
 	
+	public Minesweeper(){
+		
+	}
 	
 	public static void main(final String[] args)
 	{
@@ -20,7 +23,6 @@ public class Minesweeper {
 		new GUI(controller);
 		tui.printTui();
 		controller.setStatusCode(0);
-		//controller.create();
 		
 		boolean continu = true;
 		scanner = new Scanner(System.in);

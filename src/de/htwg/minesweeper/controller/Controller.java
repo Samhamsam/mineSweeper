@@ -75,7 +75,6 @@ public class Controller extends Observable{
 			boolean ItsABomb = IsItaBomb(AnswerList[0],AnswerList[1]);
 			
 			if(ItsABomb){
-				//iview.lostGame();
 				setStatusCode(2);
 				gameNotlost = false;
 			}
@@ -124,13 +123,13 @@ public class Controller extends Observable{
 		int numberi = Integer.parseInt(flag.get(0));
 		int numberj = Integer.parseInt(flag.get(1));
 		String testField = field.getUserFieldSimple(numberi, numberj);
-		if(testField.equals("x"))
+		if("x".equals(testField))
 			field.setFlag(numberi, numberj);
 	}
 	
 	boolean IsItaBomb(int i, int j){
 		String[][] fi = field.getfilledField();
-		if(fi[firstNumber][secondNumber].equals("b")){
+		if("b".equals(fi[firstNumber][secondNumber])){
 			field.setUserFieldSimple(firstNumber, secondNumber, "b");
 			return true;
 		}

@@ -69,13 +69,6 @@ public class GUI extends JFrame implements ActionListener,IObserver{
 				frame.add(buttonForTheMineSweeperFields[x][y]);
 				buttonForTheMineSweeperFields[x][y].setBackground(Color.GRAY);
 				buttonForTheMineSweeperFields [x][y].addActionListener(this);
-				/*
-				buttonForTheMineSweeperFields[x][y].addMouseListener(new MouseAdapter() {
-		            public void mouseClicked(MouseEvent e) {
-
-		            }
-		        });
-		        */
 			}
 		}
 	}
@@ -84,13 +77,13 @@ public class GUI extends JFrame implements ActionListener,IObserver{
 		for (int y=0; y < 10; y++){
 			for (int x = 0; x < 10; x++){
 				setJButtonText(FieldString[y][x], y, x);
-				if(getJButtonText(y,x).equals("0")){
+				if("0".equals(getJButtonText(y,x))){
 					setJButtonColor(y,x,Color.GREEN);
 				}
-				else if(getJButtonText(y,x).equals("x")){
+				else if("x".equals(getJButtonText(y,x))){
 					setJButtonColor(y,x,Color.GRAY);
 				}
-				else if(getJButtonText(y,x).equals("b") || getJButtonText(y,x).equals("f")){
+				else if("b".equals(getJButtonText(y,x)) || "f".equals(getJButtonText(y,x))){
 					setJButtonColor(y,x,Color.RED);
 				}
 				else{
@@ -100,7 +93,7 @@ public class GUI extends JFrame implements ActionListener,IObserver{
 		}
 	}
 	
-	private void setEnableButtons(String[][] FieldString, boolean status){
+	private void setEnableButtons(boolean status){
 		for (int y=0; y < 10; y++){
 			for (int x = 0; x < 10; x++){
 				buttonForTheMineSweeperFields [x][y].setEnabled(status);
@@ -126,7 +119,7 @@ public class GUI extends JFrame implements ActionListener,IObserver{
 		
 		if(e.getSource()==newGame){
 			controller.newGame();
-			setEnableButtons(getFeldText(), true);
+			setEnableButtons(true);
 
 		}
 		else if(e.getSource()==quit){
@@ -135,7 +128,8 @@ public class GUI extends JFrame implements ActionListener,IObserver{
 		else {
 			for (int y=0; y < 10; y++){
 				for (int x = 0; x < 10; x++){
-					if(e.getSource().equals(buttonForTheMineSweeperFields[y][x])){
+					Object buttonText = e.getSource();
+					if(buttonText.equals(buttonForTheMineSweeperFields[y][x])){
 						controller.startgame(String.valueOf(y)+","+String.valueOf(x));
 					}
 	
@@ -152,7 +146,7 @@ public class GUI extends JFrame implements ActionListener,IObserver{
 		
 		if(controller.getStatusCode() == 2){
 			messageDialog("You Lost!");
-			setEnableButtons(getFeldText(), false);
+			setEnableButtons(false);
 		}
 
 		if(controller.getStatusCode() == 3)

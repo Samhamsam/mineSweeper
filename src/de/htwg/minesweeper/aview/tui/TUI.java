@@ -10,7 +10,7 @@ import java.io.InputStream;
 import java.util.Scanner;
 
 
-//Using Command Prompt, allows user to start new game or to quit
+
 public class TUI implements IObserver {
 	private static final Logger log = LogManager.getLogger();
 	
