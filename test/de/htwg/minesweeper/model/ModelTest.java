@@ -2,7 +2,6 @@ package de.htwg.minesweeper.model;
 
 import static org.junit.Assert.*;
 
-import org.apache.logging.log4j.core.pattern.RootThrowablePatternConverter;
 import org.junit.Before;
 import org.junit.Test;
 

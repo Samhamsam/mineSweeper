@@ -2,13 +2,7 @@ package de.htwg.minesweeper.model;
 import java.util.Observable;
 import java.util.Random;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-
 public class Model extends Observable {
-	
-	private static final Logger log = LogManager.getLogger();
 	
 	private int row;;
 	private int column;

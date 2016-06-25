@@ -1,8 +1,6 @@
 package de.htwg.minesweeper;
 import java.util.Scanner;
 
-import javax.swing.plaf.TreeUI;
-
 import de.htwg.minesweeper.aview.gui.GUI;
 import de.htwg.minesweeper.aview.tui.TUI;
 import de.htwg.minesweeper.controller.Controller;
@@ -11,7 +9,6 @@ public class Minesweeper {
 	
 	private static Scanner scanner;
 	private static TUI tui;
-	private static GUI gui;
 	private static Controller controller;
 	
 	
@@ -20,8 +17,9 @@ public class Minesweeper {
 		controller = new Controller();
 		
 		tui = new TUI(controller);
-		gui = new GUI(controller);
-		
+		new GUI(controller);
+		tui.printTui();
+		controller.setStatusCode(0);
 		//controller.create();
 		
 		boolean continu = true;

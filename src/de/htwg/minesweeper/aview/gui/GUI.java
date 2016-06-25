@@ -20,8 +20,8 @@ public class GUI extends JFrame implements ActionListener,IObserver{
 	JFrame frame;
 	JMenuBar menuBar;
 	JMenu menu, submenu;
-	JMenuItem menuItem1;
-	JMenuItem menuItem2;
+	JMenuItem newGame;
+	JMenuItem quit;
 	
 	
 	public GUI(Controller controller){
@@ -33,12 +33,12 @@ public class GUI extends JFrame implements ActionListener,IObserver{
 		menuBar = new JMenuBar();
 		menu = new JMenu("Menu");
 		menuBar.add(menu);
-		menuItem1 = new JMenuItem("New Game");
-		menuItem2 = new JMenuItem("Quit");
-		menu.add(menuItem1);
-		menu.add(menuItem2);
-		menuItem1.addActionListener(this);
-		menuItem2.addActionListener(this);
+		newGame = new JMenuItem("New Game");
+		quit = new JMenuItem("Quit");
+		menu.add(newGame);
+		menu.add(quit);
+		newGame.addActionListener(this);
+		quit.addActionListener(this);
 		
 		
 		
@@ -124,14 +124,13 @@ public class GUI extends JFrame implements ActionListener,IObserver{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		if(e.getSource()==menuItem1){
+		if(e.getSource()==newGame){
 			controller.newGame();
-			setStringInButton(getFeldText());
 			setEnableButtons(getFeldText(), true);
 
 		}
-		else if(e.getSource()==menuItem2){
-			System.exit(0);
+		else if(e.getSource()==quit){
+			controller.exitGame();
 		}
 		else {
 			for (int y=0; y < 10; y++){

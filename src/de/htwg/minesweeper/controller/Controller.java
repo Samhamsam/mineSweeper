@@ -3,18 +3,14 @@ package de.htwg.minesweeper.controller;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
-import javax.management.loading.PrivateClassLoader;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.omg.CORBA.PRIVATE_MEMBER;
-
 import de.htwg.minesweeper.model.Model;
 import util.observer.Observable;
 
 public class Controller extends Observable{
+
+	private static final String FIRST_FIELD_POSITION = "";
 	
-	private static final Logger log = LogManager.getLogger();
+	private String fieldPosition = FIRST_FIELD_POSITION;
 
 	Model field;
 	
@@ -24,21 +20,27 @@ public class Controller extends Observable{
 	private boolean firstStart = true;
 	
 	private int statusCode;
-	private String FeldText[][]; 
+	private String[][] feldText; 
 	
 	private long timestart;
 	private long timeEnd;
-	private long Wontime;
+	private long wonTime;
 	
-	private int row = 10, column = 10, numberOfMines = 4;
+	private static final int ROW = 10; 
+	private static final int COLUMN = 10; 
+	private static final int NUMBER_MINES = 4;
 	
 	public Controller(){
-		field = new Model(row, column, numberOfMines);
+		feldText = new String[10][10];
+		field = new Model(ROW, COLUMN, NUMBER_MINES);
 	}
 	
 	public void newGame(){
-		field = new Model(row, column, numberOfMines);
+		field = new Model(ROW, COLUMN, NUMBER_MINES);
 		firstStart = true;
+		fieldPosition = "n";
+		statusCode = 1;
+		notifyObservers();
 	}
 
 	
@@ -54,7 +56,7 @@ public class Controller extends Observable{
 			setStartTime(System.nanoTime());
 		}
 		firstStart = false;
-
+		fieldPosition = answer;
 		int[] AnswerList = {};
 		boolean gameNotlost = true;
 		
@@ -75,7 +77,7 @@ public class Controller extends Observable{
 			else if(checkIfGameIsWon()){
 				timeEnd = System.nanoTime();
 				long elapsedTime = timeEnd - timestart;
-				Wontime = TimeUnit.SECONDS.convert(elapsedTime, TimeUnit.NANOSECONDS);
+				wonTime = TimeUnit.SECONDS.convert(elapsedTime, TimeUnit.NANOSECONDS);
 
 				statusCode = 3;
 			}
@@ -105,13 +107,8 @@ public class Controller extends Observable{
 	int[] stringToNumber(List<String> list){
 		int[] i;
 		i = new int[2];
-		try{
-			firstNumber = Integer.parseInt(list.get(0));
-			secondNumber = Integer.parseInt(list.get(1));
-		}
-		catch (ArrayIndexOutOfBoundsException ah ){
-			log.error("You forgot to input the second coordinate!" + ah.getMessage());
-		}
+		firstNumber = Integer.parseInt(list.get(0));
+		secondNumber = Integer.parseInt(list.get(1));
 		i[0] = firstNumber;
 		i[1] = secondNumber;
 		return i;
@@ -135,14 +132,21 @@ public class Controller extends Observable{
 		return false;
 	}
 	
-	
-	
-	
-	
-	
 	public int getStatusText()
 	{
 		return statusCode;
+	}
+	
+	private String getFieldPositionPrivat(){
+		return fieldPosition;
+	}
+	
+	public String getFieldPosition(){
+		String text = "";
+		if(!getFieldPositionPrivat().isEmpty()){
+			text = "You typed: " + getFieldPositionPrivat();
+		}
+		return text;
 	}
 
 	private void setStartTime(long time){
@@ -154,22 +158,22 @@ public class Controller extends Observable{
 	}
 	
 	public int getRow(){
-		return row;
-	}
-	
-	public void setRow(int i){
-		row = i;
+		return ROW;
 	}
 
 	public String[][] getFeldText(){
 		return field.getUserField();
 	}
 	
+	public void setStatusCode(int code){
+		this.statusCode = code;
+	}
+	
 	public void setFeldText(String feldText[][]) {
-		FeldText = feldText;
+		this.feldText = feldText;
 	}
 	
 	public String getTimeWon(){
-		return String.valueOf(Wontime);
+		return String.valueOf(wonTime);
 	}
 }
