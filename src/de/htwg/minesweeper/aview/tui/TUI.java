@@ -89,11 +89,11 @@ public class TUI implements IObserver {
 		
 		log.info(stringBuilder.toString());
 		
-		if(controller.getStatusText() == 1 || controller.getStatusText() == 0)
+		if(controller.getStatusCode() == 1 || controller.getStatusCode() == 0)
 			log.info("Type: x,x | x is a number between 0 and 9(column, row):\n");
-		if(controller.getStatusText() == 2)
+		if(controller.getStatusCode() == 2)
 			log.info("You Lost! New Game? Type: n");
-		if(controller.getStatusText() == 3){
+		if(controller.getStatusCode() == 3){
 			log.info("You Won! " + controller.getTimeWon() + " Points!");
 			log.info("New Game? Type: n");
 		}

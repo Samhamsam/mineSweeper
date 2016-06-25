@@ -90,7 +90,7 @@ public class GUI extends JFrame implements ActionListener,IObserver{
 				else if(getJButtonText(y,x).equals("x")){
 					setJButtonColor(y,x,Color.GRAY);
 				}
-				else if(getJButtonText(y,x).equals("b")){
+				else if(getJButtonText(y,x).equals("b") || getJButtonText(y,x).equals("f")){
 					setJButtonColor(y,x,Color.RED);
 				}
 				else{
@@ -148,14 +148,14 @@ public class GUI extends JFrame implements ActionListener,IObserver{
 	@Override
 	public void update(Event e) {
 		setStringInButton(getFeldText());
-		if(controller.getStatusText() == 1);
+		if(controller.getStatusCode() == 1);
 		
-		if(controller.getStatusText() == 2){
+		if(controller.getStatusCode() == 2){
 			messageDialog("You Lost!");
 			setEnableButtons(getFeldText(), false);
 		}
 
-		if(controller.getStatusText() == 3)
+		if(controller.getStatusCode() == 3)
 			messageDialog("You Won! "+controller.getTimeWon()+" Points!");
 	}
 	

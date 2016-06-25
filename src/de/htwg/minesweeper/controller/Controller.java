@@ -19,6 +19,8 @@ public class Controller extends Observable{
 	
 	private boolean firstStart = true;
 	
+
+
 	private int statusCode;
 	private String[][] feldText; 
 	
@@ -28,18 +30,20 @@ public class Controller extends Observable{
 	
 	private static final int ROW = 10; 
 	private static final int COLUMN = 10; 
-	private static final int NUMBER_MINES = 4;
-	
+	private int numberOfMines = 20;
+
+
+
 	public Controller(){
 		feldText = new String[10][10];
-		field = new Model(ROW, COLUMN, NUMBER_MINES);
+		field = new Model(ROW, COLUMN, numberOfMines);
 	}
 	
 	public void newGame(){
-		field = new Model(ROW, COLUMN, NUMBER_MINES);
+		field = new Model(ROW, COLUMN, numberOfMines);
 		firstStart = true;
 		fieldPosition = "n";
-		statusCode = 1;
+		setStatusCode(1);
 		notifyObservers();
 	}
 
@@ -51,16 +55,18 @@ public class Controller extends Observable{
 	
 	
 	public boolean startgame(String answer) {
-
+		int[] AnswerList = {};
+		
 		if(firstStart == true){
 			setStartTime(System.nanoTime());
 		}
 		firstStart = false;
+		
 		fieldPosition = answer;
-		int[] AnswerList = {};
+		
 		boolean gameNotlost = true;
 		
-		statusCode = 1;
+		setStatusCode(1);
 
 		List<String> list = Arrays.asList(answer.split(","));
 		
@@ -70,7 +76,7 @@ public class Controller extends Observable{
 			
 			if(ItsABomb){
 				//iview.lostGame();
-				statusCode = 2;
+				setStatusCode(2);
 				gameNotlost = false;
 			}
 			
@@ -79,7 +85,7 @@ public class Controller extends Observable{
 				long elapsedTime = timeEnd - timestart;
 				wonTime = TimeUnit.SECONDS.convert(elapsedTime, TimeUnit.NANOSECONDS);
 
-				statusCode = 3;
+				setStatusCode(3);
 			}
 			
 
@@ -132,9 +138,13 @@ public class Controller extends Observable{
 		return false;
 	}
 	
-	public int getStatusText()
+	public int getStatusCode()
 	{
 		return statusCode;
+	}
+	
+	public void setStatusCode(int code){
+		this.statusCode = code;
 	}
 	
 	private String getFieldPositionPrivat(){
@@ -156,17 +166,9 @@ public class Controller extends Observable{
 	public void exitGame(){
 		Runtime.getRuntime().halt(0);
 	}
-	
-	public int getRow(){
-		return ROW;
-	}
 
 	public String[][] getFeldText(){
 		return field.getUserField();
-	}
-	
-	public void setStatusCode(int code){
-		this.statusCode = code;
 	}
 	
 	public void setFeldText(String feldText[][]) {
@@ -176,4 +178,21 @@ public class Controller extends Observable{
 	public String getTimeWon(){
 		return String.valueOf(wonTime);
 	}
+	
+	public boolean isFirstStart() {
+		return firstStart;
+	}
+
+	public void setFirstStart(boolean firstStart) {
+		this.firstStart = firstStart;
+	}
+	
+	public int getNumberOfMines() {
+		return numberOfMines;
+	}
+
+	public void setNumberOfMines(int numberOfMines) {
+		this.numberOfMines = numberOfMines;
+	}
+	
 }
