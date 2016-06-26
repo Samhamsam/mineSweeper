@@ -89,6 +89,9 @@ public class Model extends Observable {
 	public void setFlag(int i, int j){
 		UserField[i][j] = "f";
 	}
+	public void resetFlag(int i, int j){
+		UserField[i][j] = "x";
+	}
 	
 	void openAllBlanks(int i, int j){
 		String stringnumber = openAllBlanksHelper(i, j);

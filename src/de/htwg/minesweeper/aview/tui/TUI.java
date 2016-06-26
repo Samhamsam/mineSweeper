@@ -2,7 +2,7 @@ package de.htwg.minesweeper.aview.tui;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import de.htwg.minesweeper.controller.Controller;
+import de.htwg.minesweeper.controller.IController;
 import util.observer.Event;
 import util.observer.IObserver;
 
@@ -15,10 +15,10 @@ public class TUI implements IObserver {
 	private static final Logger log = LogManager.getLogger();
 	
 	
-	private Controller controller;
+	private IController controller;
 	
 	
-	public TUI(Controller controller){
+	public TUI(IController controller){
 		this.controller = controller;
 		controller.addObserver(this);
 	}
@@ -48,7 +48,7 @@ public class TUI implements IObserver {
 			
 			
 			default:
-				continu = controller.startgame(answer);
+				continu = controller.startGame(answer);
 		}
 		return continu;
 	}

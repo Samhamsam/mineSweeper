@@ -3,13 +3,19 @@ package de.htwg.minesweeper.controller;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
+import de.htwg.minesweeper.controller.impl.Context;
+import de.htwg.minesweeper.controller.impl.StatusPressedBomb;
+import de.htwg.minesweeper.controller.impl.StatusRunning;
+import de.htwg.minesweeper.controller.impl.StatusWonGame;
 import de.htwg.minesweeper.model.Model;
 import util.observer.Observable;
 
-public class Controller extends Observable{
+public class Controller extends Observable implements IController{
 
 	private static final String FIRST_FIELD_POSITION = "";
 	
+	Context context;
+
 	private String fieldPosition = FIRST_FIELD_POSITION;
 
 	Model field;
@@ -19,8 +25,7 @@ public class Controller extends Observable{
 	
 	private boolean firstStart = true;
 	
-
-
+	
 	private int statusCode;
 	private String[][] feldText; 
 	
@@ -35,12 +40,15 @@ public class Controller extends Observable{
 
 
 	public Controller(){
-		feldText = new String[10][10];
+		feldText = new String[ROW][COLUMN];
 		field = new Model(ROW, COLUMN, numberOfMines);
+		context = new Context();
 	}
 	
+	@Override
 	public void newGame(){
-		field = new Model(ROW, COLUMN, numberOfMines);
+		//field = new Model(ROW, COLUMN, numberOfMines);
+		field = context.newGame();
 		firstStart = true;
 		fieldPosition = "n";
 		setStatusCode(1);
@@ -53,8 +61,11 @@ public class Controller extends Observable{
 	}
 	
 	
-	
-	public boolean startgame(String answer) {
+	@Override
+	public boolean startGame(String answer) {
+		
+		setStatusRunning();
+		
 		int[] AnswerList = {};
 		
 		if(firstStart == true){
@@ -68,6 +79,7 @@ public class Controller extends Observable{
 		
 		setStatusCode(1);
 
+
 		List<String> list = Arrays.asList(answer.split(","));
 		
 		if(list.size() == 2){
@@ -77,13 +89,14 @@ public class Controller extends Observable{
 			if(ItsABomb){
 				setStatusCode(2);
 				gameNotlost = false;
+				setStatusPressedBomb();
 			}
 			
 			else if(checkIfGameIsWon()){
 				timeEnd = System.nanoTime();
 				long elapsedTime = timeEnd - timestart;
 				wonTime = TimeUnit.SECONDS.convert(elapsedTime, TimeUnit.NANOSECONDS);
-
+				setStatusWonGame();
 				setStatusCode(3);
 			}
 			
@@ -123,8 +136,12 @@ public class Controller extends Observable{
 		int numberi = Integer.parseInt(flag.get(0));
 		int numberj = Integer.parseInt(flag.get(1));
 		String testField = field.getUserFieldSimple(numberi, numberj);
-		if("x".equals(testField))
+		if("x".equals(testField)){
 			field.setFlag(numberi, numberj);
+		}
+		else if("f".equals(testField)){
+			field.resetFlag(numberi,numberj);
+		}
 	}
 	
 	boolean IsItaBomb(int i, int j){
@@ -137,6 +154,7 @@ public class Controller extends Observable{
 		return false;
 	}
 	
+	@Override
 	public int getStatusCode()
 	{
 		return statusCode;
@@ -150,6 +168,7 @@ public class Controller extends Observable{
 		return fieldPosition;
 	}
 	
+	@Override
 	public String getFieldPosition(){
 		String text = "";
 		if(!getFieldPositionPrivat().isEmpty()){
@@ -162,10 +181,12 @@ public class Controller extends Observable{
 		timestart = time;
 	}
 	
+	@Override
 	public void exitGame(){
 		Runtime.getRuntime().halt(0);
 	}
-
+	
+	@Override
 	public String[][] getFeldText(){
 		return field.getUserField();
 	}
@@ -174,6 +195,7 @@ public class Controller extends Observable{
 		this.feldText = feldText;
 	}
 	
+	@Override
 	public String getTimeWon(){
 		return String.valueOf(wonTime);
 	}
@@ -193,5 +215,17 @@ public class Controller extends Observable{
 	public void setNumberOfMines(int numberOfMines) {
 		this.numberOfMines = numberOfMines;
 	}
+	private void setStatusRunning(){
+		context.setStatus(new StatusRunning());
+	}
+	@SuppressWarnings("unused")
+	private void setStatusPressedBomb(){
+		context.setStatus(new StatusWonGame());
+	}
+	@SuppressWarnings("unused")
+	private void setStatusWonGame(){
+		context.setStatus(new StatusPressedBomb());
+	}
+
 	
 }

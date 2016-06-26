@@ -29,14 +29,14 @@ public class ControllerTest {
 		
 		control.setNumberOfMines(0);
 		control.newGame();
-		control.startgame("0,0");
-		assertEquals(true, control.startgame("0,0"));
+		control.startGame("0,0");
+		assertEquals(true, control.startGame("0,0"));
 		control.setNumberOfMines(1000);
 		control.newGame();
-		control.startgame("0,0");
-		assertEquals(false, control.startgame("0,0"));
+		control.startGame("0,0");
+		assertEquals(false, control.startGame("0,0"));
 		control.newGame();
-		control.startgame("0,0,f");
+		control.startGame("0,0,f");
 		String field[][] = control.getFeldText();
 		
 		assertEquals("f", field[0][0]);
@@ -51,7 +51,7 @@ public class ControllerTest {
 	@Test
 	public void testGetFieldPosition() {
 		assertTrue(control.getFieldPosition().isEmpty());
-		control.startgame("2,2");
+		control.startGame("2,2");
 		assertFalse(control.getFieldPosition().isEmpty());
 	}
 

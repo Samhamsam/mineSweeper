@@ -3,6 +3,7 @@ package de.htwg.minesweeper.aview.gui;
 import javax.swing.*;
 
 import de.htwg.minesweeper.controller.Controller;
+import de.htwg.minesweeper.controller.IController;
 import util.observer.Event;
 import util.observer.IObserver;
 
@@ -12,10 +13,10 @@ import java.awt.event.*;
 
 //import de.htwg.
 
-public class GUI extends JFrame implements ActionListener,IObserver{
+public class GUI extends JFrame implements ActionListener,IObserver,MouseListener{
 	private static final long serialVersionUID = 1L;
 	private JButton[][] buttonForTheMineSweeperFields;
-	private Controller controller;
+	private IController controller;
 	
 	JFrame frame;
 	JMenuBar menuBar;
@@ -24,7 +25,7 @@ public class GUI extends JFrame implements ActionListener,IObserver{
 	JMenuItem quit;
 	
 	
-	public GUI(Controller controller){
+	public GUI(IController controller){
 		this.controller = controller;
 		controller.addObserver(this);
 		
@@ -68,7 +69,7 @@ public class GUI extends JFrame implements ActionListener,IObserver{
 				buttonForTheMineSweeperFields [x][y] = new JButton (fieldString[y][x]); 
 				frame.add(buttonForTheMineSweeperFields[x][y]);
 				buttonForTheMineSweeperFields[x][y].setBackground(Color.GRAY);
-				buttonForTheMineSweeperFields [x][y].addActionListener(this);
+				buttonForTheMineSweeperFields [x][y].addMouseListener(this);
 			}
 		}
 	}
@@ -116,7 +117,7 @@ public class GUI extends JFrame implements ActionListener,IObserver{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
+
 		if(e.getSource()==newGame){
 			controller.newGame();
 			setEnableButtons(true);
@@ -125,18 +126,7 @@ public class GUI extends JFrame implements ActionListener,IObserver{
 		else if(e.getSource()==quit){
 			controller.exitGame();
 		}
-		else {
-			for (int y=0; y < 10; y++){
-				for (int x = 0; x < 10; x++){
-					Object buttonText = e.getSource();
-					if(buttonText.equals(buttonForTheMineSweeperFields[y][x])){
-						controller.startgame(y+","+x);
-					}
-	
-				}
-			}
 
-		}
 	}
 
 	@Override
@@ -158,6 +148,75 @@ public class GUI extends JFrame implements ActionListener,IObserver{
 	
 	private void messageDialog(String text){
 		JOptionPane.showMessageDialog(frame, text);
+	}
+
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		
+		if(e.getButton() == MouseEvent.BUTTON1){
+			System.out.println("asf");
+		
+			if(e.getSource()==newGame){
+				controller.newGame();
+				setEnableButtons(true);
+	
+			}
+			else if(e.getSource()==quit){
+				controller.exitGame();
+			}
+			else {
+				for (int y=0; y < 10; y++){
+					for (int x = 0; x < 10; x++){
+						Object buttonText = e.getSource();
+						if(buttonText.equals(buttonForTheMineSweeperFields[y][x])){
+							controller.startGame(y+","+x);
+						}
+		
+					}
+				}
+	
+			}
+		}
+		else if(e.getButton() == MouseEvent.BUTTON3){
+			for (int y=0; y < 10; y++){
+				for (int x = 0; x < 10; x++){
+					Object buttonText = e.getSource();
+					if(buttonText.equals(buttonForTheMineSweeperFields[y][x])){
+						controller.startGame(y+","+x+",f");
+					}
+	
+				}
+			}
+		}
+	}
+
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 
