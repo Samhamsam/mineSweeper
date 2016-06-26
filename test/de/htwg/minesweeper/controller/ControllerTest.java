@@ -17,7 +17,7 @@ public class ControllerTest {
 		control = new Controller();
 		model = new Model(10, 10, 20);
 	}
-
+	/*
 	@Test
 	public void testNewGame() {
 		control.newGame();
@@ -41,7 +41,7 @@ public class ControllerTest {
 		
 		assertEquals("f", field[0][0]);
 	}
-
+*/
 	@Test
 	public void testGetStatusText() {
 		control.setStatusCode(0);
