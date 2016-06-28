@@ -1,7 +1,10 @@
 package de.htwg.minesweeper.controller;
 
 import java.util.*;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
+
+import com.sun.org.apache.xpath.internal.operations.NotEquals;
 
 import de.htwg.minesweeper.controller.impl.Context;
 import de.htwg.minesweeper.controller.impl.StatusPressedBomb;
@@ -23,6 +26,8 @@ public class Controller extends Observable implements IController{
 	private int firstNumber;
 	private int secondNumber;
 	
+	
+	
 	private boolean firstStart = true;
 	
 	
@@ -35,15 +40,15 @@ public class Controller extends Observable implements IController{
 	
 	private static final int ROW = 15; 
 	private static final int COLUMN = 15;
-	private static final int NUMBER_OF_MINES = 15;
+	private static final int NUMBER_OF_MINES = 4;
 	
 	private int row = ROW;
 
 	private int column = COLUMN;
 
 	private int numberOfMines = NUMBER_OF_MINES;
-
-
+	private ICommand command;
+	private String helpText;
 
 	public Controller(){
 		feldText = new String[row][column];
@@ -51,10 +56,33 @@ public class Controller extends Observable implements IController{
 		context = new Context();
 	}
 	
+	public void setCommand(ICommand command){
+		this.command = command;
+	}
+	
+	public void hilfe() {
+				
+		Help help = new Help();
+		ICommand commandHelp = new HelpCommand(help);
+		setCommand(commandHelp);
+		command.execute();
+		setHelpText(help.getHelpText());
+	}
+	
+	public void setHelpText(String helpText) {
+		this.helpText = helpText;
+	}
+	public String getHelpText() {
+		return helpText;
+	}
+	
+	
+	
+	
 	@Override
 	public void newGame(){
-		//field = new Model(ROW, COLUMN, numberOfMines);
-		field = context.newGame();
+		field = new Model(row, column, numberOfMines);
+		//field = context.newGame();
 		firstStart = true;
 		fieldPosition = "n";
 		setStatusCode(1);
@@ -102,8 +130,6 @@ public class Controller extends Observable implements IController{
 			else{
 				setStatusRunning();
 			}
-			
-
 		}
 		else if(list.size() == 3){
 			setFlag(list);
@@ -185,7 +211,10 @@ public class Controller extends Observable implements IController{
 	
 	@Override
 	public void exitGame(){
-		Runtime.getRuntime().halt(0);
+		Quit quit = new Quit();
+		ICommand commandQuit = new QuitCommand(quit);
+		setCommand(commandQuit);
+		command.execute();
 	}
 	
 	@Override
@@ -240,6 +269,4 @@ public class Controller extends Observable implements IController{
 	public void setColumn(int column) {
 		this.column = column;
 	}
-
-	
 }
