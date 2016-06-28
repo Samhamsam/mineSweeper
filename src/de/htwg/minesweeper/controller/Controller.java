@@ -33,15 +33,21 @@ public class Controller extends Observable implements IController{
 	private long timeEnd;
 	private long wonTime;
 	
-	private static final int ROW = 10; 
-	private static final int COLUMN = 10; 
-	private int numberOfMines = 20;
+	private static final int ROW = 15; 
+	private static final int COLUMN = 15;
+	private static final int NUMBER_OF_MINES = 15;
+	
+	private int row = ROW;
+
+	private int column = COLUMN;
+
+	private int numberOfMines = NUMBER_OF_MINES;
 
 
 
 	public Controller(){
-		feldText = new String[ROW][COLUMN];
-		field = new Model(ROW, COLUMN, numberOfMines);
+		feldText = new String[row][column];
+		field = new Model(row, column, numberOfMines);
 		context = new Context();
 	}
 	
@@ -62,10 +68,7 @@ public class Controller extends Observable implements IController{
 	
 	
 	@Override
-	public boolean startGame(String answer) {
-		
-		setStatusRunning();
-		
+	public void startGame(String answer) {
 		int[] AnswerList = {};
 		
 		if(firstStart == true){
@@ -75,29 +78,29 @@ public class Controller extends Observable implements IController{
 		
 		fieldPosition = answer;
 		
-		boolean gameNotlost = true;
-		
 		setStatusCode(1);
-
+		
 
 		List<String> list = Arrays.asList(answer.split(","));
 		
 		if(list.size() == 2){
+			
 			AnswerList = stringToNumber(list);
 			boolean ItsABomb = IsItaBomb(AnswerList[0],AnswerList[1]);
 			
 			if(ItsABomb){
 				setStatusCode(2);
-				gameNotlost = false;
 				setStatusPressedBomb();
-			}
-			
+			}			
 			else if(checkIfGameIsWon()){
 				timeEnd = System.nanoTime();
 				long elapsedTime = timeEnd - timestart;
 				wonTime = TimeUnit.SECONDS.convert(elapsedTime, TimeUnit.NANOSECONDS);
 				setStatusWonGame();
 				setStatusCode(3);
+			}
+			else{
+				setStatusRunning();
 			}
 			
 
@@ -110,7 +113,6 @@ public class Controller extends Observable implements IController{
 		
 		notifyObservers();
 
-		return gameNotlost;
 	}
 	
 	boolean checkIfGameIsWon(){
@@ -218,13 +220,25 @@ public class Controller extends Observable implements IController{
 	private void setStatusRunning(){
 		context.setStatus(new StatusRunning());
 	}
-	@SuppressWarnings("unused")
 	private void setStatusPressedBomb(){
 		context.setStatus(new StatusWonGame());
 	}
-	@SuppressWarnings("unused")
 	private void setStatusWonGame(){
 		context.setStatus(new StatusPressedBomb());
+	}
+	public int getRow() {
+		return row;
+	}
+
+	public void setRow(int row) {
+		this.row = row;
+	}
+	public int getColumn() {
+		return column;
+	}
+
+	public void setColumn(int column) {
+		this.column = column;
 	}
 
 	

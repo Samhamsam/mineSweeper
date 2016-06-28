@@ -48,7 +48,7 @@ public class TUI implements IObserver {
 			
 			
 			default:
-				continu = controller.startGame(answer);
+				controller.startGame(answer);
 		}
 		return continu;
 	}
@@ -61,8 +61,8 @@ public class TUI implements IObserver {
 	
 	public StringBuilder printField(String[][] field){
 		StringBuilder result = new StringBuilder();
-		for(int j = 0; j < 10; j++){
-			for(int i= 0; i < 10; i++){
+		for(int j = 0; j < controller.getRow(); j++){
+			for(int i= 0; i < controller.getColumn(); i++){
 				result.append(field[i][j]).append(" ");
 			}
 			result.append("\n");

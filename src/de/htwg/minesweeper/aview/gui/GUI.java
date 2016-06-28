@@ -45,10 +45,10 @@ public class GUI extends JFrame implements ActionListener,IObserver,MouseListene
 		
 		frame.setJMenuBar(menuBar);
 		
-		frame.setLayout(new GridLayout (10,10,2,2));
+		frame.setLayout(new GridLayout (controller.getRow(),controller.getColumn()));
 		buildGameField(frame);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    frame.setPreferredSize(new Dimension(550, 500));
+	    frame.setPreferredSize(new Dimension(700, 700));
 	    frame.pack();
 	    frame.setLocationRelativeTo(null);
 	    frame.setVisible(true);
@@ -56,7 +56,7 @@ public class GUI extends JFrame implements ActionListener,IObserver,MouseListene
 
 	
 	private void buildGameField(JFrame frame){
-		buttonForTheMineSweeperFields = new JButton[10][10];
+		buttonForTheMineSweeperFields = new JButton[controller.getRow()][controller.getColumn()];
 		
 		String[][] fieldString= getFeldText();
 		
@@ -64,8 +64,8 @@ public class GUI extends JFrame implements ActionListener,IObserver,MouseListene
 	}
 	
 	private void setStringInButton(JFrame frame, String[][] fieldString){
-		for (int y=0; y < 10; y++){
-			for (int x = 0; x < 10; x++){
+		for (int y=0; y < controller.getColumn(); y++){
+			for (int x = 0; x < controller.getColumn(); x++){
 				buttonForTheMineSweeperFields [x][y] = new JButton (fieldString[y][x]); 
 				frame.add(buttonForTheMineSweeperFields[x][y]);
 				buttonForTheMineSweeperFields[x][y].setBackground(Color.GRAY);
@@ -75,8 +75,8 @@ public class GUI extends JFrame implements ActionListener,IObserver,MouseListene
 	}
 	
 	private void setStringInButton(String[][] fieldString){
-		for (int y=0; y < 10; y++){
-			for (int x = 0; x < 10; x++){
+		for (int y=0; y < controller.getColumn(); y++){
+			for (int x = 0; x < controller.getRow(); x++){
 				setJButtonText(fieldString[y][x], y, x);
 				if("0".equals(getJButtonText(y,x))){
 					setJButtonColor(y,x,Color.GREEN);
@@ -95,8 +95,8 @@ public class GUI extends JFrame implements ActionListener,IObserver,MouseListene
 	}
 	
 	private void setEnableButtons(boolean status){
-		for (int y=0; y < 10; y++){
-			for (int x = 0; x < 10; x++){
+		for (int y=0; y < controller.getColumn(); y++){
+			for (int x = 0; x < controller.getRow(); x++){
 				buttonForTheMineSweeperFields [x][y].setEnabled(status);
 			}
 		}
@@ -162,7 +162,6 @@ public class GUI extends JFrame implements ActionListener,IObserver,MouseListene
 	public void mousePressed(MouseEvent e) {
 		
 		if(e.getButton() == MouseEvent.BUTTON1){
-			System.out.println("asf");
 		
 			if(e.getSource()==newGame){
 				controller.newGame();
@@ -173,8 +172,8 @@ public class GUI extends JFrame implements ActionListener,IObserver,MouseListene
 				controller.exitGame();
 			}
 			else {
-				for (int y=0; y < 10; y++){
-					for (int x = 0; x < 10; x++){
+				for (int y=0; y < controller.getColumn(); y++){
+					for (int x = 0; x < controller.getRow(); x++){
 						Object buttonText = e.getSource();
 						if(buttonText.equals(buttonForTheMineSweeperFields[y][x])){
 							controller.startGame(y+","+x);
@@ -186,8 +185,8 @@ public class GUI extends JFrame implements ActionListener,IObserver,MouseListene
 			}
 		}
 		else if(e.getButton() == MouseEvent.BUTTON3){
-			for (int y=0; y < 10; y++){
-				for (int x = 0; x < 10; x++){
+			for (int y=0; y < controller.getColumn(); y++){
+				for (int x = 0; x < controller.getRow(); x++){
 					Object buttonText = e.getSource();
 					if(buttonText.equals(buttonForTheMineSweeperFields[y][x])){
 						controller.startGame(y+","+x+",f");

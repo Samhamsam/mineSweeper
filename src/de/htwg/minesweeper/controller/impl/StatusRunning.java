@@ -10,5 +10,4 @@ public class StatusRunning implements IStatus {
 		return field;
 	}
 
-
 }

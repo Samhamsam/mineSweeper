@@ -8,7 +8,7 @@ public interface IController extends IObservable{
 	
 	public void newGame();
 	
-	public boolean startGame(String answer);
+	public void startGame(String answer);
 	
 	public String[][] getFeldText();
 	
@@ -17,4 +17,8 @@ public interface IController extends IObservable{
 	public int getStatusCode();
 	
 	public String getTimeWon();
+	
+	public int getRow();
+	
+	public int getColumn();
 }

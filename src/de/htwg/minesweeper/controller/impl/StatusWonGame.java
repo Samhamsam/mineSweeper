@@ -10,4 +10,5 @@ public class StatusWonGame implements IStatus{
 		return field;
 	}
 
+
 }

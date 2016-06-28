@@ -67,8 +67,8 @@ public class Model extends Observable {
 	}
 
 	public void countIfGameIsWon(){
-		for(int j = 0; j < 10; j++){
-			for(int i= 0; i < 10; i++){
+		for(int j = 0; j < column; j++){
+			for(int i= 0; i < row; i++){
 				if((UserField[i][j].equals("x") && getfilledField()[i][j].equals("b")) || (UserField[i][j].equals("f") && getfilledField()[i][j].equals("b")))
 					setsizeOfxAndfWithBomb(getsizeOfxAndfWithBomb()+1);
 
@@ -96,13 +96,13 @@ public class Model extends Observable {
 	void openAllBlanks(int i, int j){
 		String stringnumber = openAllBlanksHelper(i, j);
 		UserField[i][j] = stringnumber;
-		if(i < 9){
+		if(i < row-1){
 			openAllBlanksI9(i,j,stringnumber);
 		}
 		if(i > 0){
 			openAllBlanksI0(i,j,stringnumber);
 		}
-		if(j < 9){
+		if(j < column-1){
 			openAllBlanksJ9(i,j,stringnumber);
 		}
 		if(j > 0){

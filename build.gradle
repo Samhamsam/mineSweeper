@@ -35,7 +35,7 @@ sourceSets {
 }
 
 jar {
-    manifest.attributes "Main-Class":"de.htwg.minesweeper.Main"
+    manifest.attributes "Main-Class":"de.htwg.minesweeper"
 }
   
 sonarqube {

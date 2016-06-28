@@ -23,5 +23,6 @@ public class Context{
 	public Model newGame(){
 		return status.newGame(field);
 	}
+	
 
 }
