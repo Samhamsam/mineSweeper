@@ -5,7 +5,7 @@ import de.htwg.minesweeper.aview.gui.GUI;
 import de.htwg.minesweeper.aview.tui.TUI;
 import de.htwg.minesweeper.controller.Controller;
 
-public class Minesweeper {
+public final class Minesweeper {
 	
 	private static Scanner scanner;
 	private static TUI tui;
