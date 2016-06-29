@@ -4,7 +4,6 @@ public class StatusRunning implements IStatus {
 
 	@Override
 	public boolean endStatus() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
