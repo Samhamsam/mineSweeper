@@ -73,7 +73,9 @@ public class TUI implements IObserver {
 
 	public void printTui() {
 		int status = controller.getStatusCode();
+		
 		StringBuilder stringBuilder;
+		
 		stringBuilder = printField(controller.getFeldText());
 		
 		if(!"".equals(controller.getFieldPosition()))
@@ -89,10 +91,9 @@ public class TUI implements IObserver {
 			LOGGER.info("You Won! " + controller.getTimeWon() + " Points!");
 		}
 		if(status == 4){
-			
 			LOGGER.info(controller.getHelpText());
 		}
-		if(status == 2 || status == 3 || status == 4)
+		if(status == 2 || status == 3)
 			LOGGER.info("New Game? Type: n");
 	}
 }	

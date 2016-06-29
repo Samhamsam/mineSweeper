@@ -26,4 +26,6 @@ public interface IController extends IObservable{
 	
 	public String getHelpText();
 	public void setHelpText(String helpText);
+
+	public void setStatusCode(int i);
 }

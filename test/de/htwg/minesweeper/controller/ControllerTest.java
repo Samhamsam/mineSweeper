@@ -5,10 +5,14 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+
 import de.htwg.minesweeper.model.Model;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.google.inject.Module;
 public class ControllerTest {
-	
+
 	Controller control;
 	Model model;
 	
