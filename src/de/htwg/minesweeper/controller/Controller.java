@@ -96,9 +96,9 @@ public class Controller extends Observable implements IController{
 	public void startGame(String answer) {
 		if(context.endStatus()){
 			
-			int[] AnswerList = {};
+			int[] answerList = {};
 			
-			if(firstStart == true){
+			if(firstStart){
 				setStartTime(System.nanoTime());
 			}
 			firstStart = false;
@@ -112,10 +112,10 @@ public class Controller extends Observable implements IController{
 			
 			if(list.size() == 2){
 				
-				AnswerList = stringToNumber(list);
-				boolean ItsABomb = IsItaBomb(AnswerList[0],AnswerList[1]);
+				answerList = stringToNumber(list);
+				boolean itsABomb = isItaBomb(answerList[0],answerList[1]);
 				
-				if(ItsABomb){
+				if(itsABomb){
 					setStatusCode(2);
 					setStatusPressedBomb();
 				}			
@@ -171,7 +171,7 @@ public class Controller extends Observable implements IController{
 		}
 	}
 	
-	boolean IsItaBomb(int i, int j){
+	boolean isItaBomb(int i, int j){
 		String[][] fi = field.getfilledField();
 		if("b".equals(fi[i][j])){
 			field.setUserFieldSimple(i, j, "b");
