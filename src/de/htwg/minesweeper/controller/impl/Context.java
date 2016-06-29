@@ -4,6 +4,10 @@ public class Context{
 	
 	private IStatus status;
 	
+	public Context(){
+		status = null;
+	}
+	
 	public void setStatus(IStatus status){
 		this.status = status;
 	}
@@ -11,11 +15,7 @@ public class Context{
 	public IStatus getStatusRunning(){
 		return status;
 	}
-	
-	public Context(){
-		status = null;
-	}
-	
+
 	public boolean endStatus() {
 		return status.endStatus();
 	}

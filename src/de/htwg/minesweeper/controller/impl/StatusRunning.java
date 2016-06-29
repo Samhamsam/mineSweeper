@@ -1,7 +1,5 @@
 package de.htwg.minesweeper.controller.impl;
 
-import de.htwg.minesweeper.model.Model;
-
 public class StatusRunning implements IStatus {
 
 	@Override
