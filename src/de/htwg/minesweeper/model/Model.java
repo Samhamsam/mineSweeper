@@ -139,6 +139,14 @@ public class Model extends Observable {
 	}
 	
 	private void openAllBlanksDifficultHelper(int i, int j, String stringNumber){
+
+		openAllBlanksDifficultHelper1(i,j,stringNumber);
+		openAllBlanksDifficultHelper2(i,j,stringNumber);
+
+
+	}
+	
+	private void openAllBlanksDifficultHelper1(int i, int j, String stringNumber){
 		if(i > 0 && j > 0){
 			openAllBlanksI0J0(i,j,stringNumber);
 		}
@@ -146,7 +154,8 @@ public class Model extends Observable {
 		if(i < row-1 && j < column-1){
 			openAllBlanksI9J9(i,j,stringNumber);
 		}
-		
+	}
+	private void openAllBlanksDifficultHelper2(int i, int j, String stringNumber){
 		if((i >= 0) && (j < column) && (i < row-1) && (j > 0)){
 			openAllBlanksI9J0(i,j,stringNumber);
 		}
@@ -154,7 +163,6 @@ public class Model extends Observable {
 		if((i > 0) && (j < column-1) && (i < row) && (j >= 0)){
 			openAllBlanksI0J9(i,j,stringNumber);
 		}
-
 	}
 	
 	void openAllBlanksI9(int i, int j, String stringNumber){
