@@ -28,7 +28,9 @@ public class Controller extends Observable implements IController{
 	
 	
 	private int statusCode;
-	private String[][] feldText; 
+	
+	@SuppressWarnings("unused")
+	private String[][] feldText;
 	
 	private long timestart;
 	private long timeEnd;
