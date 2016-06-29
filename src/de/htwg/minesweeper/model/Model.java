@@ -109,121 +109,107 @@ public class Model extends Observable {
 	
 	void openAllBlanks(int i, int j){
 		
-		String stringnumber = openAllBlanksHelper(i, j);
+		String stringNumber = openAllBlanksHelper(i, j);
 		
- 		UserField[i][j] = stringnumber;
+ 		UserField[i][j] = stringNumber;
 
+ 		openAllBlanksSimpleHelper(i,j,stringNumber);
+		
+ 		openAllBlanksDifficultHelper(i,j,stringNumber);
+
+		
+	}
+	
+	private void openAllBlanksSimpleHelper(int i, int j, String stringNumber){
 		if(i < row-1){
-			openAllBlanksI9(i,j,stringnumber);
+			openAllBlanksI9(i,j,stringNumber);
 		}
 		
 		if(i > 0){
-			openAllBlanksI0(i,j,stringnumber);
+			openAllBlanksI0(i,j,stringNumber);
 		}
 		
 		if(j < column-1){
-			openAllBlanksJ9(i,j,stringnumber);
+			openAllBlanksJ9(i,j,stringNumber);
 		}
 		
 		if(j > 0){
-			openAllBlanksJ0(i,j,stringnumber);
+			openAllBlanksJ0(i,j,stringNumber);
 		}
-		
+	}
+	
+	private void openAllBlanksDifficultHelper(int i, int j, String stringNumber){
 		if(i > 0 && j > 0){
-			openAllBlanksI0J0(i,j,stringnumber);
+			openAllBlanksI0J0(i,j,stringNumber);
 		}
 		
 		if(i < row-1 && j < column-1){
-			openAllBlanksI9J9(i,j,stringnumber);
+			openAllBlanksI9J9(i,j,stringNumber);
 		}
 		
 		if((i >= 0) && (j < column) && (i < row-1) && (j > 0)){
-			openAllBlanksI9J0(i,j,stringnumber);
+			openAllBlanksI9J0(i,j,stringNumber);
 		}
 		
 		if((i > 0) && (j < column-1) && (i < row) && (j >= 0)){
-			openAllBlanksI0J9(i,j,stringnumber);
+			openAllBlanksI0J9(i,j,stringNumber);
 		}
 
-
-		else
-			return;
 	}
 	
-	void openAllBlanksI9(int i, int j, String stringnumber){
-		i = i+1;
-		String numberBombs = openAllBlanksHelper(i,j);
-		if((numberBombs.equals(freeUserField)) && (getUserFieldSimple(i,j).equals(userHiddenField)))
-			openAllBlanks(i,j);
-		else if((stringnumber.equals(freeUserField)) && (!numberBombs.equals(freeUserField)) && (getUserFieldSimple(i,j).equals(userHiddenField)))
-			UserField[i][j] = openAllBlanksHelper(i, j);
+	void openAllBlanksI9(int i, int j, String stringNumber){
+		int variableX = i+1;
+		int variableY = j;
+		openAllBlanksChecker(variableX, variableY, stringNumber);
 	}
 	
-	void openAllBlanksI0(int i, int j, String stringnumber){
-		i = i-1;
-		String numberBombs = openAllBlanksHelper(i,j);
-		if((numberBombs.equals(freeUserField)) && (getUserFieldSimple(i, j).equals(userHiddenField)))
-			openAllBlanks(i,j);
-		else if((stringnumber.equals(freeUserField)) && (!numberBombs.equals(freeUserField)) && (getUserFieldSimple(i,j).equals(userHiddenField)))
-			UserField[i][j] = openAllBlanksHelper(i, j);
+	void openAllBlanksI0(int i, int j, String stringNumber){
+		int variableX = i-1;
+		int variableY = j;
+		openAllBlanksChecker(variableX, variableY, stringNumber);
+		
 	}
 	
-	void openAllBlanksJ9(int i, int j, String stringnumber){
-		j = j+1;
-		String numberBombs = openAllBlanksHelper(i,j);
-		if((numberBombs.equals(freeUserField)) && (getUserFieldSimple(i,j).equals(userHiddenField)))
-			openAllBlanks(i,j);
-		else if((stringnumber.equals(freeUserField)) && (!numberBombs.equals(freeUserField)) && (getUserFieldSimple(i,j).equals(userHiddenField)))
-			UserField[i][j] = openAllBlanksHelper(i, j);
+	void openAllBlanksJ9(int i, int j, String stringNumber){
+		int variableX = i;
+		int variableY = j+1;
+		openAllBlanksChecker(variableX, variableY, stringNumber);
 	}
 	
-	void openAllBlanksJ0(int i, int j, String stringnumber){
-		j = j-1;
-		String numberBombs = openAllBlanksHelper(i,j);
-		if((numberBombs.equals(freeUserField)) && (getUserFieldSimple(i,j).equals(userHiddenField)))
-			openAllBlanks(i,j);
-		else if((stringnumber.equals(freeUserField)) && (!numberBombs.equals(freeUserField)) && (getUserFieldSimple(i,j).equals(userHiddenField)))
-			UserField[i][j] = openAllBlanksHelper(i, j);
+	void openAllBlanksJ0(int i, int j, String stringNumber){
+		int variableX = i;
+		int variableY = j-1;
+		openAllBlanksChecker(variableX, variableY, stringNumber);
 	}
 	
-	void openAllBlanksI0J0(int i, int j, String stringnumber){
-		i = i-1;
-		j = j-1;
-		String numberBombs = openAllBlanksHelper(i,j);
-		if((numberBombs.equals(freeUserField)) && (getUserFieldSimple(i,j).equals(userHiddenField)))
-			openAllBlanks(i,j);
-		else if((stringnumber.equals(freeUserField)) && (!numberBombs.equals(freeUserField)) && (getUserFieldSimple(i,j).equals(userHiddenField)))
-			UserField[i][j] = openAllBlanksHelper(i, j);
+	void openAllBlanksI0J0(int i, int j, String stringNumber){
+		int variableX = i-1;
+		int variableY = j-1;
+		openAllBlanksChecker(variableX, variableY, stringNumber);
 	}
-	void openAllBlanksI9J9(int i, int j, String stringnumber){
-		i = i+1;
-		j = j+1;
-		String numberBombs = openAllBlanksHelper(i,j);
-		if((numberBombs.equals(freeUserField)) && (getUserFieldSimple(i,j).equals(userHiddenField)))
-			openAllBlanks(i,j);
-		else if((stringnumber.equals(freeUserField)) && (!numberBombs.equals(freeUserField)) && (getUserFieldSimple(i,j).equals(userHiddenField)))
-			UserField[i][j] = openAllBlanksHelper(i, j);
+	void openAllBlanksI9J9(int i, int j, String stringNumber){
+		int variableX = i+1;
+		int variableY = j+1;
+		openAllBlanksChecker(variableX, variableY, stringNumber);
 	}
-	void openAllBlanksI9J0(int i, int j, String stringnumber){
-		i = i+1;
-		j = j-1;
-		String numberBombs = openAllBlanksHelper(i,j);
-		if((numberBombs.equals(freeUserField)) && (getUserFieldSimple(i,j).equals(userHiddenField)))
-			openAllBlanks(i,j);
-		else if((stringnumber.equals(freeUserField)) && (!numberBombs.equals(freeUserField)) && (getUserFieldSimple(i,j).equals(userHiddenField)))
-			UserField[i][j] = openAllBlanksHelper(i, j);
+	void openAllBlanksI9J0(int i, int j, String stringNumber){
+		int variableX = i+1;
+		int variableY = j-1;
+		openAllBlanksChecker(variableX, variableY, stringNumber);
 	}
-	void openAllBlanksI0J9(int i, int j, String stringnumber){
-		i = i-1;
-		j = j+1;
-		String numberBombs = openAllBlanksHelper(i,j);
-		if((numberBombs.equals(freeUserField)) && (getUserFieldSimple(i,j).equals(userHiddenField)))
-			openAllBlanks(i,j);
-		else if((stringnumber.equals(freeUserField)) && (!numberBombs.equals(freeUserField)) && (getUserFieldSimple(i,j).equals(userHiddenField)))
-			UserField[i][j] = openAllBlanksHelper(i, j);
+	void openAllBlanksI0J9(int i, int j, String stringNumber){
+		int variableX = i-1;
+		int variableY = j+1;
+		openAllBlanksChecker(variableX, variableY, stringNumber);
 	}
 	
-	
+	private void openAllBlanksChecker(int variableX, int variableY, String stringNumber){
+		String numberBombs = openAllBlanksHelper(variableX,variableY);
+		if((numberBombs.equals(freeUserField)) && (getUserFieldSimple(variableX,variableY).equals(userHiddenField)))
+			openAllBlanks(variableX,variableY);
+		else if((stringNumber.equals(freeUserField)) && (!numberBombs.equals(freeUserField)) && (getUserFieldSimple(variableX,variableY).equals(userHiddenField)))
+			UserField[variableX][variableY] = openAllBlanksHelper(variableX, variableY);
+	}
 	
 	private String openAllBlanksHelper(int i, int j){
 		return String.valueOf(getNumberMinesNearField(i,j));
