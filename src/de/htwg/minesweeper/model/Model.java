@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Model extends Observable {
 	
-	private int row;;
+	private int row;
 	private int column;
 	private int numberOfMines;
 	
@@ -26,8 +26,8 @@ public class Model extends Observable {
 	private int sizeOfxAndfWithBomb = 0;
 	private int sizeOfxAndfWithoutBomb = 0;
 	
-	private String filledField[][];
-	private String UserField[][];
+	private String[][] filledField;
+	private String[][] UserField;
 	
 	public Model(int i, int j, int k){
 		this.row=i;
@@ -35,11 +35,11 @@ public class Model extends Observable {
 		this.numberOfMines = k;
 		this.filledField = new String[column][row];
 		filledField = insertb(insertg(filledField));
-		UserField = UserField();
+		UserField = userField();
 	}
 
 	
-	private String[][] insertg(String fillWithBlanks[][]){
+	private String[][] insertg(String[][] fillWithBlanks){
 		for (int i = 0; i < column; i++)
 		{
 		    for (int j = 0; j < row; j++)
@@ -50,7 +50,7 @@ public class Model extends Observable {
 		return fillWithBlanks;
 	}
 
-	private String[][] insertb(String fillWithMines[][]){
+	private String[][] insertb(String[][] fillWithMines){
 		Random rand = new Random();
 
 		for(int i = 0; i < numberOfMines; i++) {
@@ -62,14 +62,16 @@ public class Model extends Observable {
 		return fillWithMines;
 	}
 	
-	public String[][] setOneBomb(int i, int j, String fillWithMines[][]){
+	public String[][] setOneBomb(int i, int j, String[][] fillWithMines){
 			fillWithMines[i][j] = bomb;
 		return fillWithMines;
 	}
 	
 	
-	public String[][] UserField(){
-		String t[][] = new String[column][row];
+	public String[][] userField(){
+		
+		String[][] t = new String[column][row];
+		
 		for (int i = 0; i < column; i++)
 		{
 		    for (int j = 0; j < row; j++)
@@ -225,11 +227,11 @@ public class Model extends Observable {
 
 	private int getNumberMinesNearField(int i, int j){
 		int number = 0;
-		int[] Ii = {i,i-1,i+1};
-		int[] Jj = {j,j-1,j+1};
+		int[] iii = {i,i-1,i+1};
+		int[] jjj = {j,j-1,j+1};
 		
-		for(int ii: Ii){
-			for(int jj: Jj){
+		for(int ii: iii){
+			for(int jj: jjj){
 				if(inBoundsHelper(ii,jj))
 					number += getNumberMinesNearFieldHelper(ii,jj);
 			}
