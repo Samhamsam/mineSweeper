@@ -11,8 +11,6 @@ import java.awt.*;
 import java.awt.event.*;
 
 
-//import de.htwg.
-
 public class GUI extends JFrame implements ActionListener,IObserver,MouseListener{
 	private static final long serialVersionUID = 1L;
 	private JButton[][] buttonForTheMineSweeperFields;
@@ -169,8 +167,7 @@ public class GUI extends JFrame implements ActionListener,IObserver,MouseListene
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 
@@ -199,22 +196,19 @@ public class GUI extends JFrame implements ActionListener,IObserver,MouseListene
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+
 	}
 	
 	private void setFlag(MouseEvent e){
