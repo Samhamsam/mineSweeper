@@ -20,8 +20,8 @@ public class Context{
 		field = new Model(10, 10, 10);
 	}
 	
-	public Model newGame(){
-		return status.newGame(field);
+	public boolean endStatus() {
+		return status.endStatus();
 	}
 	
 

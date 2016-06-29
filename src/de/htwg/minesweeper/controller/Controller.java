@@ -50,6 +50,7 @@ public class Controller extends Observable implements IController{
 		feldText = new String[row][column];
 		field = new Model(row, column, numberOfMines);
 		context = new Context();
+		setStatusRunning();
 	}
 	
 	public void setCommand(ICommand command){
@@ -85,6 +86,7 @@ public class Controller extends Observable implements IController{
 		fieldPosition = "n";
 		setStatusCode(1);
 		notifyObservers();
+		setStatusRunning();
 	}
 
 	
@@ -95,49 +97,52 @@ public class Controller extends Observable implements IController{
 	
 	@Override
 	public void startGame(String answer) {
-		int[] AnswerList = {};
-		
-		if(firstStart == true){
-			setStartTime(System.nanoTime());
-		}
-		firstStart = false;
-		
-		fieldPosition = answer;
-		
-		setStatusCode(1);
-		
-
-		List<String> list = Arrays.asList(answer.split(","));
-		
-		if(list.size() == 2){
+		if(context.endStatus()){
 			
-			AnswerList = stringToNumber(list);
-			boolean ItsABomb = IsItaBomb(AnswerList[0],AnswerList[1]);
+			int[] AnswerList = {};
 			
-			if(ItsABomb){
-				setStatusCode(2);
-				setStatusPressedBomb();
-			}			
-			else if(checkIfGameIsWon()){
-				timeEnd = System.nanoTime();
-				long elapsedTime = timeEnd - timestart;
-				wonTime = TimeUnit.SECONDS.convert(elapsedTime, TimeUnit.NANOSECONDS);
-				setStatusWonGame();
-				setStatusCode(3);
+			if(firstStart == true){
+				setStartTime(System.nanoTime());
 			}
-			else{
-				setStatusRunning();
-			}
+			firstStart = false;
 			
-
+			fieldPosition = answer;
+			
+			setStatusCode(1);
+			
+	
+			List<String> list = Arrays.asList(answer.split(","));
+			
+			if(list.size() == 2){
+				
+				AnswerList = stringToNumber(list);
+				boolean ItsABomb = IsItaBomb(AnswerList[0],AnswerList[1]);
+				
+				if(ItsABomb){
+					setStatusCode(2);
+					setStatusPressedBomb();
+				}			
+				else if(checkIfGameIsWon()){
+					timeEnd = System.nanoTime();
+					long elapsedTime = timeEnd - timestart;
+					wonTime = TimeUnit.SECONDS.convert(elapsedTime, TimeUnit.NANOSECONDS);
+					setStatusWonGame();
+					setStatusCode(3);
+				}
+				else{
+					setStatusRunning();
+				}
+				
+	
+			}
+			else if(list.size() == 3){
+				setFlag(list);
+			}
+	
+			spielFeld();
+			
+			notifyObservers();
 		}
-		else if(list.size() == 3){
-			setFlag(list);
-		}
-
-		spielFeld();
-		
-		notifyObservers();
 
 	}
 	
