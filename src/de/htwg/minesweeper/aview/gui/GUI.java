@@ -125,7 +125,6 @@ public class GUI extends JFrame implements ActionListener,IObserver,MouseListene
 
 		if(e.getSource()==newGame){
 			controller.newGame();
-			setEnableButtons(true);
 
 		}
 		else if(e.getSource()==quit){
@@ -142,6 +141,10 @@ public class GUI extends JFrame implements ActionListener,IObserver,MouseListene
 	@Override
 	public void update(Event e) {
 		setStringInButton(getFeldText());
+		
+		if(controller.getStatusCode() == 1){
+			setEnableButtons(true);
+		}
 		
 		if(controller.getStatusCode() == 2){
 			messageDialog("You Lost!");

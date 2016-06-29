@@ -10,6 +10,7 @@ public class Minesweeper {
 	private static Scanner scanner;
 	private static TUI tui;
 	private static Controller controller;
+	private static GUI gui;
 	
 	public Minesweeper(){
 		
@@ -20,7 +21,8 @@ public class Minesweeper {
 		controller = new Controller();
 		
 		tui = new TUI(controller);
-		new GUI(controller);
+		gui = new GUI(controller);
+		
 		tui.printTui();
 		controller.setStatusCode(0);
 		
