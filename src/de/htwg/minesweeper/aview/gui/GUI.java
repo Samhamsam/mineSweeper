@@ -167,7 +167,7 @@ public class GUI extends JFrame implements ActionListener,IObserver,MouseListene
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-
+		// Not needed
 	}
 
 
@@ -196,19 +196,19 @@ public class GUI extends JFrame implements ActionListener,IObserver,MouseListene
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-
+		// Not needed
 	}
 
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-
+		// Not needed
 	}
 
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-
+		// Not needed
 	}
 	
 	private void setFlag(MouseEvent e){
