@@ -6,13 +6,9 @@ import de.htwg.minesweeper.controller.IController;
 import util.observer.Event;
 import util.observer.IObserver;
 
-import java.io.InputStream;
-import java.util.Scanner;
-
-
 
 public class TUI implements IObserver {
-	private static final Logger log = LogManager.getLogger();
+	private static final Logger LOGGER = LogManager.getLogger();
 	
 	
 	private IController controller;
@@ -27,7 +23,7 @@ public class TUI implements IObserver {
 	public void printTheField(String[][] filledField){
 		for(String[] row: filledField){
 			for(String value: row){
-				log.info("%-20s",value);
+				LOGGER.info("%-20s",value);
 			}
 		}
 	}
@@ -81,22 +77,22 @@ public class TUI implements IObserver {
 		stringBuilder = printField(controller.getFeldText());
 		
 		if(!"".equals(controller.getFieldPosition()))
-			log.info("You typed: " + controller.getFieldPosition() + "\n");
+			LOGGER.info("You typed: " + controller.getFieldPosition() + "\n");
 		
-		log.info(stringBuilder.toString());
+		LOGGER.info(stringBuilder.toString());
 		
 		if(status == 1 || status == 0)
-			log.info("Type: x,x | x is a number between 0 and 9(row, column):\n");
+			LOGGER.info("Type: x,x | x is a number between 0 and 9(row, column):\n");
 		if(status == 2)
-			log.info("You Lost!");
+			LOGGER.info("You Lost!");
 		if(status == 3){
-			log.info("You Won! " + controller.getTimeWon() + " Points!");
+			LOGGER.info("You Won! " + controller.getTimeWon() + " Points!");
 		}
 		if(status == 4){
 			
-			log.info(controller.getHelpText());
+			LOGGER.info(controller.getHelpText());
 		}
 		if(status == 2 || status == 3 || status == 4)
-			log.info("New Game? Type: n");
+			LOGGER.info("New Game? Type: n");
 	}
 }	
