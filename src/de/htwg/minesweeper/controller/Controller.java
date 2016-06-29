@@ -35,7 +35,7 @@ public class Controller extends Observable implements IController{
 	
 	private static final int ROW = 15; 
 	private static final int COLUMN = 15;
-	private static final int NUMBER_OF_MINES = 15;
+	private static final int NUMBER_OF_MINES = 10;
 	
 	private int row = ROW;
 
@@ -53,8 +53,8 @@ public class Controller extends Observable implements IController{
 	
 	@Override
 	public void newGame(){
-		//field = new Model(ROW, COLUMN, numberOfMines);
-		field = context.newGame();
+		field = new Model(row, column, numberOfMines);
+		//field = context.newGame();
 		firstStart = true;
 		fieldPosition = "n";
 		setStatusCode(1);

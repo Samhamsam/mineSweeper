@@ -80,7 +80,7 @@ public class TUI implements IObserver {
 		log.info(stringBuilder.toString());
 		
 		if(controller.getStatusCode() == 1 || controller.getStatusCode() == 0)
-			log.info("Type: x,x | x is a number between 0 and 9(column, row):\n");
+			log.info("Type: x,x | x is a number between 0 and 9(row, column):\n");
 		if(controller.getStatusCode() == 2)
 			log.info("You Lost! New Game? Type: n");
 		if(controller.getStatusCode() == 3){

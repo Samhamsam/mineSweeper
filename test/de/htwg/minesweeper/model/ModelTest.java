@@ -16,7 +16,7 @@ public class ModelTest {
 	@Before
 	public void setUp() throws Exception {
 		model = new Model(row, column, mines);
-		model1 = new Model(row, column, 0);
+		model1 = new Model(15, 15, 0);
 	}
 
 	@Test
@@ -47,6 +47,17 @@ public class ModelTest {
 		
 		assertEquals("0", teString);
 		
+	}
+	@Test
+	public void openAllBlanksI0J9(){
+		model1.setOneBomb(14,5, model1.getfilledField());
+		model1.setOneBomb(10,2, model1.getfilledField());
+		model1.setOneBomb(11,2, model1.getfilledField());
+		model1.setOneBomb(11,1, model1.getfilledField());
+		model1.setOneBomb(11,0, model1.getfilledField());
+		model1.setOneBomb(12,6, model1.getfilledField());
+		model1.openAllBlanks(12, 4);
+		assertEquals("0", model1.getUserFieldSimple(13, 3));
 	}
 	@Test
 	public void testopenAllBlanksI9() {
