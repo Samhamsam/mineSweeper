@@ -188,28 +188,11 @@ public class GUI extends JFrame implements ActionListener,IObserver,MouseListene
 				controller.exitGame();
 			}
 			else {
-				for (int y=0; y < controller.getColumn(); y++){
-					for (int x = 0; x < controller.getRow(); x++){
-						Object buttonText = e.getSource();
-						if(buttonText.equals(buttonForTheMineSweeperFields[y][x])){
-							controller.startGame(y+","+x);
-						}
-		
-					}
-				}
-	
+				getButtonPositionAndStartController(e);
 			}
 		}
 		else if(e.getButton() == MouseEvent.BUTTON3){
-			for (int y=0; y < controller.getColumn(); y++){
-				for (int x = 0; x < controller.getRow(); x++){
-					Object buttonText = e.getSource();
-					if(buttonText.equals(buttonForTheMineSweeperFields[y][x])){
-						controller.startGame(y+","+x+",f");
-					}
-	
-				}
-			}
+			setFlag(e);
 		}
 	}
 
@@ -233,6 +216,29 @@ public class GUI extends JFrame implements ActionListener,IObserver,MouseListene
 		// TODO Auto-generated method stub
 		
 	}
+	
+	private void setFlag(MouseEvent e){
+		for (int y=0; y < controller.getColumn(); y++){
+			for (int x = 0; x < controller.getRow(); x++){
+				Object buttonText = e.getSource();
+				if(buttonText.equals(buttonForTheMineSweeperFields[y][x])){
+					controller.startGame(y+","+x+",f");
+				}
 
+			}
+		}
+	}
+	
+	private void getButtonPositionAndStartController(MouseEvent e){
+		for (int y=0; y < controller.getColumn(); y++){
+			for (int x = 0; x < controller.getRow(); x++){
+				Object buttonText = e.getSource();
+				if(buttonText.equals(buttonForTheMineSweeperFields[y][x])){
+					controller.startGame(y+","+x);
+				}
+
+			}
+		}
+	}
 
 }
