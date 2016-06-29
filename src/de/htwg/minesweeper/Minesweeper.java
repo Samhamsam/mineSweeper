@@ -12,6 +12,9 @@ public final class Minesweeper {
 	private static Controller controller;
 	private static GUI gui;
 	
+	private Minesweeper(){
+		
+	}
 	
 	public static void main(final String[] args)
 	{
