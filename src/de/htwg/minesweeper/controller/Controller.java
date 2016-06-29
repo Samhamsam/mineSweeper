@@ -29,8 +29,6 @@ public class Controller extends Observable implements IController{
 	
 	private int statusCode;
 	
-	@SuppressWarnings("unused")
-	private String[][] feldText;
 	
 	private long timestart;
 	private long timeEnd;
@@ -49,7 +47,6 @@ public class Controller extends Observable implements IController{
 	private String helpText;
 
 	public Controller(){
-		feldText = new String[row][column];
 		field = new Model(row, column, numberOfMines);
 		context = new Context();
 		setStatusRunning();
@@ -95,11 +92,6 @@ public class Controller extends Observable implements IController{
 	}
 
 	
-	public void spielFeld() {
-		setFeldText(field.getUserField());
-	}
-	
-	
 	@Override
 	public void startGame(String answer) {
 		if(context.endStatus()){
@@ -143,9 +135,6 @@ public class Controller extends Observable implements IController{
 			else if(list.size() == 3){
 				setFlag(list);
 			}
-	
-			spielFeld();
-			
 			notifyObservers();
 		}
 
@@ -230,10 +219,6 @@ public class Controller extends Observable implements IController{
 	@Override
 	public String[][] getFeldText(){
 		return field.getUserField();
-	}
-	
-	public void setFeldText(String feldText[][]) {
-		this.feldText = feldText;
 	}
 	
 	@Override
