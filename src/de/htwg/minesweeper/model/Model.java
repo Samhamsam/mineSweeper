@@ -27,7 +27,7 @@ public class Model extends Observable {
 	private int sizeOfxAndfWithoutBomb = 0;
 	
 	private String[][] filledField;
-	private String[][] UserField;
+	private String[][] userField;
 	
 	public Model(int i, int j, int k){
 		this.row=i;
@@ -35,7 +35,7 @@ public class Model extends Observable {
 		this.numberOfMines = k;
 		this.filledField = new String[column][row];
 		filledField = insertb(insertg(filledField));
-		UserField = userField();
+		userField = userField();
 	}
 
 	
@@ -85,10 +85,10 @@ public class Model extends Observable {
 	public void countIfGameIsWon(){
 		for(int j = 0; j < column; j++){
 			for(int i= 0; i < row; i++){
-				if((UserField[i][j].equals(userHiddenField) && getfilledField()[i][j].equals(bomb)) || (UserField[i][j].equals(flag) && getfilledField()[i][j].equals(bomb)))
+				if((userField[i][j].equals(userHiddenField) && getfilledField()[i][j].equals(bomb)) || (userField[i][j].equals(flag) && getfilledField()[i][j].equals(bomb)))
 					setsizeOfxAndfWithBomb(getsizeOfxAndfWithBomb()+1);
 
-				if(UserField[i][j].equals(userHiddenField) || UserField[i][j].equals(flag))
+				if(userField[i][j].equals(userHiddenField) || userField[i][j].equals(flag))
 					setsizeOfxAndfWithoutBomb(getsizeOfxAndfWithoutBomb() +1);
 			}
 		}
@@ -98,22 +98,22 @@ public class Model extends Observable {
 		String stringnumber = String.valueOf(getNumberMinesNearField(i, j));
 		if(stringnumber.equals(freeUserField))
 			openAllBlanks(i, j);
-		UserField[i][j] = stringnumber;
+		userField[i][j] = stringnumber;
 		countIfGameIsWon();
 	}
 	
 	public void setFlag(int i, int j){
-		UserField[i][j] = flag;
+		userField[i][j] = flag;
 	}
 	public void resetFlag(int i, int j){
-		UserField[i][j] = userHiddenField;
+		userField[i][j] = userHiddenField;
 	}
 	
 	void openAllBlanks(int i, int j){
 		
 		String stringNumber = openAllBlanksHelper(i, j);
 		
- 		UserField[i][j] = stringNumber;
+		userField[i][j] = stringNumber;
 
  		openAllBlanksSimpleHelper(i,j,stringNumber);
 		
@@ -218,7 +218,7 @@ public class Model extends Observable {
 		if((numberBombs.equals(freeUserField)) && (getUserFieldSimple(variableX,variableY).equals(userHiddenField)))
 			openAllBlanks(variableX,variableY);
 		else if((stringNumber.equals(freeUserField)) && (!numberBombs.equals(freeUserField)) && (getUserFieldSimple(variableX,variableY).equals(userHiddenField)))
-			UserField[variableX][variableY] = openAllBlanksHelper(variableX, variableY);
+			userField[variableX][variableY] = openAllBlanksHelper(variableX, variableY);
 	}
 	
 	private String openAllBlanksHelper(int i, int j){
@@ -272,15 +272,15 @@ public class Model extends Observable {
 	}
 
 	public String[][] getUserField(){
-		return UserField;
+		return userField;
 	}
 	
 	public String getUserFieldSimple(int i, int j){
-		return UserField[i][j];
+		return userField[i][j];
 	}
 	
 	public void setUserFieldSimple(int i, int j, String a){
-		UserField[i][j] = a;
+		userField[i][j] = a;
 	}
 	
 	public void setsizeOfxAndfWithBomb(int sizeOfXAndWithBomb){
