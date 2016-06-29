@@ -59,6 +59,7 @@ public class Controller extends Observable implements IController{
 		this.command = command;
 	}
 	
+	@Override
 	public void hilfe() {
 		Help help = new Help();
 		ICommand commandHelp = new HelpCommand(help);
@@ -70,9 +71,12 @@ public class Controller extends Observable implements IController{
 		notifyObservers();
 	}
 	
+	@Override
 	public void setHelpText(String helpText) {
 		this.helpText = helpText;
 	}
+	
+	@Override
 	public String getHelpText() {
 		return helpText;
 	}
@@ -83,7 +87,6 @@ public class Controller extends Observable implements IController{
 	@Override
 	public void newGame(){
 		field = new Model(row, column, numberOfMines);
-		//field = context.newGame();
 		firstStart = true;
 		fieldPosition = "n";
 		setStatusCode(1);
@@ -181,11 +184,11 @@ public class Controller extends Observable implements IController{
 	
 	boolean IsItaBomb(int i, int j){
 		String[][] fi = field.getfilledField();
-		if("b".equals(fi[firstNumber][secondNumber])){
-			field.setUserFieldSimple(firstNumber, secondNumber, "b");
+		if("b".equals(fi[i][j])){
+			field.setUserFieldSimple(i, j, "b");
 			return true;
 		}
-		field.setUserField(firstNumber,secondNumber);	
+		field.setUserField(i,j);	
 		return false;
 	}
 	
@@ -262,6 +265,8 @@ public class Controller extends Observable implements IController{
 	private void setStatusWonGame(){
 		context.setStatus(new StatusPressedBomb());
 	}
+	
+	@Override
 	public int getRow() {
 		return row;
 	}
@@ -269,6 +274,8 @@ public class Controller extends Observable implements IController{
 	public void setRow(int row) {
 		this.row = row;
 	}
+	
+	@Override
 	public int getColumn() {
 		return column;
 	}
