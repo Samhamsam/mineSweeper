@@ -1,7 +1,10 @@
 package de.htwg.minesweeper.controller;
 
 import java.util.*;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
+
+import com.sun.org.apache.xpath.internal.operations.NotEquals;
 
 import de.htwg.minesweeper.controller.impl.Context;
 import de.htwg.minesweeper.controller.impl.StatusPressedBomb;
@@ -42,14 +45,37 @@ public class Controller extends Observable implements IController{
 	private int column = COLUMN;
 
 	private int numberOfMines = NUMBER_OF_MINES;
-
-
+	private ICommand command;
+	private String helpText;
 
 	public Controller(){
 		feldText = new String[row][column];
 		field = new Model(row, column, numberOfMines);
 		context = new Context();
 	}
+	
+	public void setCommand(ICommand command){
+		this.command = command;
+	}
+	
+	public void hilfe() {
+				
+		Help help = new Help();
+		ICommand commandHelp = new HelpCommand(help);
+		setCommand(commandHelp);
+		command.execute();
+		setHelpText(help.getHelpText());
+	}
+	
+	public void setHelpText(String helpText) {
+		this.helpText = helpText;
+	}
+	public String getHelpText() {
+		return helpText;
+	}
+	
+	
+	
 	
 	@Override
 	public void newGame(){
@@ -185,7 +211,10 @@ public class Controller extends Observable implements IController{
 	
 	@Override
 	public void exitGame(){
-		Runtime.getRuntime().halt(0);
+		Quit quit = new Quit();
+		ICommand commandQuit = new QuitCommand(quit);
+		setCommand(commandQuit);
+		command.execute();
 	}
 	
 	@Override

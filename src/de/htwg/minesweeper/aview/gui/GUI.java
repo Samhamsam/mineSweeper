@@ -4,6 +4,7 @@ import javax.swing.*;
 
 import de.htwg.minesweeper.controller.Controller;
 import de.htwg.minesweeper.controller.IController;
+import sun.swing.MenuItemLayoutHelper;
 import util.observer.Event;
 import util.observer.IObserver;
 
@@ -20,10 +21,10 @@ public class GUI extends JFrame implements ActionListener,IObserver,MouseListene
 	
 	JFrame frame;
 	JMenuBar menuBar;
-	JMenu menu, submenu;
+	JMenu menu, submenu, menuQuestion;
 	JMenuItem newGame;
 	JMenuItem quit;
-	
+	JMenuItem help;
 	
 	public GUI(IController controller){
 		this.controller = controller;
@@ -33,14 +34,19 @@ public class GUI extends JFrame implements ActionListener,IObserver,MouseListene
 		
 		menuBar = new JMenuBar();
 		menu = new JMenu("Menu");
+		menuQuestion = new JMenu("?");
 		menuBar.add(menu);
+		menuBar.add(menuQuestion);
 		newGame = new JMenuItem("New Game");
 		quit = new JMenuItem("Quit");
+		help = new JMenuItem("Help");
 		menu.add(newGame);
 		menu.add(quit);
+		menuQuestion.add(help);
+		
 		newGame.addActionListener(this);
 		quit.addActionListener(this);
-		
+		help.addActionListener(this);
 		
 		
 		frame.setJMenuBar(menuBar);
@@ -125,6 +131,10 @@ public class GUI extends JFrame implements ActionListener,IObserver,MouseListene
 		}
 		else if(e.getSource()==quit){
 			controller.exitGame();
+		}
+		else if(e.getSource()==help) {
+			controller.hilfe();
+			System.out.print(controller.getHelpText());
 		}
 
 	}

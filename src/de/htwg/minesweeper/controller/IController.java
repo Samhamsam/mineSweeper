@@ -21,4 +21,9 @@ public interface IController extends IObservable{
 	public int getRow();
 	
 	public int getColumn();
+	
+	public void hilfe();
+	
+	public String getHelpText();
+	public void setHelpText(String helpText);
 }
