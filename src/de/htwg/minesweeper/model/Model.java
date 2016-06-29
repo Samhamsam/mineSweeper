@@ -8,12 +8,20 @@ public class Model extends Observable {
 	private int column;
 	private int numberOfMines;
 	
-	private String bomb = "b";
-	private String freeField = "g";
-	private String userHiddenField = "x";
+	private static final String BOMB = "b";
+	private static final String FREE_FIELD = "g";
+	private static final String USER_HIDDEN_FIELD = "x";
+	private static final String FREE_USER_FIELD = "0";
+	private static final String FLAG = "f";
+	
+	
+	private String bomb = BOMB;
+	private String freeField = FREE_FIELD;
+	private String userHiddenField = USER_HIDDEN_FIELD;
+	private String flag = FLAG;
 
 
-	private String freeUserField = "0";
+	private String freeUserField = FREE_USER_FIELD;
 	
 	private int sizeOfxAndfWithBomb = 0;
 	private int sizeOfxAndfWithoutBomb = 0;
@@ -75,10 +83,10 @@ public class Model extends Observable {
 	public void countIfGameIsWon(){
 		for(int j = 0; j < column; j++){
 			for(int i= 0; i < row; i++){
-				if((UserField[i][j].equals("x") && getfilledField()[i][j].equals("b")) || (UserField[i][j].equals("f") && getfilledField()[i][j].equals("b")))
+				if((UserField[i][j].equals(userHiddenField) && getfilledField()[i][j].equals(bomb)) || (UserField[i][j].equals(flag) && getfilledField()[i][j].equals(bomb)))
 					setsizeOfxAndfWithBomb(getsizeOfxAndfWithBomb()+1);
 
-				if(UserField[i][j].equals("x") || UserField[i][j].equals("f"))
+				if(UserField[i][j].equals(userHiddenField) || UserField[i][j].equals(flag))
 					setsizeOfxAndfWithoutBomb(getsizeOfxAndfWithoutBomb() +1);
 			}
 		}
@@ -93,10 +101,10 @@ public class Model extends Observable {
 	}
 	
 	public void setFlag(int i, int j){
-		UserField[i][j] = "f";
+		UserField[i][j] = flag;
 	}
 	public void resetFlag(int i, int j){
-		UserField[i][j] = "x";
+		UserField[i][j] = userHiddenField;
 	}
 	
 	void openAllBlanks(int i, int j){
@@ -262,19 +270,11 @@ public class Model extends Observable {
 	public int getNumberOfMines(){
 		return numberOfMines;
 	}
-	
-	/**
-	 * 
-	 * @return the Field with b and g
-	 */
+
 	public String[][] getfilledField(){
 		return filledField;
 	}
-	
-	/**
-	 * 
-	 * @return the field with x
-	 */
+
 	public String[][] getUserField(){
 		return UserField;
 	}
