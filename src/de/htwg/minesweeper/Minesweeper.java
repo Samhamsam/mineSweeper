@@ -22,6 +22,7 @@ public final class Minesweeper {
 		
 		tui = new TUI(controller);
 		GUI gui = new GUI(controller);
+		gui.getAccessibleContext();
 		
 		tui.printTui();
 		controller.setStatusCode(0);
