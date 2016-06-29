@@ -46,6 +46,10 @@ public class TUI implements IObserver {
 				controller.newGame();
 			break;
 			
+			case "h":
+				controller.hilfe();
+			break;
+			
 			
 			default:
 				controller.startGame(answer);
@@ -72,20 +76,27 @@ public class TUI implements IObserver {
 
 
 	public void printTui() {
+		int status = controller.getStatusCode();
 		StringBuilder stringBuilder;
 		stringBuilder = printField(controller.getFeldText());
 		
-		log.info(controller.getFieldPosition() + "\n");
+		if(!"".equals(controller.getFieldPosition()))
+			log.info("You typed: " + controller.getFieldPosition() + "\n");
 		
 		log.info(stringBuilder.toString());
 		
-		if(controller.getStatusCode() == 1 || controller.getStatusCode() == 0)
+		if(status == 1 || status == 0)
 			log.info("Type: x,x | x is a number between 0 and 9(row, column):\n");
-		if(controller.getStatusCode() == 2)
-			log.info("You Lost! New Game? Type: n");
-		if(controller.getStatusCode() == 3){
+		if(status == 2)
+			log.info("You Lost!");
+		if(status == 3){
 			log.info("You Won! " + controller.getTimeWon() + " Points!");
-			log.info("New Game? Type: n");
 		}
+		if(status == 4){
+			
+			log.info(controller.getHelpText());
+		}
+		if(status == 2 || status == 3 || status == 4)
+			log.info("New Game? Type: n");
 	}
 }	

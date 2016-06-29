@@ -6,7 +6,9 @@ public class Help {
 	
 	public void run()
 	{
-		String text = "HILFE HILFE HILFE HILFE";
+		String text = "(TUI:n) GUI:	Menu	->	New Game: 	This command start a new game. (reset)\n"
+					+ "(TUI:q) GUI:	Menu	->	Quit:		This command end the Game and close it\n"
+					+ "(TUI:h) GUI:	?	->	Help:		This command shows the help text";
 		setHelpText(text);
 	}
 	

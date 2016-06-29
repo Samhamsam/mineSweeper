@@ -1,10 +1,8 @@
 package de.htwg.minesweeper.controller;
 
 import java.util.*;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
-import com.sun.org.apache.xpath.internal.operations.NotEquals;
 
 import de.htwg.minesweeper.controller.impl.Context;
 import de.htwg.minesweeper.controller.impl.StatusPressedBomb;
@@ -59,12 +57,14 @@ public class Controller extends Observable implements IController{
 	}
 	
 	public void hilfe() {
-				
 		Help help = new Help();
 		ICommand commandHelp = new HelpCommand(help);
 		setCommand(commandHelp);
 		command.execute();
 		setHelpText(help.getHelpText());
+		fieldPosition = "h";
+		setStatusCode(4);
+		notifyObservers();
 	}
 	
 	public void setHelpText(String helpText) {
@@ -200,7 +200,7 @@ public class Controller extends Observable implements IController{
 	public String getFieldPosition(){
 		String text = "";
 		if(!getFieldPositionPrivat().isEmpty()){
-			text = "You typed: " + getFieldPositionPrivat();
+			text = getFieldPositionPrivat();
 		}
 		return text;
 	}

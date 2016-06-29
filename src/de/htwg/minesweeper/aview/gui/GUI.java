@@ -2,9 +2,8 @@ package de.htwg.minesweeper.aview.gui;
 
 import javax.swing.*;
 
-import de.htwg.minesweeper.controller.Controller;
 import de.htwg.minesweeper.controller.IController;
-import sun.swing.MenuItemLayoutHelper;
+
 import util.observer.Event;
 import util.observer.IObserver;
 
@@ -132,10 +131,11 @@ public class GUI extends JFrame implements ActionListener,IObserver,MouseListene
 		else if(e.getSource()==quit){
 			controller.exitGame();
 		}
+		
 		else if(e.getSource()==help) {
 			controller.hilfe();
-			System.out.print(controller.getHelpText());
 		}
+		
 
 	}
 
@@ -150,6 +150,9 @@ public class GUI extends JFrame implements ActionListener,IObserver,MouseListene
 
 		if(controller.getStatusCode() == 3)
 			messageDialog("You Won! "+controller.getTimeWon()+" Points!");
+		
+		if(controller.getStatusCode() == 4)
+			messageDialog(controller.getHelpText());
 	}
 	
 	public String[][] getFeldText(){
