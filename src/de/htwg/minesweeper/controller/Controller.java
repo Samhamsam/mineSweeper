@@ -15,10 +15,22 @@ public class Controller extends Observable implements IController{
 
 	private static final String FIRST_FIELD_POSITION = "";
 	
-	Context context;
-
+	private static final int ROW = 15; 
+	private static final int COLUMN = 15;
+	private static final int NUMBER_OF_MINES = 10;
+	
+	private static final int STATUS_CODE_INFO_TEXT = 1;
+	private static final int STATUS_CODE_WON_GAME = 3;
+	private static final int STATUS_CODE_GAME_LOST = 2;
+	private static final int STATUS_CODE_HELP_TEXT = 4;
+	
+	private int row = ROW;
+	private int column = COLUMN;
+	private int numberOfMines = NUMBER_OF_MINES;
+	
 	private String fieldPosition = FIRST_FIELD_POSITION;
-
+	
+	Context context;
 	Model field;
 	
 	private int firstNumber;
@@ -34,15 +46,8 @@ public class Controller extends Observable implements IController{
 	private long timeEnd;
 	private long wonTime;
 	
-	private static final int ROW = 15; 
-	private static final int COLUMN = 15;
-	private static final int NUMBER_OF_MINES = 10;
+
 	
-	private int row = ROW;
-
-	private int column = COLUMN;
-
-	private int numberOfMines = NUMBER_OF_MINES;
 	private ICommand command;
 	private String helpText;
 
@@ -64,7 +69,7 @@ public class Controller extends Observable implements IController{
 		command.execute();
 		setHelpText(help.getHelpText());
 		fieldPosition = "h";
-		setStatusCode(4);
+		setStatusCode(STATUS_CODE_HELP_TEXT);
 		notifyObservers();
 	}
 	
@@ -86,7 +91,7 @@ public class Controller extends Observable implements IController{
 		field = new Model(row, column, numberOfMines);
 		firstStart = true;
 		fieldPosition = "n";
-		setStatusCode(1);
+		setStatusCode(STATUS_CODE_INFO_TEXT);
 		notifyObservers();
 		setStatusRunning();
 	}
@@ -105,7 +110,7 @@ public class Controller extends Observable implements IController{
 			
 			fieldPosition = answer;
 			
-			setStatusCode(1);
+			setStatusCode(STATUS_CODE_INFO_TEXT);
 			
 	
 			List<String> list = Arrays.asList(answer.split(","));
@@ -116,7 +121,7 @@ public class Controller extends Observable implements IController{
 				boolean itsABomb = isItaBomb(answerList[0],answerList[1]);
 				
 				if(itsABomb){
-					setStatusCode(2);
+					setStatusCode(STATUS_CODE_GAME_LOST);
 					setStatusPressedBomb();
 				}			
 				else if(checkIfGameIsWon()){
@@ -124,7 +129,7 @@ public class Controller extends Observable implements IController{
 					long elapsedTime = timeEnd - timestart;
 					wonTime = TimeUnit.SECONDS.convert(elapsedTime, TimeUnit.NANOSECONDS);
 					setStatusWonGame();
-					setStatusCode(3);
+					setStatusCode(STATUS_CODE_WON_GAME);
 				}
 				else{
 					setStatusRunning();
