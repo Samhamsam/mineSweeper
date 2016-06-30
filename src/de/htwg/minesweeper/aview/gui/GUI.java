@@ -1,15 +1,11 @@
 package de.htwg.minesweeper.aview.gui;
 
 import javax.swing.*;
-
 import de.htwg.minesweeper.controller.IController;
-
 import util.observer.Event;
 import util.observer.IObserver;
-
 import java.awt.*;
 import java.awt.event.*;
-
 
 public class GUI extends JFrame implements ActionListener,IObserver,MouseListener{
 	private static final long serialVersionUID = 1L;
@@ -44,7 +40,6 @@ public class GUI extends JFrame implements ActionListener,IObserver,MouseListene
 		newGame.addActionListener(this);
 		quit.addActionListener(this);
 		help.addActionListener(this);
-		
 		
 		frame.setJMenuBar(menuBar);
 		
@@ -166,12 +161,10 @@ public class GUI extends JFrame implements ActionListener,IObserver,MouseListene
 		JOptionPane.showMessageDialog(frame, text);
 	}
 
-
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// Not needed
 	}
-
 
 	@Override
 	public void mousePressed(MouseEvent e) {
@@ -195,18 +188,15 @@ public class GUI extends JFrame implements ActionListener,IObserver,MouseListene
 		}
 	}
 
-
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// Not needed
 	}
 
-
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// Not needed
 	}
-
 
 	@Override
 	public void mouseExited(MouseEvent e) {

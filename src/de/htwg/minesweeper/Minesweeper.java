@@ -1,8 +1,8 @@
 package de.htwg.minesweeper;
+
 import java.util.Scanner;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-
 import de.htwg.minesweeper.aview.gui.GUI;
 import de.htwg.minesweeper.aview.tui.TUI;
 import de.htwg.minesweeper.controller.IController;
@@ -16,7 +16,6 @@ public final class Minesweeper {
 	private GUI gui;
 	private static Minesweeper instance = null;
 
-	
 	private Minesweeper(){
 		Injector inject = Guice.createInjector();
 		controller = inject.getInstance(Controller.class);

@@ -1,25 +1,20 @@
 package de.htwg.minesweeper.aview.tui;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import de.htwg.minesweeper.controller.IController;
 import util.observer.Event;
 import util.observer.IObserver;
 
-
 public class TUI implements IObserver {
 	private static final Logger LOGGER = LogManager.getLogger();
-	
-	
 	private IController controller;
-	
-	
+
 	public TUI(IController controller){
 		this.controller = controller;
 		controller.addObserver(this);
 	}
 	
-
 	public boolean answerOptions(String answer){
 		boolean continu = true;
 		switch(answer){
@@ -48,7 +43,6 @@ public class TUI implements IObserver {
 		printTui();
 	}
 
-	
 	public StringBuilder printField(String[][] field){
 		StringBuilder result = new StringBuilder();
 		for(int j = 0; j < controller.getRow(); j++){
@@ -60,12 +54,10 @@ public class TUI implements IObserver {
 		return result;
 	}
 
-
 	public void printTui() {
 		int status = controller.getStatusCode();
 		
 		if(!(status == 5)){
-			
 		
 			StringBuilder stringBuilder;
 			
