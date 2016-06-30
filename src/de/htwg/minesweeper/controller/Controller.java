@@ -2,12 +2,7 @@ package de.htwg.minesweeper.controller;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
-
-
-import de.htwg.minesweeper.controller.impl.Context;
-import de.htwg.minesweeper.controller.impl.StatusPressedBomb;
-import de.htwg.minesweeper.controller.impl.StatusRunning;
-import de.htwg.minesweeper.controller.impl.StatusWonGame;
+import de.htwg.minesweeper.controller.impl.*;
 import de.htwg.minesweeper.model.Model;
 import util.observer.Observable;
 
@@ -23,6 +18,10 @@ public class Controller extends Observable implements IController{
 	private static final int STATUS_CODE_WON_GAME = 3;
 	private static final int STATUS_CODE_GAME_LOST = 2;
 	private static final int STATUS_CODE_HELP_TEXT = 4;
+	
+	private static final String HELP_COMMAND = "h";
+	private static final String NEW_GAME_COMMAND = "n";
+
 	
 	private int row = ROW;
 	private int column = COLUMN;
@@ -51,6 +50,12 @@ public class Controller extends Observable implements IController{
 	private ICommand command;
 	private String helpText;
 
+	public Controller(Model field){
+		this.field = field; 
+		context = new Context();
+		setStatusRunning();
+	}
+	
 	public Controller(){
 		field = new Model(row, column, numberOfMines);
 		context = new Context();
@@ -68,7 +73,7 @@ public class Controller extends Observable implements IController{
 		setCommand(commandHelp);
 		command.execute();
 		setHelpText(help.getHelpText());
-		fieldPosition = "h";
+		fieldPosition = HELP_COMMAND;
 		setStatusCode(STATUS_CODE_HELP_TEXT);
 		notifyObservers();
 	}
@@ -87,10 +92,20 @@ public class Controller extends Observable implements IController{
 	
 	
 	@Override
+	public void newGame(Model field){
+		this.field = field;
+		firstStart = true;
+		fieldPosition = NEW_GAME_COMMAND;
+		setStatusCode(STATUS_CODE_INFO_TEXT);
+		notifyObservers();
+		setStatusRunning();
+	}
+	
+	@Override
 	public void newGame(){
 		field = new Model(row, column, numberOfMines);
 		firstStart = true;
-		fieldPosition = "n";
+		fieldPosition = NEW_GAME_COMMAND;
 		setStatusCode(STATUS_CODE_INFO_TEXT);
 		notifyObservers();
 		setStatusRunning();
@@ -168,18 +183,18 @@ public class Controller extends Observable implements IController{
 		int numberi = Integer.parseInt(flag.get(0));
 		int numberj = Integer.parseInt(flag.get(1));
 		String testField = field.getUserFieldSimple(numberi, numberj);
-		if("x".equals(testField)){
+		if(field.getUserHiddenField().equals(testField)){
 			field.setFlag(numberi, numberj);
 		}
-		else if("f".equals(testField)){
+		else if(field.getFlag().equals(testField)){
 			field.resetFlag(numberi,numberj);
 		}
 	}
 	
 	boolean isItaBomb(int i, int j){
 		String[][] fi = field.getfilledField();
-		if("b".equals(fi[i][j])){
-			field.setUserFieldSimple(i, j, "b");
+		if(field.getBomb().equals(fi[i][j])){
+			field.setUserFieldSimple(i, j, field.getBomb());
 			return true;
 		}
 		field.setUserField(i,j);	

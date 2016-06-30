@@ -16,9 +16,15 @@ public class Model extends Observable {
 	
 	
 	private String bomb = BOMB;
+
+
+
 	private String freeField = FREE_FIELD;
 	private String userHiddenField = USER_HIDDEN_FIELD;
 	private String flag = FLAG;
+
+
+
 
 
 	private String freeUserField = FREE_USER_FIELD;
@@ -311,5 +317,23 @@ public class Model extends Observable {
 
 	public void setUserHiddenField(String userHiddenField) {
 		this.userHiddenField = userHiddenField;
+	}
+	
+	public String getBomb() {
+		return bomb;
+	}
+
+
+	public void setBomb(String bomb) {
+		this.bomb = bomb;
+	}
+	
+	public String getFlag() {
+		return flag;
+	}
+
+
+	public void setFlag(String flag) {
+		this.flag = flag;
 	}
 }

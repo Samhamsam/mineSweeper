@@ -2,50 +2,76 @@ package de.htwg.minesweeper.controller;
 
 import static org.junit.Assert.*;
 
+import java.util.*;
+
 import org.junit.Before;
 import org.junit.Test;
 
 
 import de.htwg.minesweeper.model.Model;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-import com.google.inject.Module;
 public class ControllerTest {
 
-	Controller control;
-	Model model;
-	
+	Controller control,control2;
+	Model model, modelWithoutBombs,modelWithLotsBombs;
+	/*
+	@Rule
+    public final ExpectedSystemExit exit = ExpectedSystemExit.none();
+	*/
 	@Before
 	public void setUp() throws Exception {
-		control = new Controller();
 		model = new Model(10, 10, 20);
+		modelWithoutBombs = new Model(10, 10, 0);
+		modelWithLotsBombs = new Model(10, 10, 10000);
+		control = new Controller(model);
+		control2 = new Controller();
 	}
-	/*
+	
+	@Test
+	public void testhilfe(){
+		control.hilfe();
+		assertTrue(control.getHelpText().contains("GUI"));
+	}
+
 	@Test
 	public void testNewGame() {
 		control.newGame();
-		assertTrue(control.isFirstStart());
+		assertTrue(control.getStatusCode() == 1);
 	}
-	
+
 	@Test
 	public void testStartgame() {
+		control.newGame(modelWithoutBombs);
+		control.startGame("0,0");
+		assertEquals("0", modelWithoutBombs.getUserFieldSimple(0, 0));
 		
-		control.setNumberOfMines(0);
-		control.newGame();
+		control.newGame(modelWithLotsBombs);
 		control.startGame("0,0");
-		assertEquals(true, control.startGame("0,0"));
-		control.setNumberOfMines(1000);
-		control.newGame();
-		control.startGame("0,0");
-		assertEquals(false, control.startGame("0,0"));
-		control.newGame();
+		assertEquals("b", modelWithLotsBombs.getUserFieldSimple(0, 0));
+
+		control.newGame(model);
 		control.startGame("0,0,f");
-		String field[][] = control.getFeldText();
+		assertEquals("f", model.getUserFieldSimple(0, 0));
 		
-		assertEquals("f", field[0][0]);
+		control2.setNumberOfMines(2);
+		control2.newGame();
+		assertEquals(2, control2.getNumberOfMines());
+
 	}
-*/
+	
+
+
+	@Test
+	public void testsetFlag() {
+		String answer = "0,0,f";
+		List<String> list = Arrays.asList(answer.split(","));
+		control.setFlag(list);
+		assertEquals("f",model.getUserFieldSimple(0, 0));
+		control.setFlag(list);
+		assertEquals("x",model.getUserFieldSimple(0, 0));
+	}
+	
+
 	@Test
 	public void testGetStatusText() {
 		control.setStatusCode(0);

@@ -1,5 +1,6 @@
 package de.htwg.minesweeper.controller;
 
+import de.htwg.minesweeper.model.Model;
 import util.observer.IObservable;
 
 public interface IController extends IObservable{
@@ -28,4 +29,6 @@ public interface IController extends IObservable{
 	public void setHelpText(String helpText);
 
 	public void setStatusCode(int i);
+
+	void newGame(Model field);
 }
