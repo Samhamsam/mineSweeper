@@ -186,15 +186,15 @@ public class Controller extends Observable implements IController{
 		if(field.getUserHiddenField().equals(testField)){
 			field.setFlag(numberi, numberj);
 		}
-		else if(field.getFlag().equals(testField)){
+		else if(field.getFlagString().equals(testField)){
 			field.resetFlag(numberi,numberj);
 		}
 	}
 	
 	boolean isItaBomb(int i, int j){
 		String[][] fi = field.getfilledField();
-		if(field.getBomb().equals(fi[i][j])){
-			field.setUserFieldSimple(i, j, field.getBomb());
+		if(field.getBombString().equals(fi[i][j])){
+			field.setUserFieldSimple(i, j, field.getBombString());
 			return true;
 		}
 		field.setUserField(i,j);	
