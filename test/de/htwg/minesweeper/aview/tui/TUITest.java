@@ -26,15 +26,16 @@ public class TUITest {
 	@Test
 	public void testAnswerOptions() {
 		tui.answerOptions("n");
+		assertEquals("n", controller.getFieldPosition());
 		tui.answerOptions("0,0");
-		assertEquals("", controller.getFieldPosition());
+		assertEquals("0,0", controller.getFieldPosition());
 		tui.answerOptions("h");
 		assertTrue(controller.getHelpText().contains("GUI"));
 		
 		exit.expectSystemExit();
 		assertTrue(tui.answerOptions("q"));
 	}
-
+/*
 	@Test
 	public void testUpdate() {
 		fail("Not yet implemented");
@@ -49,5 +50,5 @@ public class TUITest {
 	public void testPrintTui() {
 		fail("Not yet implemented");
 	}
-
+*/
 }
