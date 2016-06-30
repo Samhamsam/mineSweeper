@@ -2,10 +2,8 @@ package de.htwg.minesweeper.controller;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import de.htwg.minesweeper.controller.impl.*;
 import de.htwg.minesweeper.model.Model;
 import util.observer.Observable;
@@ -27,7 +25,6 @@ public class Controller extends Observable implements IController{
 	private static final String HELP_COMMAND = "h";
 	private static final String NEW_GAME_COMMAND = "n";
 
-	
 	private int row = ROW;
 	private int column = COLUMN;
 	private int numberOfMines = NUMBER_OF_MINES;
@@ -42,15 +39,11 @@ public class Controller extends Observable implements IController{
 	
 	private boolean firstStart = true;
 	
-	
 	private int statusCode;
-	
 	
 	private long timestart;
 	private long timeEnd;
 	private long wonTime;
-	
-
 	
 	private ICommand command;
 	private String helpText;
@@ -297,6 +290,4 @@ public class Controller extends Observable implements IController{
 	public void setColumn(int column) {
 		this.column = column;
 	}
-
-	
 }
