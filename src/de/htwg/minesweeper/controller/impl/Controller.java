@@ -8,7 +8,6 @@ import org.apache.logging.log4j.Logger;
 
 import de.htwg.minesweeper.controller.ICommand;
 import de.htwg.minesweeper.controller.IController;
-import de.htwg.minesweeper.controller.impl.*;
 import de.htwg.minesweeper.model.Model;
 import util.observer.Observable;
 
@@ -25,9 +24,13 @@ public class Controller extends Observable implements IController{
 	private static final int STATUS_CODE_GAME_LOST = 2;
 	private static final int STATUS_CODE_HELP_TEXT = 4;
 	private static final int STATUS_CODE_ERROR = 5;
+	private static final int STATUS_CHANGE_VARIABLES = 6;
+	private static final int STATUS_DO_CHANGE_SETTINGS = 7;
 	
 	private static final String HELP_COMMAND = "h";
 	private static final String NEW_GAME_COMMAND = "n";
+	private static final String CHANGE_SETTINGS_COMMAND = "c";
+
 
 	
 	private int row = ROW;
@@ -88,6 +91,26 @@ public class Controller extends Observable implements IController{
 	@Override
 	public void setHelpText(String helpText) {
 		this.helpText = helpText;
+	}
+	
+	@Override
+	public void setRowAndColumnAndBombs(List<String> list, boolean guiOrTUi) {
+		if(guiOrTUi){
+			fieldPosition = CHANGE_SETTINGS_COMMAND+","+list.get(1)+","+list.get(2);
+			setStatusCode(STATUS_CHANGE_VARIABLES);
+			notifyObservers();
+		}
+		this.row = Integer.parseInt(list.get(1));
+		this.column = row;
+		this.numberOfMines = Integer.parseInt(list.get(2));
+		field = new Model(row, column, numberOfMines);
+	}
+	
+	@Override
+	public void notifyIfSettingsSet(){
+		setStatusRunning();
+		setStatusCode(STATUS_DO_CHANGE_SETTINGS);
+		notifyObservers();
 	}
 	
 	@Override
@@ -265,10 +288,12 @@ public class Controller extends Observable implements IController{
 		return String.valueOf(wonTime);
 	}
 	
+	@Override
 	public int getNumberOfMines() {
 		return numberOfMines;
 	}
-
+	
+	@Override
 	public void setNumberOfMines(int numberOfMines) {
 		this.numberOfMines = numberOfMines;
 	}

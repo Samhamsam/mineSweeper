@@ -16,15 +16,18 @@ public class GUI extends JFrame implements ActionListener,IObserver,MouseListene
 	JMenuBar menuBar;
 	JMenu menu, submenu, menuQuestion;
 	JMenuItem newGame;
-	JMenuItem quit;
-	JMenuItem help;
+	JMenuItem quit,settingsmenu,help;
 	
 	public GUI(IController controller){
 		this.controller = controller;
 		controller.addObserver(this);
-		
 		frame = new JFrame("Minesweeper");
-		
+		setFrame(new Dimension(700, 700));
+
+	}
+	
+	private void setFrame(Dimension dime){
+
 		menuBar = new JMenuBar();
 		menu = new JMenu("Menu");
 		menuQuestion = new JMenu("?");
@@ -33,20 +36,22 @@ public class GUI extends JFrame implements ActionListener,IObserver,MouseListene
 		newGame = new JMenuItem("New Game");
 		quit = new JMenuItem("Quit");
 		help = new JMenuItem("Help");
+		settingsmenu = new JMenuItem("Settings");
 		menu.add(newGame);
+		menu.add(settingsmenu);
 		menu.add(quit);
 		menuQuestion.add(help);
 		
 		newGame.addActionListener(this);
 		quit.addActionListener(this);
 		help.addActionListener(this);
+		settingsmenu.addActionListener(this);
 		
 		frame.setJMenuBar(menuBar);
 		
 		frame.setLayout(new GridLayout (controller.getRow(),controller.getColumn()));
 		buildGameField(frame);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    frame.setPreferredSize(new Dimension(700, 700));
 	    frame.pack();
 	    frame.setLocationRelativeTo(null);
 	    frame.setVisible(true);
@@ -68,6 +73,7 @@ public class GUI extends JFrame implements ActionListener,IObserver,MouseListene
 				frame.add(buttonForTheMineSweeperFields[x][y]);
 				buttonForTheMineSweeperFields[x][y].setBackground(Color.GRAY);
 				buttonForTheMineSweeperFields [x][y].addMouseListener(this);
+				buttonForTheMineSweeperFields[x][y].setPreferredSize(new Dimension(50, 50));
 			}
 		}
 	}
@@ -127,6 +133,9 @@ public class GUI extends JFrame implements ActionListener,IObserver,MouseListene
 		else if(e.getSource()==help) {
 			controller.hilfe();
 		}
+		else if(e.getSource()==settingsmenu) {
+			setSettings();
+		}
 		
 
 	}
@@ -134,7 +143,10 @@ public class GUI extends JFrame implements ActionListener,IObserver,MouseListene
 	@Override
 	public void update(Event e) {
 		if(!(controller.getStatusCode() == 5)){
-			setStringInButton(getFeldText());
+			if(!((controller.getStatusCode() == 6) || (controller.getStatusCode() == 7))){
+				setStringInButton(getFeldText());
+			}
+				
 			
 			if(controller.getStatusCode() == 1){
 				setEnableButtons(true);
@@ -150,6 +162,12 @@ public class GUI extends JFrame implements ActionListener,IObserver,MouseListene
 			
 			if(controller.getStatusCode() == 4)
 				messageDialog(controller.getHelpText());
+			
+			if(controller.getStatusCode() == 6)
+				setSettings();
+
+			if(controller.getStatusCode() == 7)
+				doSettings();
 		}
 	}
 	
@@ -225,6 +243,16 @@ public class GUI extends JFrame implements ActionListener,IObserver,MouseListene
 
 			}
 		}
+	}
+	
+	private void setSettings(){
+		new GUISettings(controller.getColumn(), controller.getNumberOfMines(),controller,frame);
+	}
+	private void doSettings(){
+		frame.getContentPane().removeAll();
+		setFrame(new Dimension(700, 700));
+		frame.validate();
+		frame.repaint();
 	}
 
 }

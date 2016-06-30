@@ -1,5 +1,8 @@
 package de.htwg.minesweeper.aview.tui;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import de.htwg.minesweeper.controller.IController;
@@ -17,6 +20,12 @@ public class TUI implements IObserver {
 	
 	public boolean answerOptions(String answer){
 		boolean continu = true;
+		List<String> list = Arrays.asList(answer.split(","));
+
+		if(list.get(0).equals("c")){
+			answer = "c";
+		}
+			
 		switch(answer){
 			case "q":
 				continu = false;
@@ -29,6 +38,12 @@ public class TUI implements IObserver {
 			
 			case "h":
 				controller.hilfe();
+			break;
+			
+			case "c":
+				controller.setRowAndColumnAndBombs(list,true);
+				controller.notifyIfSettingsSet();
+
 			break;
 			
 			
@@ -66,6 +81,10 @@ public class TUI implements IObserver {
 			if(!"".equals(controller.getFieldPosition()))
 				LOGGER.info("You typed: " + controller.getFieldPosition() + "\n");
 			
+			if(status == 7){
+				LOGGER.info("You set row/column to: "+controller.getRow()+" and bombs to: "+controller.getNumberOfMines());
+			}
+			
 			LOGGER.info(stringBuilder.toString());
 			
 			if(status == 1 || status == 0)
@@ -80,6 +99,12 @@ public class TUI implements IObserver {
 			}
 			if(status == 2 || status == 3)
 				LOGGER.info("New Game? Type: n");
+			if(status == 6){
+				LOGGER.info("Set number of column/row and mines:");
+			}
+
+				
+			
 		}else{
 			LOGGER.error("NOT A NUMBER!");
 		}
