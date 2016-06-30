@@ -36,8 +36,11 @@ public class ModelTest {
 	@Test
 	public void testCountIfGameIsWon() {
 		model.countIfGameIsWon();
+		model1.countIfGameIsWon();
 		boolean test = model.getsizeOfxAndfWithBomb() == model.getsizeOfxAndfWithoutBomb();
+		boolean test2 = model1.getsizeOfxAndfWithBomb() == model1.getsizeOfxAndfWithoutBomb();
 		assertFalse(test);
+		assertFalse(test2);
 	}
 
 	@Test

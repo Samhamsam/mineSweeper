@@ -17,7 +17,7 @@ public class Controller extends Observable implements IController{
 	
 	private static final int ROW = 15; 
 	private static final int COLUMN = 15;
-	private static final int NUMBER_OF_MINES = 10;
+	private static final int NUMBER_OF_MINES = 30;
 	
 	private static final int STATUS_CODE_INFO_TEXT = 1;
 	private static final int STATUS_CODE_WON_GAME = 3;
@@ -100,10 +100,15 @@ public class Controller extends Observable implements IController{
 			setStatusCode(STATUS_CHANGE_VARIABLES);
 			notifyObservers();
 		}
-		this.row = Integer.parseInt(list.get(1));
-		this.column = row;
-		this.numberOfMines = Integer.parseInt(list.get(2));
-		field = new Model(row, column, numberOfMines);
+		try {
+			this.row = Integer.parseInt(list.get(1));
+			this.column = row;
+			this.numberOfMines = Integer.parseInt(list.get(2));
+			field = new Model(row, column, numberOfMines);
+		} catch (Exception e) {
+			LOGGER.error(e);
+		}
+
 	}
 	
 	@Override
@@ -159,6 +164,7 @@ public class Controller extends Observable implements IController{
 			if(list.size() == 2){
 				
 				answerList = stringToNumber(list);
+				
 				boolean itsABomb = isItaBomb(answerList[0],answerList[1]);
 				
 				if(itsABomb){
@@ -238,7 +244,8 @@ public class Controller extends Observable implements IController{
 			field.setUserFieldSimple(i, j, field.getBombString());
 			return true;
 		}
-		field.setUserField(i,j);	
+		field.setUserField(i,j);
+			
 		return false;
 	}
 	

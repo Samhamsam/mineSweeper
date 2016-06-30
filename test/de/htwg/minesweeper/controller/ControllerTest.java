@@ -132,5 +132,25 @@ public class ControllerTest {
 		assertEquals(10, control2.getColumn());
 	}
 	
+	@Test
+	public void testSetRowAndColumnAndBombs(){
+		String answer = "c,10,10";
+		List<String> list = Arrays.asList(answer.split(","));
+		control.setRowAndColumnAndBombs(list, false);
+		assertEquals(10, control.getColumn());
+		control.setRowAndColumnAndBombs(list, true);
+		assertEquals(6, control.getStatusCode());
+		String answer1 = "c,c,c";
+		List<String> list1 = Arrays.asList(answer1.split(","));
+		control.setRowAndColumnAndBombs(list1, false);
+		
+	}
+	
+	@Test
+	public void testnotifyIfSettingsSet(){
+		control.notifyIfSettingsSet();
+		assertEquals(7, control.getStatusCode());
+	}
+	
 
 }

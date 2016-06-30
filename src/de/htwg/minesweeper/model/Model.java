@@ -82,7 +82,9 @@ public class Model extends Observable {
 	public void countIfGameIsWon(){
 		for(int j = 0; j < column; j++){
 			for(int i= 0; i < row; i++){
-				if((userField[i][j].equals(userHiddenFieldString) && getfilledField()[i][j].equals(bombString)) || (userField[i][j].equals(flagString) && getfilledField()[i][j].equals(bombString)))
+				boolean one = (userField[i][j].equals(userHiddenFieldString) && getfilledField()[i][j].equals(bombString));
+				boolean two = (userField[i][j].equals(flagString) && getfilledField()[i][j].equals(bombString));
+				if(one || two)
 					setsizeOfxAndfWithBomb(getsizeOfxAndfWithBomb()+1);
 
 				if(userField[i][j].equals(userHiddenFieldString) || userField[i][j].equals(flagString))
