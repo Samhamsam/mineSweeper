@@ -93,9 +93,6 @@ public class Controller extends Observable implements IController{
 		return helpText;
 	}
 	
-	
-	
-	
 	@Override
 	public void newGame(Model field){
 		this.field = field;
