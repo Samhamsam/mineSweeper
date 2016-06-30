@@ -2,12 +2,16 @@ package de.htwg.minesweeper.controller;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import de.htwg.minesweeper.controller.impl.*;
 import de.htwg.minesweeper.model.Model;
 import util.observer.Observable;
 
 public class Controller extends Observable implements IController{
-
+	private static final Logger LOGGER = LogManager.getLogger();
 	private static final String FIRST_FIELD_POSITION = "";
 	
 	private static final int ROW = 15; 
@@ -178,6 +182,7 @@ public class Controller extends Observable implements IController{
 		} catch (Exception e) {
 			setStatusCode(STATUS_CODE_ERROR);
 			notifyObservers();
+			LOGGER.error(e);
 		}
 
 		i[0] = firstNumber;
@@ -201,6 +206,7 @@ public class Controller extends Observable implements IController{
 		catch (Exception e) {
 			setStatusCode(STATUS_CODE_ERROR);
 			notifyObservers();
+			LOGGER.error(e);
 		}
 	}
 	
