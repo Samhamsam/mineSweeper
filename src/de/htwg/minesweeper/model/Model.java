@@ -15,13 +15,13 @@ public class Model extends Observable {
 	private static final String FLAG = "f";
 	
 	
-	private String bomb = BOMB;
+	private String bombString = BOMB;
 
 
 
-	private String freeField = FREE_FIELD;
-	private String userHiddenField = USER_HIDDEN_FIELD;
-	private String flag = FLAG;
+	private String freeFieldString = FREE_FIELD;
+	private String userHiddenFieldString = USER_HIDDEN_FIELD;
+	private String flagString = FLAG;
 
 
 
@@ -50,7 +50,7 @@ public class Model extends Observable {
 		{
 		    for (int j = 0; j < row; j++)
 		    {
-		    	fillWithBlanks[i][j] = freeField;
+		    	fillWithBlanks[i][j] = freeFieldString;
 		    }
 		}
 		return fillWithBlanks;
@@ -62,14 +62,14 @@ public class Model extends Observable {
 		for(int i = 0; i < numberOfMines; i++) {
 			int mrow = rand.nextInt(row);
 			int ncolumn = rand.nextInt(column);
-			fillWithMines[mrow][ncolumn] = bomb;
+			fillWithMines[mrow][ncolumn] = bombString;
 		}
 
 		return fillWithMines;
 	}
 	
 	public String[][] setOneBomb(int i, int j, String[][] fillWithMines){
-			fillWithMines[i][j] = bomb;
+			fillWithMines[i][j] = bombString;
 		return fillWithMines;
 	}
 	
@@ -82,7 +82,7 @@ public class Model extends Observable {
 		{
 		    for (int j = 0; j < row; j++)
 		    {
-		    	t[i][j] = userHiddenField;
+		    	t[i][j] = userHiddenFieldString;
 		    }
 		}
 		return t;
@@ -91,10 +91,10 @@ public class Model extends Observable {
 	public void countIfGameIsWon(){
 		for(int j = 0; j < column; j++){
 			for(int i= 0; i < row; i++){
-				if((userField[i][j].equals(userHiddenField) && getfilledField()[i][j].equals(bomb)) || (userField[i][j].equals(flag) && getfilledField()[i][j].equals(bomb)))
+				if((userField[i][j].equals(userHiddenFieldString) && getfilledField()[i][j].equals(bombString)) || (userField[i][j].equals(flagString) && getfilledField()[i][j].equals(bombString)))
 					setsizeOfxAndfWithBomb(getsizeOfxAndfWithBomb()+1);
 
-				if(userField[i][j].equals(userHiddenField) || userField[i][j].equals(flag))
+				if(userField[i][j].equals(userHiddenFieldString) || userField[i][j].equals(flagString))
 					setsizeOfxAndfWithoutBomb(getsizeOfxAndfWithoutBomb() +1);
 			}
 		}
@@ -109,10 +109,10 @@ public class Model extends Observable {
 	}
 	
 	public void setFlag(int i, int j){
-		userField[i][j] = flag;
+		userField[i][j] = flagString;
 	}
 	public void resetFlag(int i, int j){
-		userField[i][j] = userHiddenField;
+		userField[i][j] = userHiddenFieldString;
 	}
 	
 	void openAllBlanks(int i, int j){
@@ -221,9 +221,9 @@ public class Model extends Observable {
 	
 	private void openAllBlanksChecker(int variableX, int variableY, String stringNumber){
 		String numberBombs = openAllBlanksHelper(variableX,variableY);
-		if((numberBombs.equals(freeUserField)) && (getUserFieldSimple(variableX,variableY).equals(userHiddenField)))
+		if((numberBombs.equals(freeUserField)) && (getUserFieldSimple(variableX,variableY).equals(userHiddenFieldString)))
 			openAllBlanks(variableX,variableY);
-		else if((stringNumber.equals(freeUserField)) && (!numberBombs.equals(freeUserField)) && (getUserFieldSimple(variableX,variableY).equals(userHiddenField)))
+		else if((stringNumber.equals(freeUserField)) && (!numberBombs.equals(freeUserField)) && (getUserFieldSimple(variableX,variableY).equals(userHiddenFieldString)))
 			userField[variableX][variableY] = openAllBlanksHelper(variableX, variableY);
 	}
 	
@@ -247,7 +247,7 @@ public class Model extends Observable {
 	
 	private int getNumberMinesNearFieldHelper(int ii, int jj){
 		int number = 0;
-		if(filledField[ii][jj].equals(bomb)){
+		if(filledField[ii][jj].equals(bombString)){
 			number = 1;
 		}
 		return number;
@@ -311,29 +311,29 @@ public class Model extends Observable {
 	}
 	
 	public String getUserHiddenField() {
-		return userHiddenField;
+		return userHiddenFieldString;
 	}
 
 
-	public void setUserHiddenField(String userHiddenField) {
-		this.userHiddenField = userHiddenField;
-	}
-	
-	public String getBomb() {
-		return bomb;
-	}
-
-
-	public void setBomb(String bomb) {
-		this.bomb = bomb;
+	public void setUserHiddenField(String userHiddenFieldString) {
+		this.userHiddenFieldString = userHiddenFieldString;
 	}
 	
-	public String getFlag() {
-		return flag;
+	public String getBombString() {
+		return bombString;
 	}
 
 
-	public void setFlag(String flag) {
-		this.flag = flag;
+	public void setBombString(String bombString) {
+		this.bombString = bombString;
+	}
+	
+	public String getFlagString() {
+		return flagString;
+	}
+
+
+	public void setFlagString(String flagString) {
+		this.flagString = flagString;
 	}
 }

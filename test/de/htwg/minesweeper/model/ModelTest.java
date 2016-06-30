@@ -99,5 +99,17 @@ public class ModelTest {
 		assertEquals(0, model.getsizeOfxAndfWithBomb());
 		assertEquals(0, model.getsizeOfxAndfWithoutBomb());
 	}
+	
+	@Test
+	public void testSetGetBomb() {
+		model.setBombString("c");
+		assertEquals("c", model.getBombString());
+	}
+	
+	@Test
+	public void testSetGetFlag() {
+		model.setFlagString("c");
+		assertEquals("c", model.getFlagString());
+	}
 
 }

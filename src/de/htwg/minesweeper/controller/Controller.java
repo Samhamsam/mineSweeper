@@ -246,14 +246,6 @@ public class Controller extends Observable implements IController{
 		return String.valueOf(wonTime);
 	}
 	
-	public boolean isFirstStart() {
-		return firstStart;
-	}
-
-	public void setFirstStart(boolean firstStart) {
-		this.firstStart = firstStart;
-	}
-	
 	public int getNumberOfMines() {
 		return numberOfMines;
 	}

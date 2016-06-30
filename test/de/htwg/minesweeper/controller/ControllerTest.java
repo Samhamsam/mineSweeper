@@ -4,9 +4,8 @@ import static org.junit.Assert.*;
 
 import java.util.*;
 
-import org.junit.Before;
-import org.junit.Test;
-
+import org.junit.*;
+import org.junit.contrib.java.lang.system.ExpectedSystemExit;
 
 import de.htwg.minesweeper.model.Model;
 
@@ -14,10 +13,10 @@ public class ControllerTest {
 
 	Controller control,control2;
 	Model model, modelWithoutBombs,modelWithLotsBombs;
-	/*
+	
 	@Rule
     public final ExpectedSystemExit exit = ExpectedSystemExit.none();
-	*/
+	
 	@Before
 	public void setUp() throws Exception {
 		model = new Model(10, 10, 20);
@@ -90,5 +89,37 @@ public class ControllerTest {
 		control.setStatusCode(0);
 		assertEquals(0,control.getStatusCode());
 	}
+	
+	@Test
+	public void testexitGame() {
+		exit.expectSystemExitWithStatus(0);
+		control.exitGame();
+	}
+	
+	@Test
+	public void testgetFeldText() {
+		control.newGame(modelWithoutBombs);
+		assertEquals("x", control.getFeldText()[0][0]);
+	}
+	
+	@Test
+	public void testgetTimeWon() {
+		control.newGame(modelWithoutBombs);
+		control.startGame("0,0");
+		assertEquals("0", control.getTimeWon());
+	}
+	
+	@Test
+	public void testSetAndGetRow() {
+		control2.setRow(10);
+		assertEquals(10, control2.getRow());
+	}
+	
+	@Test
+	public void testSetAndGetColumn() {
+		control2.setColumn(10);
+		assertEquals(10, control2.getColumn());
+	}
+	
 
 }
