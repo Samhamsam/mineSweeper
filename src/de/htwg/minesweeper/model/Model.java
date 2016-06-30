@@ -14,18 +14,11 @@ public class Model extends Observable {
 	private static final String FREE_USER_FIELD = "0";
 	private static final String FLAG = "f";
 	
-	
 	private String bombString = BOMB;
-
-
 
 	private String freeFieldString = FREE_FIELD;
 	private String userHiddenFieldString = USER_HIDDEN_FIELD;
 	private String flagString = FLAG;
-
-
-
-
 
 	private String freeUserField = FREE_USER_FIELD;
 	
@@ -44,7 +37,6 @@ public class Model extends Observable {
 		userField = userField();
 	}
 
-	
 	private String[][] insertg(String[][] fillWithBlanks){
 		for (int i = 0; i < column; i++)
 		{
@@ -72,7 +64,6 @@ public class Model extends Observable {
 			fillWithMines[i][j] = bombString;
 		return fillWithMines;
 	}
-	
 	
 	public String[][] userField(){
 		
