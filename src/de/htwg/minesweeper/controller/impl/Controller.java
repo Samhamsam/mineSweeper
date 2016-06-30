@@ -1,4 +1,4 @@
-package de.htwg.minesweeper.controller;
+package de.htwg.minesweeper.controller.impl;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -6,6 +6,8 @@ import java.util.concurrent.TimeUnit;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import de.htwg.minesweeper.controller.ICommand;
+import de.htwg.minesweeper.controller.IController;
 import de.htwg.minesweeper.controller.impl.*;
 import de.htwg.minesweeper.model.Model;
 import util.observer.Observable;
@@ -187,7 +189,7 @@ public class Controller extends Observable implements IController{
 		return i;
 	}
 	
-	void setFlag(List<String> flag){
+	public void setFlag(List<String> flag){
 		try{
 			int numberi = Integer.parseInt(flag.get(0));
 			int numberj = Integer.parseInt(flag.get(1));

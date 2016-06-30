@@ -1,4 +1,6 @@
-package de.htwg.minesweeper.controller;
+package de.htwg.minesweeper.controller.impl;
+
+import de.htwg.minesweeper.controller.ICommand;
 
 public class QuitCommand implements ICommand{
 	private Quit quit;

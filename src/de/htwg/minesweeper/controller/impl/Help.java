@@ -1,4 +1,4 @@
-package de.htwg.minesweeper.controller;
+package de.htwg.minesweeper.controller.impl;
 
 public class Help {
 	

@@ -1,5 +1,7 @@
 package de.htwg.minesweeper.controller.impl;
 
+import de.htwg.minesweeper.controller.IStatus;
+
 public class Context{
 	
 	private IStatus status;
