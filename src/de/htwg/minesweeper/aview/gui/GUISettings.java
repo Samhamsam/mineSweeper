@@ -11,11 +11,9 @@ import javax.swing.JSlider;
 import javax.swing.UIManager;
 
 import de.htwg.minesweeper.controller.IController;
-import util.observer.Event;
-import util.observer.IObserver;
 
 
-public class GUISettings implements IObserver {
+public class GUISettings {
 	
 	static JOptionPane optionPane;
 	Frame frame;
@@ -41,10 +39,9 @@ public class GUISettings implements IObserver {
 	  this.frame = frame;
 	  this.initialValueColumnAndRow = initialValueColumnAndRow;
 	  this.initialValueMines = initialValueMines;
-	  run();
   }
   
-  private void run(){
+  public void run(){
 	  eins.setMaximum(maximumCR);
 	  eins.setMinimum(minimum);
 	  eins.setValue(initialValueColumnAndRow);	
@@ -75,9 +72,6 @@ public class GUISettings implements IObserver {
 		  setController();
 		  controller.notifyIfSettingsSet();
 	  }
-	  else{
-		  
-	  }
 		  
   }
   
@@ -88,11 +82,5 @@ public class GUISettings implements IObserver {
 	  controller.setRowAndColumnAndBombs(list,false);
 	  return;
   }
-
-@Override
-public void update(Event e) {
-	System.exit(0);
-}
-  
 
 }

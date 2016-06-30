@@ -19,14 +19,15 @@ public class TUI implements IObserver {
 	}
 	
 	public boolean answerOptions(String answer){
+		String answer2 = answer;
 		boolean continu = true;
 		List<String> list = Arrays.asList(answer.split(","));
 
-		if(list.get(0).equals("c")){
-			answer = "c";
+		if("c".equals(list.get(0))){
+			answer2 = "c";
 		}
 			
-		switch(answer){
+		switch(answer2){
 			case "q":
 				continu = false;
 				controller.exitGame();
@@ -41,9 +42,7 @@ public class TUI implements IObserver {
 			break;
 			
 			case "c":
-				controller.setRowAndColumnAndBombs(list,true);
-				controller.notifyIfSettingsSet();
-
+				runSettings(list);
 			break;
 			
 			
@@ -51,6 +50,11 @@ public class TUI implements IObserver {
 				controller.startGame(answer);
 		}
 		return continu;
+	}
+	
+	private void runSettings(List<String> list){
+		controller.setRowAndColumnAndBombs(list,true);
+		controller.notifyIfSettingsSet();
 	}
 
 	@Override

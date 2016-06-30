@@ -11,6 +11,7 @@ public class GUI extends JFrame implements ActionListener,IObserver,MouseListene
 	private static final long serialVersionUID = 1L;
 	private JButton[][] buttonForTheMineSweeperFields;
 	private IController controller;
+	private GUISettings guiSettings;
 	
 	JFrame frame;
 	JMenuBar menuBar;
@@ -22,11 +23,11 @@ public class GUI extends JFrame implements ActionListener,IObserver,MouseListene
 		this.controller = controller;
 		controller.addObserver(this);
 		frame = new JFrame("Minesweeper");
-		setFrame(new Dimension(700, 700));
+		setFrame();
 
 	}
 	
-	private void setFrame(Dimension dime){
+	private void setFrame(){
 
 		menuBar = new JMenuBar();
 		menu = new JMenu("Menu");
@@ -246,11 +247,12 @@ public class GUI extends JFrame implements ActionListener,IObserver,MouseListene
 	}
 	
 	private void setSettings(){
-		new GUISettings(controller.getColumn(), controller.getNumberOfMines(),controller,frame);
+		guiSettings = new GUISettings(controller.getColumn(), controller.getNumberOfMines(),controller,frame);
+		guiSettings.run();
 	}
 	private void doSettings(){
 		frame.getContentPane().removeAll();
-		setFrame(new Dimension(700, 700));
+		setFrame();
 		frame.validate();
 		frame.repaint();
 	}
