@@ -21,8 +21,8 @@ public class GUISettings {
 	private int maximumCR = 40;
 	private int maximumB = 100;
 	private int minimum = 5;
-	private int majorSpacing = 10;
-	private int minorSpacing = 2;
+	private int majorSpacing = 5;
+	private int minorSpacing = 1;
 	private int initialValueColumnAndRow;
 	private int initialValueMines;
 	
@@ -61,7 +61,7 @@ public class GUISettings {
 	  zwei.setPaintLabels(true);
 	  
 	  UIManager.put("OptionPane.minimumSize",new Dimension(500,100));
-	  Object[] complexMsg = { "Set size row/column", eins, "Set size mines",zwei};
+	  Object[] complexMsg = { "Set number row/column", eins, "Set number mines",zwei};
 
 	  int result = JOptionPane.showConfirmDialog(frame, complexMsg, 
 		       "Settings", JOptionPane.OK_CANCEL_OPTION);
