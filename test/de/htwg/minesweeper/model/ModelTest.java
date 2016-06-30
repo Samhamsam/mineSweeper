@@ -114,5 +114,11 @@ public class ModelTest {
 		model.setFlagString("c");
 		assertEquals("c", model.getFlagString());
 	}
+	
+	@Test
+	public void testResetFlag() {
+		model.resetFlag(0, 0);
+		assertEquals("x", model.getUserFieldSimple(0, 0));
+	}
 
 }
