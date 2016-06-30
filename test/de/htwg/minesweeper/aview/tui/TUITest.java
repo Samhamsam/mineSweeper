@@ -8,11 +8,13 @@ import org.junit.Test;
 import org.junit.contrib.java.lang.system.ExpectedSystemExit;
 
 import de.htwg.minesweeper.controller.Controller;
+import util.observer.Event;
 
 public class TUITest {
 	
 	Controller controller = new Controller();
 	TUI tui;
+	Event e;
 	
 	@Rule
     public final ExpectedSystemExit exit = ExpectedSystemExit.none();
@@ -35,20 +37,10 @@ public class TUITest {
 		exit.expectSystemExit();
 		assertTrue(tui.answerOptions("q"));
 	}
-/*
+
 	@Test
 	public void testUpdate() {
-		fail("Not yet implemented");
+		tui.update(e);
+		assertEquals(0, controller.getStatusCode());
 	}
-
-	@Test
-	public void testPrintField() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testPrintTui() {
-		fail("Not yet implemented");
-	}
-*/
 }
