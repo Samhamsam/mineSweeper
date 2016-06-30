@@ -66,6 +66,7 @@ public class ControllerTest {
 		assertEquals(5, control.getStatusCode());
 		control.startGame("a,a,a");
 		assertEquals(5, control.getStatusCode());
+		control.startGame("");
 		
 	}
 	
@@ -79,6 +80,9 @@ public class ControllerTest {
 		assertEquals("f",model.getUserFieldSimple(0, 0));
 		control.setFlag(list);
 		assertEquals("x",model.getUserFieldSimple(0, 0));
+		String answer2 = "0,0,c";
+		List<String> list2 = Arrays.asList(answer.split(","));
+		control.setFlag(list2);
 	}
 	
 

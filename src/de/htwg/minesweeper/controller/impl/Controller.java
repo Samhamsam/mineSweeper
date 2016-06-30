@@ -184,7 +184,7 @@ public class Controller extends Observable implements IController{
 				
 	
 			}
-			else if(list.size() == 3){
+			else{
 				setFlag(list);
 			}
 			notifyObservers();
@@ -227,9 +227,10 @@ public class Controller extends Observable implements IController{
 			if(field.getUserHiddenField().equals(testField)){
 				field.setFlag(numberi, numberj);
 			}
-			else if(field.getFlagString().equals(testField)){
+			else {
 				field.resetFlag(numberi,numberj);
 			}
+				
 		}
 		catch (Exception e) {
 			setStatusCode(STATUS_CODE_ERROR);
