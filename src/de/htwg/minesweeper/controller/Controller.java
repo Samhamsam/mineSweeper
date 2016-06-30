@@ -18,6 +18,7 @@ public class Controller extends Observable implements IController{
 	private static final int STATUS_CODE_WON_GAME = 3;
 	private static final int STATUS_CODE_GAME_LOST = 2;
 	private static final int STATUS_CODE_HELP_TEXT = 4;
+	private static final int STATUS_CODE_ERROR = 5;
 	
 	private static final String HELP_COMMAND = "h";
 	private static final String NEW_GAME_COMMAND = "n";
@@ -114,9 +115,10 @@ public class Controller extends Observable implements IController{
 	
 	@Override
 	public void startGame(String answer) {
-		if(context.endStatus()){
-			
-			int[] answerList = {};
+		int[] answerList = {};
+		List<String> list = Arrays.asList(answer.split(","));
+		
+		if(context.endStatus() && (list.size()>1) && (list.size()<4)){
 			
 			if(firstStart){
 				setStartTime(System.nanoTime());
@@ -127,8 +129,6 @@ public class Controller extends Observable implements IController{
 			
 			setStatusCode(STATUS_CODE_INFO_TEXT);
 			
-	
-			List<String> list = Arrays.asList(answer.split(","));
 			
 			if(list.size() == 2){
 				
@@ -172,22 +172,35 @@ public class Controller extends Observable implements IController{
 	int[] stringToNumber(List<String> list){
 		int[] i;
 		i = new int[2];
-		firstNumber = Integer.parseInt(list.get(0));
-		secondNumber = Integer.parseInt(list.get(1));
+		try {
+			firstNumber = Integer.parseInt(list.get(0));
+			secondNumber = Integer.parseInt(list.get(1));
+		} catch (Exception e) {
+			setStatusCode(STATUS_CODE_ERROR);
+			notifyObservers();
+		}
+
 		i[0] = firstNumber;
 		i[1] = secondNumber;
 		return i;
 	}
 	
 	void setFlag(List<String> flag){
-		int numberi = Integer.parseInt(flag.get(0));
-		int numberj = Integer.parseInt(flag.get(1));
-		String testField = field.getUserFieldSimple(numberi, numberj);
-		if(field.getUserHiddenField().equals(testField)){
-			field.setFlag(numberi, numberj);
+		try{
+			int numberi = Integer.parseInt(flag.get(0));
+			int numberj = Integer.parseInt(flag.get(1));
+			
+			String testField = field.getUserFieldSimple(numberi, numberj);
+			if(field.getUserHiddenField().equals(testField)){
+				field.setFlag(numberi, numberj);
+			}
+			else if(field.getFlagString().equals(testField)){
+				field.resetFlag(numberi,numberj);
+			}
 		}
-		else if(field.getFlagString().equals(testField)){
-			field.resetFlag(numberi,numberj);
+		catch (Exception e) {
+			setStatusCode(STATUS_CODE_ERROR);
+			notifyObservers();
 		}
 	}
 	

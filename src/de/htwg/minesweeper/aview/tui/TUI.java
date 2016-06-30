@@ -64,26 +64,32 @@ public class TUI implements IObserver {
 	public void printTui() {
 		int status = controller.getStatusCode();
 		
-		StringBuilder stringBuilder;
+		if(!(status == 5)){
+			
 		
-		stringBuilder = printField(controller.getFeldText());
-		
-		if(!"".equals(controller.getFieldPosition()))
-			LOGGER.info("You typed: " + controller.getFieldPosition() + "\n");
-		
-		LOGGER.info(stringBuilder.toString());
-		
-		if(status == 1 || status == 0)
-			LOGGER.info("Type: x,x | x is a number between 0 and 9(row, column):\n");
-		if(status == 2)
-			LOGGER.info("You Lost!");
-		if(status == 3){
-			LOGGER.info("You Won! " + controller.getTimeWon() + " Points!");
+			StringBuilder stringBuilder;
+			
+			stringBuilder = printField(controller.getFeldText());
+			
+			if(!"".equals(controller.getFieldPosition()))
+				LOGGER.info("You typed: " + controller.getFieldPosition() + "\n");
+			
+			LOGGER.info(stringBuilder.toString());
+			
+			if(status == 1 || status == 0)
+				LOGGER.info("Type: x,x | x is a number between 0 and 9(row, column):\n");
+			if(status == 2)
+				LOGGER.info("You Lost!");
+			if(status == 3){
+				LOGGER.info("You Won! " + controller.getTimeWon() + " Points!");
+			}
+			if(status == 4){
+				LOGGER.info(controller.getHelpText());
+			}
+			if(status == 2 || status == 3)
+				LOGGER.info("New Game? Type: n");
+		}else{
+			LOGGER.error("NOT A NUMBER!");
 		}
-		if(status == 4){
-			LOGGER.info(controller.getHelpText());
-		}
-		if(status == 2 || status == 3)
-			LOGGER.info("New Game? Type: n");
 	}
 }	

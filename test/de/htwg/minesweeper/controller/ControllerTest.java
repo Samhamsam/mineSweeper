@@ -47,8 +47,9 @@ public class ControllerTest {
 		control.newGame(modelWithLotsBombs);
 		control.startGame("0,0");
 		assertEquals("b", modelWithLotsBombs.getUserFieldSimple(0, 0));
-		assertTrue(!control.context.endStatus());
-		
+		control.startGame("0,0");
+		control.startGame("0,0,0,0");
+
 		control.newGame(model);
 		control.startGame("0,0,f");
 		assertEquals("f", model.getUserFieldSimple(0, 0));

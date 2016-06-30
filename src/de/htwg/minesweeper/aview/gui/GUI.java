@@ -138,22 +138,24 @@ public class GUI extends JFrame implements ActionListener,IObserver,MouseListene
 
 	@Override
 	public void update(Event e) {
-		setStringInButton(getFeldText());
-		
-		if(controller.getStatusCode() == 1){
-			setEnableButtons(true);
+		if(!(controller.getStatusCode() == 5)){
+			setStringInButton(getFeldText());
+			
+			if(controller.getStatusCode() == 1){
+				setEnableButtons(true);
+			}
+			
+			if(controller.getStatusCode() == 2){
+				messageDialog("You Lost!");
+				setEnableButtons(false);
+			}
+	
+			if(controller.getStatusCode() == 3)
+				messageDialog("You Won! "+controller.getTimeWon()+" Points!");
+			
+			if(controller.getStatusCode() == 4)
+				messageDialog(controller.getHelpText());
 		}
-		
-		if(controller.getStatusCode() == 2){
-			messageDialog("You Lost!");
-			setEnableButtons(false);
-		}
-
-		if(controller.getStatusCode() == 3)
-			messageDialog("You Won! "+controller.getTimeWon()+" Points!");
-		
-		if(controller.getStatusCode() == 4)
-			messageDialog(controller.getHelpText());
 	}
 	
 	public String[][] getFeldText(){
