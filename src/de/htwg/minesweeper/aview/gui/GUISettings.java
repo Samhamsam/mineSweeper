@@ -61,7 +61,7 @@ public class GUISettings {
 	  zwei.setPaintLabels(true);
 	  
 	  UIManager.put("OptionPane.minimumSize",new Dimension(500,100));
-	  Object complexMsg[] = { "Set size row/column", eins, "Set size mines",zwei};
+	  Object[] complexMsg = { "Set size row/column", eins, "Set size mines",zwei};
 
 	  int result = JOptionPane.showConfirmDialog(frame, complexMsg, 
 		       "Settings", JOptionPane.OK_CANCEL_OPTION);
