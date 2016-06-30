@@ -207,6 +207,7 @@ public class Controller extends Observable implements IController{
 		return statusCode;
 	}
 	
+	@Override
 	public void setStatusCode(int code){
 		this.statusCode = code;
 	}
