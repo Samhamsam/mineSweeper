@@ -212,7 +212,7 @@ public class Controller extends Observable implements IController{
 		this.statusCode = code;
 	}
 	
-	private String getFieldPositionPrivat(){
+	String getFieldPositionPrivat(){
 		return fieldPosition;
 	}
 	

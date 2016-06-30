@@ -18,18 +18,8 @@ public class TUI implements IObserver {
 		this.controller = controller;
 		controller.addObserver(this);
 	}
+	
 
-
-	public void printTheField(String[][] filledField){
-		for(String[] row: filledField){
-			for(String value: row){
-				LOGGER.info("%-20s",value);
-			}
-		}
-	}
-	
-	
-	
 	public boolean answerOptions(String answer){
 		boolean continu = true;
 		switch(answer){
