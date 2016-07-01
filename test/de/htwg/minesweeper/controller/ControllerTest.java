@@ -7,7 +7,6 @@ import java.util.*;
 import org.junit.*;
 import org.junit.contrib.java.lang.system.ExpectedSystemExit;
 
-import de.htwg.minesweeper.controller.impl.Controller;
 import de.htwg.minesweeper.model.Model;
 
 public class ControllerTest {

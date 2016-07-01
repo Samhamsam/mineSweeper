@@ -1,6 +1,4 @@
-package de.htwg.minesweeper.controller.impl;
-
-import de.htwg.minesweeper.controller.ICommand;
+package de.htwg.minesweeper.controller;
 
 public class HelpCommand implements ICommand {
 

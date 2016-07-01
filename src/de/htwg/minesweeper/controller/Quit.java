@@ -1,4 +1,4 @@
-package de.htwg.minesweeper.controller.impl;
+package de.htwg.minesweeper.controller;
 
 public class Quit {
 	public void run(){

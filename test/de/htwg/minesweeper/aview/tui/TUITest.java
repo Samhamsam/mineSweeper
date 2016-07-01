@@ -7,7 +7,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.contrib.java.lang.system.ExpectedSystemExit;
 
-import de.htwg.minesweeper.controller.impl.Controller;
+import de.htwg.minesweeper.controller.Controller;
 import util.observer.Event;
 
 public class TUITest {

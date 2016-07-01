@@ -1,4 +1,4 @@
-package de.htwg.minesweeper.controller.impl;
+package de.htwg.minesweeper.controller;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -6,8 +6,10 @@ import java.util.concurrent.TimeUnit;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import de.htwg.minesweeper.controller.ICommand;
-import de.htwg.minesweeper.controller.IController;
+import de.htwg.minesweeper.controller.impl.Context;
+import de.htwg.minesweeper.controller.impl.StatusPressedBomb;
+import de.htwg.minesweeper.controller.impl.StatusRunning;
+import de.htwg.minesweeper.controller.impl.StatusWonGame;
 import de.htwg.minesweeper.model.Model;
 import util.observer.Observable;
 

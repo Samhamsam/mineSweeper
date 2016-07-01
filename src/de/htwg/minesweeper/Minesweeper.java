@@ -5,8 +5,8 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import de.htwg.minesweeper.aview.gui.GUI;
 import de.htwg.minesweeper.aview.tui.TUI;
+import de.htwg.minesweeper.controller.Controller;
 import de.htwg.minesweeper.controller.IController;
-import de.htwg.minesweeper.controller.impl.Controller;
 
 public final class Minesweeper {
 	
