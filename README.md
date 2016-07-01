@@ -19,9 +19,9 @@ The user interface is console-based and is a textual user interface. The TUI and
 Execute JarFile to run the game without the use of Eclipse
 
 One can also do the following if desired:
+
 1. Download the project as a zip file
 2. Unzip the folder
-3. Open Eclipse and import the file as follows:
-  File > import > Gradle Project > Unzipped Minesweeper Folder
+3. Open Eclipse and import the file as follows: File > import > Gradle Project > Unzipped Minesweeper Folder
 4. Click Finish
 5. Run the program
