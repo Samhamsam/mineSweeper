@@ -229,7 +229,7 @@ public class Controller extends Observable implements IController{
 			if(field.getUserHiddenField().equals(testField)){
 				field.setFlag(numberi, numberj);
 			}
-			else {
+			else if(field.getFlagString().equals(testField)) {
 				field.resetFlag(numberi,numberj);
 			}
 				
