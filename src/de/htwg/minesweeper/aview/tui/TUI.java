@@ -138,9 +138,10 @@ public class TUI implements IObserver {
     }
 
     public String getJson() {
-        // new DO ->
-        final MineSweeperDO mineSweeperDO = new MineSweeperDO();
-        final Gson gson = new Gson();
-        return gson.toJson(mineSweeperDO);
+        final MineSweeperDO mineSweeperDO = new MineSweeperDO(
+                controller.getFeldText(),
+                controller.getNumberOfMines(),
+                controller.getStatusCode());
+        return new Gson().toJson(mineSweeperDO);
     }
 }
