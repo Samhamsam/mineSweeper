@@ -1,2 +1,9 @@
 bin/
-build/
+build/classes/main
+build/classes/test
+.gradle/
+.idea/
+gradle/
+gradlew
+gradlew.bat
+
