@@ -1,4 +1,4 @@
-package de.htwg.se.minesweeper.controller.impl;
+package de.htwg.se.minesweeper.model.commands;
 
 
 public interface IStatus {

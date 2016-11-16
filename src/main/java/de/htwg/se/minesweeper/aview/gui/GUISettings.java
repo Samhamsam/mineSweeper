@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JSlider;
 import javax.swing.UIManager;
 
-import de.htwg.se.minesweeper.controller.IController;
+import de.htwg.se.minesweeper.controller.OldIController;
 
 
 public class GUISettings {
@@ -30,11 +30,11 @@ public class GUISettings {
 	private int newRowColumn;
 	private int newMines;
 
-  	private IController controller;
+  	private OldIController controller;
 	static JSlider eins = new JSlider(JSlider.HORIZONTAL);
   	static JSlider zwei = new JSlider(JSlider.HORIZONTAL);
 
-  public GUISettings(int initialValueColumnAndRow, int initialValueMines, IController controller, Frame frame){
+  public GUISettings(int initialValueColumnAndRow, int initialValueMines, OldIController controller, Frame frame){
 	  this.controller = controller;
 	  this.frame = frame;
 	  this.initialValueColumnAndRow = initialValueColumnAndRow;

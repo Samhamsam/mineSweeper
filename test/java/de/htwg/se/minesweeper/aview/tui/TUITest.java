@@ -1,6 +1,6 @@
 package de.htwg.se.minesweeper.aview.tui;
 
-import de.htwg.se.minesweeper.controller.Controller;
+import de.htwg.se.minesweeper.controller.impl.OldController;
 import observer.Event;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -15,7 +15,7 @@ import static org.junit.Assert.assertTrue;
 @Ignore
 public class TUITest {
 	
-	Controller controller = new Controller();
+	OldController controller = new OldController();
 	TUI tui;
 	Event e;
 	

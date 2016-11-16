@@ -1,19 +1,17 @@
-package de.htwg.se.minesweeper.controller;
+package de.htwg.se.minesweeper.controller.impl;
 
-import java.util.*;
-import java.util.concurrent.TimeUnit;
-
+import de.htwg.se.minesweeper.controller.OldIController;
+import de.htwg.se.minesweeper.model.Model;
+import de.htwg.se.minesweeper.model.commands.*;
+import observer.Observable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import de.htwg.se.minesweeper.controller.impl.Context;
-import de.htwg.se.minesweeper.controller.impl.StatusPressedBomb;
-import de.htwg.se.minesweeper.controller.impl.StatusRunning;
-import de.htwg.se.minesweeper.controller.impl.StatusWonGame;
-import de.htwg.se.minesweeper.model.Model;
-import observer.Observable;
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
-public class Controller extends Observable implements IController{
+public class OldController extends Observable implements OldIController {
 	private static final Logger LOGGER = LogManager.getLogger();
 	private static final String FIRST_FIELD_POSITION = "";
 	
@@ -38,7 +36,8 @@ public class Controller extends Observable implements IController{
 	private int row = ROW;
 	private int column = COLUMN;
 	private int numberOfMines = NUMBER_OF_MINES;
-	
+
+	// letzte eingabe vom user
 	private String fieldPosition = FIRST_FIELD_POSITION;
 	
 	Context context;
@@ -62,13 +61,13 @@ public class Controller extends Observable implements IController{
 	private ICommand command;
 	private String helpText;
 
-	public Controller(Model field){
+	public OldController(Model field){
 		this.field = field; 
 		context = new Context();
 		setStatusRunning();
 	}
 	
-	public Controller(){
+	public OldController(){
 		field = new Model(row, column, numberOfMines);
 		context = new Context();
 		setStatusRunning();
@@ -196,9 +195,12 @@ public class Controller extends Observable implements IController{
 	
 	boolean checkIfGameIsWon(){
 		boolean gameWon = false;
+
+		// x Anzahl geschlossene felder, f flags
 		if (field.getsizeOfxAndfWithBomb() == field.getsizeOfxAndfWithoutBomb() ){
 			gameWon = true;
 		}
+		// ??????
 		field.resetSizeOFBoMB();
 		return gameWon;
 	}

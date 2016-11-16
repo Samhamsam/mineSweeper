@@ -5,20 +5,20 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import de.htwg.se.minesweeper.aview.gui.GUI;
 import de.htwg.se.minesweeper.aview.tui.TUI;
-import de.htwg.se.minesweeper.controller.Controller;
-import de.htwg.se.minesweeper.controller.IController;
+import de.htwg.se.minesweeper.controller.impl.OldController;
+import de.htwg.se.minesweeper.controller.OldIController;
 
 public final class Minesweeper {
 	
 	private static Scanner scanner;
 	private TUI tui;
-	protected IController controller;
+	protected OldIController controller;
 	private GUI gui;
 	private static Minesweeper instance = null;
 
 	private Minesweeper(){
 		Injector inject = Guice.createInjector();
-		controller = inject.getInstance(Controller.class);
+		controller = inject.getInstance(OldController.class);
 		tui = new TUI(controller);
 		gui = new GUI(controller);
 		controller.setStatusCode(0);
@@ -40,7 +40,7 @@ public final class Minesweeper {
 		return gui;
 	}
 	
-	public IController getController(){
+	public OldIController getController(){
 		return controller;
 	}
 	

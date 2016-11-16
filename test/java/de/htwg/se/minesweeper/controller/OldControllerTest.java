@@ -1,5 +1,6 @@
 package de.htwg.se.minesweeper.controller;
 
+import de.htwg.se.minesweeper.controller.impl.OldController;
 import de.htwg.se.minesweeper.model.Model;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -14,9 +15,9 @@ import static org.junit.Assert.*;
 
 // TODO Mark
 @Ignore
-public class ControllerTest {
+public class OldControllerTest {
 
-	Controller control,control2;
+	OldController control,control2;
 	Model model, modelWithoutBombs,modelWithLotsBombs;
 	
 	@Rule
@@ -27,8 +28,8 @@ public class ControllerTest {
 		model = new Model(10, 10, 20);
 		modelWithoutBombs = new Model(10, 10, 0);
 		modelWithLotsBombs = new Model(10, 10, 10000);
-		control = new Controller(model);
-		control2 = new Controller();
+		control = new OldController(model);
+		control2 = new OldController();
 	}
 	
 	@Test

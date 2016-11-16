@@ -1,6 +1,6 @@
 package de.htwg.se.minesweeper.aview.tui;
 
-import de.htwg.se.minesweeper.controller.IController;
+import de.htwg.se.minesweeper.controller.OldIController;
 import observer.Event;
 import observer.IObserver;
 import org.apache.logging.log4j.LogManager;
@@ -11,9 +11,9 @@ import java.util.List;
 
 public class TUI implements IObserver {
     private static final Logger LOGGER = LogManager.getLogger();
-    private IController controller;
+    private OldIController controller;
 
-    public TUI(IController controller){
+    public TUI(OldIController controller){
         this.controller = controller;
         controller.addObserver(this);
     }

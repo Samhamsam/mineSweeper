@@ -1,9 +1,13 @@
-package de.htwg.se.minesweeper.controller.impl;
+package de.htwg.se.minesweeper.model.commands;
 
 public class Context{
 	
 	private IStatus status;
-	
+
+	public Context(IStatus status) {
+		this.status = status;
+	}
+
 	public Context(){
 		status = null;
 	}

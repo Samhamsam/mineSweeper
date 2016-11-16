@@ -1,4 +1,4 @@
-package de.htwg.se.minesweeper.controller;
+package de.htwg.se.minesweeper.model.commands;
 
 public class QuitCommand implements ICommand{
 	private Quit quit;

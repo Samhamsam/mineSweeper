@@ -146,7 +146,8 @@ public class Model extends Observable {
 
 
 	}
-	
+
+	// die ecken???
 	private void openAllBlanksDifficultHelper1(int i, int j, String stringNumber){
 		if(i > 0 && j > 0){
 			openAllBlanksI0J0(i,j,stringNumber);
