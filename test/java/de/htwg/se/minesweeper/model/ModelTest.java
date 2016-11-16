@@ -1,11 +1,14 @@
 package de.htwg.se.minesweeper.model;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
+// TODO Mark
+@Ignore
 public class
 ModelTest {
 	
