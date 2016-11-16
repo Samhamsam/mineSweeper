@@ -1,44 +1,26 @@
 package de.htwg.se.minesweeper.controller;
 
-import java.util.List;
-
-import de.htwg.se.minesweeper.model.Model;
 import observer.IObservable;
 
-public interface IController extends IObservable{
-	
-	public void exitGame();
-	
-	public void newGame();
-	
-	public void startGame(String answer);
-	
-	public String[][] getFeldText();
-	
-	public String getFieldPosition();
-	
-	public int getStatusCode();
-	
-	public String getTimeWon();
-	
-	public int getRow();
-	
-	public int getColumn();
-	
-	public void hilfe();
-	
-	public String getHelpText();
-	public void setHelpText(String helpText);
+/**
+ * @author Niels Boecker, MaibornWolff
+ */
+public interface IController extends IObservable {
 
-	public void setStatusCode(int i);
+    void startNewGame();
 
-	void newGame(Model field);
+    void revealCell(int row, int col);
 
-	int getNumberOfMines();
+    void setFlag(int row, int col);
 
-	void setNumberOfMines(int numberOfMines);
+    enum StatusCode {
+        INFO_TEXT,
+        HELP_TEXT,
+        GAME_WON,
+        GAME_LOST,
+        ERROR,
+        CHANGE_VARIABLES, // ???
+        CHANGE_SETTINGS
+    }
 
-	void notifyIfSettingsSet();
-
-	void setRowAndColumnAndBombs(List<String> list, boolean guiOrTUi);
 }
