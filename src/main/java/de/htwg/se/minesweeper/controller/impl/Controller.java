@@ -4,9 +4,8 @@ import de.htwg.se.minesweeper.controller.IController;
 import de.htwg.se.minesweeper.model.Cell;
 import de.htwg.se.minesweeper.model.Grid;
 import observer.Observable;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -14,18 +13,16 @@ import java.util.concurrent.TimeUnit;
  */
 public class Controller extends Observable implements IController {
 
-    private static final Logger LOGGER = LogManager.getLogger();
-
     private static final int DEFAULT_NUMBER_ROWS_AND_COLS = 15;
     private static final int DEFAULT_NUMBER_MINES = 30;
 
     private Grid grid;
-    private StatusCode statusCode;
+    private State state;
     private int currentRound;
 
     // for time measuring
-    private long timeOfGameStart;
-    private long timeOfGameEnd;
+    private long timeOfGameStartMills;
+    private long elapsedTimeSeconds;
 
     public Controller() {
         startNewGame();
@@ -46,34 +43,48 @@ public class Controller extends Observable implements IController {
     public void startNewGame(int numberOfRowsAndCols, int numberOfMines) {
         this.grid = new Grid(numberOfRowsAndCols, numberOfRowsAndCols, numberOfMines);
         this.currentRound = 1;
-        this.statusCode = StatusCode.INFO_TEXT;
-        this.timeOfGameStart = System.currentTimeMillis();
+        this.state = State.INFO_TEXT;
+        this.timeOfGameStartMills = System.currentTimeMillis();
         notifyObservers();
+        // TODO controller.setState(0); ???
         // TODO status code instead of context?!
-        // fieldPosition = NEW_GAME_COMMAND; ???
     }
 
     @Override
     public void commitNewSettingsAndRestart(int numberOfRowsAndCols, int numberOfMines) {
-        statusCode = StatusCode.CHANGE_SETTINGS;
+        state = State.CHANGE_SETTINGS_SUCCESS;
 
     }
 
     @Override
     public void revealCell(int row, int col) {
+        revealCell(this.grid.getCellAt(row, col));
+    }
 
-        final Cell cell = this.grid.getCellAt(row, col);
+    @Override
+    public void revealCell(Cell cell) {
+
+        if (cell == null || cell.isRevealed()) return;
+
         cell.setRevealed(true);
 
         if (cell.hasMine()) {
-            this.statusCode = StatusCode.GAME_LOST;
+            setElapsedTime();
+            this.state = State.GAME_LOST;
             // TODO setstatuspressedbomb???
         }
 
-        else if (allCellsAreRevealed()) {
-            long elapsedTimeNanos = System.nanoTime() - timeOfGameStart;
-            long elapsedTimeSeconds = TimeUnit.SECONDS.convert(elapsedTimeNanos, TimeUnit.NANOSECONDS);
-            statusCode = StatusCode.GAME_WON;
+        if (cell.getSurroundingMines() == 0) {
+            final List<Cell> neighbors = this.grid.getAllNeighbors(cell);
+            for (Cell neighbor : neighbors) {
+                revealCell(neighbor);
+            }
+        }
+
+        // TODO this was an "else if"
+        if (allCellsAreRevealed()) {
+            setElapsedTime();
+            state = State.GAME_WON;
         }
 
         else {
@@ -84,10 +95,16 @@ public class Controller extends Observable implements IController {
         notifyObservers();
     }
 
+    private void setElapsedTime() {
+        long elapsedTimeNanos = System.nanoTime() - timeOfGameStartMills;
+        elapsedTimeSeconds = TimeUnit.SECONDS.convert(elapsedTimeNanos, TimeUnit.NANOSECONDS);
+    }
+
     @Override
     public void toggleFlag(int row, int col) {
         final Cell cell = this.grid.getCellAt(row, col);
         cell.setFlagged(!cell.isFlagged());
+        notifyObservers();
     }
 
     @Override
@@ -96,31 +113,14 @@ public class Controller extends Observable implements IController {
     }
 
     @Override
-    public boolean checkIfCellHasMine(int row, int col) {
-        final Cell cell = this.grid.getCellAt(row, col);
-        return cell.hasMine();
-    }
-
-    @Override
-    public boolean checkIfCellIsRevealed(int row, int col) {
-        final Cell cell = this.grid.getCellAt(row, col);
-        return cell.isRevealed();
-    }
-
-    @Override
-    public int getCurrentRound() {
-        return currentRound;
-    }
-
-    @Override
-    public void setTimeOfGameStart(long timeOfGameStart) {
-        this.timeOfGameStart = timeOfGameStart;
-    }
-
-    @Override
-    public void setStatusCode(StatusCode statusCode) {
-        this.statusCode = statusCode;
+    public void setState(State state) {
+        this.state = state;
         notifyObservers();
+    }
+
+    @Override
+    public State getState() {
+        return state;
     }
 
     @Override
@@ -129,5 +129,15 @@ public class Controller extends Observable implements IController {
                 + "(TUI:q) GUI:	Menu	->	Quit:		This command ends the Game and close it\n"
                 + "(TUI:c) GUI: Menu	->	Settings:	This command sets the number for column/row and mines\n"
                 + "(TUI:h) GUI:	?	->	Help:		This command shows the help text";
+    }
+
+    @Override
+    public Grid getGrid() {
+        return grid;
+    }
+
+    @Override
+    public long getElapsedTimeSeconds() {
+        return elapsedTimeSeconds;
     }
 }

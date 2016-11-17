@@ -1,5 +1,7 @@
 package de.htwg.se.minesweeper.controller;
 
+import de.htwg.se.minesweeper.model.Cell;
+import de.htwg.se.minesweeper.model.Grid;
 import observer.IObservable;
 
 /**
@@ -17,30 +19,30 @@ public interface IController extends IObservable {
 
     void revealCell(int row, int col);
 
+    void revealCell(Cell cell);
+
     void toggleFlag(int row, int col);
 
     boolean allCellsAreRevealed();
 
-    boolean checkIfCellHasMine(int row, int col);
+    void setState(State state);
 
-    boolean checkIfCellIsRevealed(int row, int col);
-
-    int getCurrentRound();
-
-    void setTimeOfGameStart(long timeOfGameStart);
-
-    void setStatusCode(StatusCode statusCode);
+    State getState();
 
     String getHelpText();
 
-    enum StatusCode {
+    Grid getGrid();
+
+    long getElapsedTimeSeconds();
+
+    enum State {
         INFO_TEXT,
         HELP_TEXT,
         GAME_WON,
         GAME_LOST,
         ERROR,
-        CHANGE_VARIABLES, // ???
-        CHANGE_SETTINGS
+        CHANGE_SETTINGS_ACTIVATED,
+        CHANGE_SETTINGS_SUCCESS
     }
 
 }

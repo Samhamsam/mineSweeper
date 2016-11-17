@@ -5,7 +5,12 @@ package de.htwg.se.minesweeper.model;
  */
 public class Cell {
 
-    private boolean isMine;
+    // String represenations
+    private static final String MINE_CELL_STRING = "b";
+    private static final String HIDDEN_CELL_STRING = "x";
+    private static final String FLAGGED_CELL_STRING = "f";
+
+    private boolean hasMine;
     private boolean isFlagged;
     private boolean isRevealed;
     private Position position;
@@ -13,19 +18,19 @@ public class Cell {
 
     // default constructor
     public Cell(Position position) {
-        this.isMine = false;
+        this.hasMine = false;
         this.isFlagged = false;
         this.isRevealed = false;
         this.position = position;
         this.surroundingMines = 0;
     }
 
-    public boolean isMine() {
-        return isMine;
+    public boolean hasMine() {
+        return hasMine;
     }
 
-    public void setMine(boolean mine) {
-        isMine = mine;
+    public void setHasMine(boolean hasMine) {
+        this.hasMine = hasMine;
     }
 
     public boolean isFlagged() {
@@ -60,9 +65,21 @@ public class Cell {
         this.surroundingMines = surroundingMines;
     }
 
-    protected static class Position {
+    @Override
+    public String toString() {
+        if (!isRevealed && !isFlagged) {
+            return HIDDEN_CELL_STRING;
+        } else if (!isRevealed && isFlagged) {
+            return FLAGGED_CELL_STRING;
+        } else if (hasMine) {
+            return MINE_CELL_STRING;
+        } else {
+            return String.valueOf(surroundingMines);
+        }
+    }
 
-        // public so they can be accessed simply
+    public static class Position {
+
         private int row;
         private int col;
 
@@ -73,7 +90,7 @@ public class Cell {
 
         // copy constructor
         public Position(Position g) {
-            this(g.row, g.col);
+            this(g.getRow(), g.getCol());
         }
 
         // int constructor
@@ -90,45 +107,56 @@ public class Cell {
             return col;
         }
 
-        public void setPosition(int row, int col) {
-            this.row = row;
-            this.col = col;
+        public Position getNorth() {
+            return new Position(getRow() - 1, getCol());
         }
 
-        public Position getNorth() {
-            return new Position(row - 1, col);
+        public Position getNorthEast() {
+            return new Position(getRow() - 1, getCol() + 1);
         }
 
         public Position getEast() {
-            return new Position(row, col + 1);
+            return new Position(getRow(), getCol() + 1);
+        }
+
+        public Position getSouthEast() {
+            return new Position(getRow() + 1, getCol() + 1);
         }
 
         public Position getSouth() {
-            return new Position(row + 1, col);
+            return new Position(getRow() + 1, getCol());
+        }
+
+        public Position getSouthWest() {
+            return new Position(getRow() + 1, getCol() -1);
         }
 
         public Position getWest() {
-            return new Position(row, col - 1);
+            return new Position(getRow(), getCol() - 1);
+        }
+
+        public Position getNorthWest() {
+            return new Position(getRow() - 1, getCol() - 1);
         }
 
         @Override
         public boolean equals(Object obj) {
             if (obj instanceof Position) {
                 Position g = (Position) obj;
-                return (row == g.row) && (col == g.col);
+                return (getRow() == g.getRow()) && (getCol() == g.getCol());
             }
             return false;
         }
 
         @Override
         public int hashCode() {
-            int sum = row + col;
-            return sum * (sum + 1) / 2 + row;
+            int sum = getRow() + getCol();
+            return sum * (sum + 1) / 2 + getRow();
         }
 
         @Override
         public String toString() {
-            return getClass().getName() + "[row=" + row + ",col=" + col + "]";
+            return getClass().getName() + "[row=" + getRow() + ",col=" + getCol() + "]";
         }
     }
 }
