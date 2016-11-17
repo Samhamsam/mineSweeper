@@ -18,7 +18,6 @@ public class Controller extends Observable implements IController {
 
     private Grid grid;
     private State state;
-    private int currentRound;
 
     // for time measuring
     private long timeOfGameStartMills;
@@ -36,23 +35,21 @@ public class Controller extends Observable implements IController {
     @Override
     public void startNewGame() {
         startNewGame(DEFAULT_NUMBER_ROWS_AND_COLS, DEFAULT_NUMBER_MINES);
-        // TODO status code instead of "context" and "runningstate"
     }
 
     @Override
     public void startNewGame(int numberOfRowsAndCols, int numberOfMines) {
         this.grid = new Grid(numberOfRowsAndCols, numberOfRowsAndCols, numberOfMines);
-        this.currentRound = 1;
         this.state = State.INFO_TEXT;
         this.timeOfGameStartMills = System.currentTimeMillis();
         notifyObservers();
-        // TODO controller.setState(0); ???
-        // TODO status code instead of context?!
     }
 
     @Override
     public void commitNewSettingsAndRestart(int numberOfRowsAndCols, int numberOfMines) {
+        startNewGame(numberOfRowsAndCols, numberOfMines);
         state = State.CHANGE_SETTINGS_SUCCESS;
+        notifyObservers();
 
     }
 
@@ -71,7 +68,6 @@ public class Controller extends Observable implements IController {
         if (cell.hasMine()) {
             setElapsedTime();
             this.state = State.GAME_LOST;
-            // TODO setstatuspressedbomb???
         }
 
         if (cell.getSurroundingMines() == 0) {
@@ -81,17 +77,11 @@ public class Controller extends Observable implements IController {
             }
         }
 
-        // TODO this was an "else if"
         if (allCellsAreRevealed()) {
             setElapsedTime();
             state = State.GAME_WON;
         }
 
-        else {
-            // TODO setstatusrunning?!
-        }
-
-        currentRound++;
         notifyObservers();
     }
 

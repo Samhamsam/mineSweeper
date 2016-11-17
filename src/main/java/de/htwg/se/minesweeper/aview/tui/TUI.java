@@ -72,9 +72,6 @@ public class TUI implements IObserver {
 
     private void playRoundAction(List<String> inputParts) {
 
-        // ??? if(context.endStatus() && (list.size()>1) && (list.size()<4)){
-        // TODO -> if status = running?
-
         controller.setState(INFO_TEXT);
 
         if (inputParts.size() == 2) {
@@ -86,11 +83,10 @@ public class TUI implements IObserver {
         }
     }
 
-    // TODO whaaaat
     private void setFlag(List<String> answerAsList) {
         try {
-            int row = Integer.parseInt(answerAsList.get(0));
-            int col = Integer.parseInt(answerAsList.get(1));
+            int row = Integer.parseInt(answerAsList.get(1));
+            int col = Integer.parseInt(answerAsList.get(2));
             controller.toggleFlag(row, col);
         } catch (Exception e) {
             controller.setState(ERROR);
@@ -183,7 +179,7 @@ public class TUI implements IObserver {
             case INFO_TEXT: // or status == 0, running? default?
             default:
                 LOGGER.info("Type:\n\tx,x | x is a number between 0 and 9 (row, column) to reveal field.\n" +
-                        "\tx,x,f | Same as above, but only put / remove a flag at this position.\n" +
+                        "\tf,x,x | Same as above, but only put / remove a flag at this position.\n" +
                         "\tOr press " + HELP_COMMAND + " to get more help.");
         }
 

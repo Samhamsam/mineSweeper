@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Niels Boecker, MaibornWolff
@@ -14,6 +13,7 @@ public class Grid {
 
     private List<Cell> cells;
     private int numberOfRows;
+    private int numberOfColumns;
     private int numberOfMines;
 
     // default constructor for empty grid
@@ -21,6 +21,7 @@ public class Grid {
 
         cells = new ArrayList<>(numberOfColums * numberOfRows);
         this.numberOfRows = numberOfRows;
+        this.numberOfColumns = numberOfColums;
 
         for (int row = 0; row < numberOfRows; row++) {
             for (int col = 0; col < numberOfColums; col++) {
@@ -98,15 +99,6 @@ public class Grid {
         return cells;
     }
 
-    public List<List<Cell>> getRows() {
-        for (int row = 0; row < numberOfRows; row++) {
-            Stream.of(cells)
-            //.filter(c -> c.)
-            ;
-        }
-        return null;
-    }
-
     public int getNumberOfRows() {
         return numberOfRows;
     }
@@ -127,5 +119,9 @@ public class Grid {
 
     public int getNumberOfMines() {
         return numberOfMines;
+    }
+
+    public int getNumberOfColumns() {
+        return numberOfColumns;
     }
 }
