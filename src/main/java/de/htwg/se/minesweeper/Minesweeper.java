@@ -1,17 +1,18 @@
 package de.htwg.se.minesweeper;
 
+import de.htwg.se.minesweeper.aview.gui.GUI;
 import de.htwg.se.minesweeper.aview.tui.TUI;
 import de.htwg.se.minesweeper.controller.IController;
 import de.htwg.se.minesweeper.controller.impl.Controller;
 
 import java.util.Scanner;
 
-//import de.htwg.se.minesweeper.aview.gui.GUI;
 
 public final class Minesweeper {
 
     private static Scanner scanner;
     private TUI tui;
+    private GUI gui;
     protected IController controller;
     // TODO Mark private GUI gui;
     private static Minesweeper instance = null;
@@ -21,13 +22,10 @@ public final class Minesweeper {
         //controller = inject.getInstance(IController.class);
         // TODO Mark: juice
         controller = new Controller();
-        System.out.println("creating tui");
-        tui = new TUI(controller);
-        System.out.println("creating tui done");
 
-        // TODO Mark
-        // GUI auf neuen Controller umstellen
-        // gui = new GUI(controller);
+        // TODO getLogger() dauert sehr lange und verzögert Start
+        tui = new TUI(controller);
+        gui = new GUI(controller);
         tui.printTUI();
     }
 

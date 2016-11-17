@@ -1,86 +1,74 @@
 package de.htwg.se.minesweeper.aview.gui;
 
-import java.awt.Dimension;
-import java.awt.Frame;
+import de.htwg.se.minesweeper.controller.IController;
 
-import java.util.Arrays;
-import java.util.List;
-
-import javax.swing.JOptionPane;
-import javax.swing.JSlider;
-import javax.swing.UIManager;
-
-import de.htwg.se.minesweeper.controller.OldIController;
+import javax.swing.*;
+import java.awt.*;
 
 
 public class GUISettings {
-	
-	static JOptionPane optionPane;
-	Frame frame;
-	
-	private int maximumCR = 40;
-	private int maximumB = 100;
-	private int minimum = 5;
-	private int majorSpacing = 5;
-	private int minorSpacing = 1;
-	private int initialValueColumnAndRow;
-	private int initialValueMines;
-	
-	
-	private int newRowColumn;
-	private int newMines;
 
-  	private OldIController controller;
-	static JSlider eins = new JSlider(JSlider.HORIZONTAL);
-  	static JSlider zwei = new JSlider(JSlider.HORIZONTAL);
+    Frame settingsFrame;
 
-  public GUISettings(int initialValueColumnAndRow, int initialValueMines, OldIController controller, Frame frame){
-	  this.controller = controller;
-	  this.frame = frame;
-	  this.initialValueColumnAndRow = initialValueColumnAndRow;
-	  this.initialValueMines = initialValueMines;
-  }
-  
-  public void run(){
-	  eins.setMaximum(maximumCR);
-	  eins.setMinimum(minimum);
-	  eins.setValue(initialValueColumnAndRow);	
-	  eins.setMajorTickSpacing(majorSpacing);
-	  eins.setMinorTickSpacing(minorSpacing);
-	  eins.setSnapToTicks(true);
-	  eins.setPaintTicks(true);
-	  eins.setPaintLabels(true);
-	  
-	  zwei.setMaximum(maximumB);
-	  zwei.setMinimum(minimum);
-	  zwei.setValue(initialValueMines);
-	  zwei.setMajorTickSpacing(majorSpacing);
-	  zwei.setMinorTickSpacing(minorSpacing);
-	  zwei.setSnapToTicks(true);
-	  zwei.setPaintTicks(true);
-	  zwei.setPaintLabels(true);
-	  
-	  UIManager.put("OptionPane.minimumSize",new Dimension(500,100));
-	  Object[] complexMsg = { "Set number row/column", eins, "Set number mines",zwei};
+    private int maximumCR = 40;
+    private int maximumB = 100;
+    private int minimum = 5;
+    private int majorSpacing = 5;
+    private int minorSpacing = 1;
+    private int initialValueColumnAndRow;
+    private int initialValueMines;
 
-	  int result = JOptionPane.showConfirmDialog(frame, complexMsg, 
-		       "Settings", JOptionPane.OK_CANCEL_OPTION);
-	  
-	  newRowColumn = eins.getValue();
-	  newMines = zwei.getValue();
-	  if(result == 0){
-		  setController();
-		  controller.notifyIfSettingsSet();
-	  }
-		  
-  }
-  
-  
-  private void setController(){
-	  String answer = "c,"+newRowColumn+","+newMines;
-	  List<String> list = Arrays.asList(answer.split(","));
-	  controller.setRowAndColumnAndBombs(list,false);
-	  return;
-  }
+    private int newRowColumn;
+    private int newMines;
+
+    private IController controller;
+    static JSlider rowColSlider = new JSlider(JSlider.HORIZONTAL);
+    static JSlider mineSlider = new JSlider(JSlider.HORIZONTAL);
+
+    public GUISettings(int initialValueColumnAndRow, int initialValueMines, IController controller, Frame settingsFrame) {
+        this.controller = controller;
+        this.settingsFrame = settingsFrame;
+        this.initialValueColumnAndRow = initialValueColumnAndRow;
+        this.initialValueMines = initialValueMines;
+    }
+
+    public void run() {
+        rowColSlider.setMaximum(maximumCR);
+        rowColSlider.setMinimum(minimum);
+        rowColSlider.setValue(initialValueColumnAndRow);
+        rowColSlider.setMajorTickSpacing(majorSpacing);
+        rowColSlider.setMinorTickSpacing(minorSpacing);
+        rowColSlider.setSnapToTicks(true);
+        rowColSlider.setPaintTicks(true);
+        rowColSlider.setPaintLabels(true);
+
+        mineSlider.setMaximum(maximumB);
+        mineSlider.setMinimum(minimum);
+        mineSlider.setValue(initialValueMines);
+        mineSlider.setMajorTickSpacing(majorSpacing);
+        mineSlider.setMinorTickSpacing(minorSpacing);
+        mineSlider.setSnapToTicks(true);
+        mineSlider.setPaintTicks(true);
+        mineSlider.setPaintLabels(true);
+
+        UIManager.put("OptionPane.minimumSize", new Dimension(500, 100));
+        Object[] complexMsg = {"Set number row/column", rowColSlider, "Set number mines", mineSlider};
+
+        int result = JOptionPane.showConfirmDialog(settingsFrame, complexMsg,
+                "Settings", JOptionPane.OK_CANCEL_OPTION);
+
+        newRowColumn = rowColSlider.getValue();
+        newMines = mineSlider.getValue();
+        if (result == JOptionPane.OK_OPTION) {
+            setController();
+        }
+
+    }
+
+
+    private void setController() {
+        String answer = "c," + newRowColumn + "," + newMines;
+        controller.commitNewSettingsAndRestart(newRowColumn, newMines);
+    }
 
 }

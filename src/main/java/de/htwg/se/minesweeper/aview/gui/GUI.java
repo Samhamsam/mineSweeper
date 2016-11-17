@@ -1,260 +1,265 @@
 package de.htwg.se.minesweeper.aview.gui;
 
-import javax.swing.*;
-import de.htwg.se.minesweeper.controller.OldIController;
+import de.htwg.se.minesweeper.controller.IController;
 import observer.Event;
 import observer.IObserver;
+
+import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
-public class GUI extends JFrame implements ActionListener,IObserver,MouseListener{
-	private static final long serialVersionUID = 1L;
-	private JButton[][] buttonForTheMineSweeperFields;
-	private OldIController controller;
-	private GUISettings guiSettings;
-	
-	JFrame frame;
-	JMenuBar menuBar;
-	JMenu menu, submenu, menuQuestion;
-	JMenuItem newGame;
-	JMenuItem quit,settingsmenu,help;
-	
-	public GUI(OldIController controller){
-		this.controller = controller;
-		controller.addObserver(this);
-		frame = new JFrame("Minesweeper");
-		setFrame();
+// IMPORTANT NOTE
+// GUI doesn't work properly
+// TODO Mark please FIXME
 
-	}
-	
-	private void setFrame(){
+public class GUI extends JFrame implements ActionListener, IObserver, MouseListener {
+    private static final long serialVersionUID = 1L;
+    private JButton[][] gridAsJButtons;
+    private IController controller;
+    private GUISettings guiSettings;
 
-		menuBar = new JMenuBar();
-		menu = new JMenu("Menu");
-		menuQuestion = new JMenu("?");
-		menuBar.add(menu);
-		menuBar.add(menuQuestion);
-		newGame = new JMenuItem("New Game");
-		quit = new JMenuItem("Quit");
-		help = new JMenuItem("Help");
-		settingsmenu = new JMenuItem("Settings");
-		menu.add(newGame);
-		menu.add(settingsmenu);
-		menu.add(quit);
-		menuQuestion.add(help);
-		
-		newGame.addActionListener(this);
-		quit.addActionListener(this);
-		help.addActionListener(this);
-		settingsmenu.addActionListener(this);
-		
-		frame.setJMenuBar(menuBar);
-		
-		frame.setLayout(new GridLayout (controller.getRow(),controller.getColumn()));
-		buildGameField(frame);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    frame.pack();
-	    frame.setLocationRelativeTo(null);
-	    frame.setVisible(true);
-	}
+    JFrame mainFrame;
+    JMenuBar menuBar;
+    JMenu menu;
+    JMenu menuQuestion;
+    JMenuItem newGame;
+    JMenuItem quit, settingsmenu, help;
 
-	
-	private void buildGameField(JFrame frame){
-		buttonForTheMineSweeperFields = new JButton[controller.getRow()][controller.getColumn()];
-		
-		String[][] fieldString= getFeldText();
-		
-		setStringInButton(frame,fieldString);
-	}
-	
-	private void setStringInButton(JFrame frame, String[][] fieldString){
-		for (int y=0; y < controller.getColumn(); y++){
-			for (int x = 0; x < controller.getColumn(); x++){
-				buttonForTheMineSweeperFields [x][y] = new JButton (fieldString[y][x]); 
-				frame.add(buttonForTheMineSweeperFields[x][y]);
-				buttonForTheMineSweeperFields[x][y].setBackground(Color.GRAY);
-				buttonForTheMineSweeperFields [x][y].addMouseListener(this);
-				buttonForTheMineSweeperFields[x][y].setPreferredSize(new Dimension(50, 50));
-			}
-		}
-	}
-	
-	private void setStringInButton(String[][] fieldString){
-		for (int y=0; y < controller.getColumn(); y++){
-			for (int x = 0; x < controller.getRow(); x++){
-				setJButtonText(fieldString[y][x], y, x);
-				if("0".equals(getJButtonText(y,x))){
-					setJButtonColor(y,x,Color.GREEN);
-				}
-				else if("x".equals(getJButtonText(y,x))){
-					setJButtonColor(y,x,Color.GRAY);
-				}
-				else if("b".equals(getJButtonText(y,x)) || "f".equals(getJButtonText(y,x))){
-					setJButtonColor(y,x,Color.RED);
-				}
-				else{
-					setJButtonColor(y,x,Color.WHITE);
-				}
-			}
-		}
-	}
-	
-	private void setEnableButtons(boolean status){
-		for (int y=0; y < controller.getColumn(); y++){
-			for (int x = 0; x < controller.getRow(); x++){
-				buttonForTheMineSweeperFields [x][y].setEnabled(status);
-			}
-		}
-	}
-	
-	public void setJButtonColor(int i, int j, Color color){
-		buttonForTheMineSweeperFields[i][j].setBackground(color);
-	}
+    public GUI(IController controller) {
+        this.controller = controller;
+        controller.addObserver(this);
+        mainFrame = new JFrame("Minesweeper");
+        initJFrame();
 
-	
-	public void setJButtonText(String text, int i, int j){
-		buttonForTheMineSweeperFields[i][j].setText(text);
-	}
-	
-	public String getJButtonText(int i, int j){
-		return buttonForTheMineSweeperFields[i][j].getText();
-	}
+    }
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
+    private void initJFrame() {
 
-		if(e.getSource()==newGame){
-			controller.newGame();
+        menuBar = new JMenuBar();
+        menu = new JMenu("Menu");
+        menuQuestion = new JMenu("?");
+        menuBar.add(menu);
+        menuBar.add(menuQuestion);
+        newGame = new JMenuItem("New Game");
+        quit = new JMenuItem("Quit");
+        help = new JMenuItem("Help");
+        settingsmenu = new JMenuItem("Settings");
+        menu.add(newGame);
+        menu.add(settingsmenu);
+        menu.add(quit);
+        menuQuestion.add(help);
 
-		}
-		else if(e.getSource()==quit){
-			controller.exitGame();
-		}
-		
-		else if(e.getSource()==help) {
-			controller.hilfe();
-		}
-		else if(e.getSource()==settingsmenu) {
-			setSettings();
-		}
-		
+        newGame.addActionListener(this);
+        quit.addActionListener(this);
+        help.addActionListener(this);
+        settingsmenu.addActionListener(this);
 
-	}
+        mainFrame.setJMenuBar(menuBar);
 
-	@Override
-	public void update(Event e) {
-		if(!(controller.getStatusCode() == 5)){
-			if(!((controller.getStatusCode() == 6) || (controller.getStatusCode() == 7))){
-				setStringInButton(getFeldText());
-			}
-				
-			
-			if(controller.getStatusCode() == 1){
-				setEnableButtons(true);
-			}
-			
-			if(controller.getStatusCode() == 2){
-				messageDialog("You Lost!");
-				setEnableButtons(false);
-			}
-	
-			if(controller.getStatusCode() == 3)
-				messageDialog("You Won! "+controller.getTimeWon()+" Points!");
-			
-			if(controller.getStatusCode() == 4)
-				messageDialog(controller.getHelpText());
-			
-			if(controller.getStatusCode() == 6)
-				setSettings();
+        mainFrame.setLayout(new GridLayout(controller.getGrid().getNumberOfRows(), controller.getGrid().getNumberOfColumns()));
+        buildGameField();
+        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainFrame.pack();
+        mainFrame.setLocationRelativeTo(null);
+        mainFrame.setVisible(true);
+    }
 
-			if(controller.getStatusCode() == 7)
-				doSettings();
-		}
-	}
-	
-	public String[][] getFeldText(){
-		return controller.getFeldText();
-	}
-	
-	private void messageDialog(String text){
-		JOptionPane.showMessageDialog(frame, text);
-	}
 
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// Not needed
-	}
+    private void buildGameField() {
+        gridAsJButtons = new JButton[controller.getGrid().getNumberOfRows()][controller.getGrid().getNumberOfColumns()];
 
-	@Override
-	public void mousePressed(MouseEvent e) {
-		
-		if(e.getButton() == MouseEvent.BUTTON1){
-		
-			if(e.getSource()==newGame){
-				controller.newGame();
-				setEnableButtons(true);
-	
-			}
-			else if(e.getSource()==quit){
-				controller.exitGame();
-			}
-			else {
-				getButtonPositionAndStartController(e);
-			}
-		}
-		else if(e.getButton() == MouseEvent.BUTTON3){
-			setFlag(e);
-		}
-	}
+        for (int row = 0; row < controller.getGrid().getNumberOfRows(); row++) {
+            for (int col = 0; col < controller.getGrid().getNumberOfColumns(); col++) {
+                gridAsJButtons[col][row] = new JButton(controller.getGrid().getCellAt(row, col).toString());
+                mainFrame.add(gridAsJButtons[col][row]);
+                gridAsJButtons[col][row].setBackground(Color.GRAY);
+                gridAsJButtons[col][row].addMouseListener(this);
+                gridAsJButtons[col][row].setPreferredSize(new Dimension(50, 50));
+            }
+        }
+    }
 
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// Not needed
-	}
+    private void updateGameField() {
+        for (int row = 0; row < controller.getGrid().getNumberOfRows(); row++) {
+            for (int col = 0; col < controller.getGrid().getNumberOfColumns(); col++) {
+                setJButtonText(controller.getGrid().getCellAt(row, col).toString(), row, col);
 
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// Not needed
-	}
+                if ("0".equals(getJButtonText(row, col))) {
+                    setJButtonColor(row, col, Color.GREEN);
+                } else if ("x".equals(getJButtonText(row, col))) {
+                    setJButtonColor(row, col, Color.GRAY);
+                } else if ("b".equals(getJButtonText(row, col)) || "f".equals(getJButtonText(row, col))) {
+                    setJButtonColor(row, col, Color.RED);
+                } else {
+                    setJButtonColor(row, col, Color.WHITE);
+                }
+            }
+        }
+    }
 
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// Not needed
-	}
-	
-	private void setFlag(MouseEvent e){
-		for (int y=0; y < controller.getColumn(); y++){
-			for (int x = 0; x < controller.getRow(); x++){
-				Object buttonText = e.getSource();
-				if(buttonText.equals(buttonForTheMineSweeperFields[y][x])){
-					controller.startGame(y+","+x+",f");
-				}
+    private void setEnableButtons(boolean status) {
+        for (int row = 0; row < controller.getGrid().getNumberOfRows(); row++) {
+            for (int col = 0; col < controller.getGrid().getNumberOfColumns(); col++) {
+                gridAsJButtons[col][row].setEnabled(status);
+            }
+        }
+    }
 
-			}
-		}
-	}
-	
-	private void getButtonPositionAndStartController(MouseEvent e){
-		for (int y=0; y < controller.getColumn(); y++){
-			for (int x = 0; x < controller.getRow(); x++){
-				Object buttonText = e.getSource();
-				if(buttonText.equals(buttonForTheMineSweeperFields[y][x])){
-					controller.startGame(y+","+x);
-				}
+    public void setJButtonColor(int i, int j, Color color) {
+        gridAsJButtons[i][j].setBackground(color);
+    }
 
-			}
-		}
-	}
-	
-	private void setSettings(){
-		guiSettings = new GUISettings(controller.getColumn(), controller.getNumberOfMines(),controller,frame);
-		guiSettings.run();
-	}
-	private void doSettings(){
-		frame.getContentPane().removeAll();
-		setFrame();
-		frame.validate();
-		frame.repaint();
-	}
+
+    public void setJButtonText(String text, int i, int j) {
+        gridAsJButtons[i][j].setText(text);
+    }
+
+    public String getJButtonText(int i, int j) {
+        return gridAsJButtons[i][j].getText();
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+        if (e.getSource() == newGame) {
+            controller.startNewGame();
+
+        } else if (e.getSource() == quit) {
+            controller.quit();
+        } else if (e.getSource() == help) {
+            controller.getHelpText(); // TODO ?
+        } else if (e.getSource() == settingsmenu) {
+            showSettings();
+        }
+
+
+    }
+
+    @Override
+    public void update(Event e) {
+
+        final IController.State state = controller.getState();
+
+        if (state == IController.State.ERROR) {
+            // TODO Mark?
+        }
+
+        switch (state) {
+
+            case INFO_TEXT:
+                setEnableButtons(true);
+                break;
+
+            case GAME_LOST:
+                messageDialog("You Lost!");
+                setEnableButtons(false);
+                break;
+
+            case GAME_WON:
+                messageDialog("You Won! " + controller.getElapsedTimeSeconds() + " Points!");
+                break;
+
+            case HELP_TEXT:
+                messageDialog(controller.getHelpText());
+                break;
+
+            case CHANGE_SETTINGS_ACTIVATED:
+                showSettings();
+                buildGameField();
+                updateGameField();
+                break;
+
+            case CHANGE_SETTINGS_SUCCESS:
+                applySettings();
+                buildGameField();
+                updateGameField();
+                break;
+        }
+
+    }
+
+    private void messageDialog(String text) {
+        JOptionPane.showMessageDialog(mainFrame, text);
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        // Not needed
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+        if (e.getButton() == MouseEvent.BUTTON1) {
+
+            if (e.getSource() == newGame) {
+                controller.startNewGame();
+                setEnableButtons(true);
+
+            } else if (e.getSource() == quit) {
+                controller.quit();
+            } else {
+                revealCell(e);
+            }
+        }
+
+        // set flag with right click
+        else if (e.getButton() == MouseEvent.BUTTON3) {
+            setFlag(e);
+        }
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        // Not needed
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        // Not needed
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        // Not needed
+    }
+
+    private void setFlag(MouseEvent e) {
+        for (int row = 0; row < controller.getGrid().getNumberOfRows(); row++) {
+            for (int col = 0; col < controller.getGrid().getNumberOfColumns(); col++) {
+                Object buttonText = e.getSource();
+                if (buttonText.equals(gridAsJButtons[row][col])) {
+                    controller.toggleFlag(row, col);
+                }
+
+            }
+        }
+    }
+
+    private void revealCell(MouseEvent e) {
+        Object sourceButton = e.getSource();
+        for (int row = 0; row < controller.getGrid().getNumberOfRows(); row++) {
+            for (int col = 0; col < controller.getGrid().getNumberOfColumns(); col++) {
+                if (sourceButton.equals(gridAsJButtons[row][col])) {
+                    controller.revealCell(row, col);
+                }
+
+            }
+        }
+    }
+
+    private void showSettings() {
+        guiSettings = new GUISettings(controller.getGrid().getNumberOfColumns(), controller.getGrid().getNumberOfMines(), controller, mainFrame);
+        guiSettings.run();
+    }
+
+    private void applySettings() {
+        mainFrame.getContentPane().removeAll();
+        mainFrame.validate();
+        mainFrame.repaint();
+    }
 
 }
