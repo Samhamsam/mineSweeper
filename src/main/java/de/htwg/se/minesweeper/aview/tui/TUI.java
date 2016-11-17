@@ -188,5 +188,54 @@ public class TUI implements IObserver {
         }
     }
 
+    public String printTUIAsString() {
+        final IController.State state = controller.getState();
+
+        if (state.equals(ERROR)) {
+            return "NOT A NUMBER!";
+        }
+
+        final StringBuilder result = new StringBuilder(getGridAsString());
+
+        if ("".equals(lastUserInput)) {
+            result.append("You typed: " + lastUserInput + "\n");
+        }
+
+        switch (state) {
+
+            case GAME_LOST:
+                result.append("You Lost!");
+                break;
+
+            case GAME_WON:
+                result.append("You Won! " + controller.getElapsedTimeSeconds() + " Points!");
+                break;
+
+            case HELP_TEXT:
+                result.append(controller.getHelpText());
+                break;
+
+            case CHANGE_SETTINGS_ACTIVATED:
+                result.append("Set number of column/row and mines:");
+                break;
+
+            case CHANGE_SETTINGS_SUCCESS:
+                result.append("You set row/column to: " + controller.getGrid().getNumberOfRows() + " and mines to: " + controller.getGrid().getNumberOfMines());
+                break;
+
+            case INFO_TEXT: // or status == 0, running? default?
+            default:
+                result.append("Type:\n\tx,x | x is a number between 0 and 9 (row, column) to reveal field.\n" +
+                        "\tf,x,x | Same as above, but only put / remove a flag at this position.\n" +
+                        "\tOr press " + HELP_COMMAND + " to get more help.");
+        }
+
+        if (state == GAME_LOST || state == GAME_WON) {
+            result.append("New Game? Type: n");
+        }
+
+        return result.toString();
+    }
+
 
 }
