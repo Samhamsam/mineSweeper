@@ -89,10 +89,19 @@ public class Grid {
         return null;
     }
 
-    public void setCellAt(int row, int column, Cell cell) {
-        final Cell oldCell = getCellAt(row, column);
-        cells.remove(oldCell);
-        cells.add(cell);
+    public List<List<Cell>> getCellsAsRows() {
+
+        List<List<Cell>> result = new ArrayList<>(numberOfRows);
+
+        for (int row = 0; row < numberOfRows; row++) {
+            final int currentRow = row;     // to use it in Lambda expression
+            final List<Cell> cellsInRow = cells.stream()
+                    .filter(cell -> cell.getPosition().getRow() == currentRow)
+                    .collect(Collectors.toList());
+            result.add(cellsInRow);
+        }
+
+        return result;
     }
 
     public List<Cell> getCells() {

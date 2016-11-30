@@ -61,7 +61,8 @@ public class Controller extends Observable implements IController {
     @Override
     public void revealCell(Cell cell) {
 
-        if (cell == null || cell.isRevealed()) return;
+        if (cell == null || cell.isRevealed()
+                || getState() == State.GAME_LOST || getState() == State.GAME_WON) return;
 
         cell.setRevealed(true);
 
@@ -93,6 +94,9 @@ public class Controller extends Observable implements IController {
     @Override
     public void toggleFlag(int row, int col) {
         final Cell cell = this.grid.getCellAt(row, col);
+
+        if (cell == null || getState() == State.GAME_LOST || getState() == State.GAME_WON) return;
+
         cell.setFlagged(!cell.isFlagged());
         notifyObservers();
     }

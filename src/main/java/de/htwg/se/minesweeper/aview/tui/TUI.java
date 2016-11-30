@@ -9,10 +9,8 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static de.htwg.se.minesweeper.controller.IController.State.*;
-import static de.htwg.se.minesweeper.controller.IController.State.GAME_WON;
 
 public class TUI implements IObserver {
 
@@ -36,11 +34,31 @@ public class TUI implements IObserver {
         lastUserInput = input;
         List<String> inputParts = Arrays.asList(input.split(","));
 
-        switch (inputParts.get(0)) {
+        String userInput = inputParts.get(0);
+
+        /*if (controller.getState() == GAME_LOST || controller.getState() == GAME_WON) {
+
+            System.out.println("HAllo!");
+
+            switch (userInput) {
+                case QUIT_COMMAND:
+                    return runQuitCommand();
+
+                case NEW_GAME_COMMAND:
+                    newGameAction();
+                    break;
+
+                default:
+                    showHelpAction();
+                    break;
+            }
+        }
+
+        else */
+        switch (userInput) {
 
             case QUIT_COMMAND:
-                controller.quit();
-                return false; // quit loop in main program
+                return runQuitCommand();
 
             case NEW_GAME_COMMAND:
                 newGameAction();
@@ -62,8 +80,13 @@ public class TUI implements IObserver {
         return true;
     }
 
+    private boolean runQuitCommand() {
+        controller.quit();
+        return false; // quit loop in main program
+    }
+
     private void showHelpAction() {
-        LOGGER.info(controller.getHelpText());
+        controller.setState(HELP_TEXT);
     }
 
     private void newGameAction() {
@@ -126,10 +149,6 @@ public class TUI implements IObserver {
 
         for (int row = 0; row < numberOfRows; row++) {
             final int currentRow = row;     // to use it in Lambda expression
-            final List<Cell> justForDebug = allCells.stream()
-                    .filter(cell -> cell.getPosition().getRow() == currentRow)
-                    .collect(Collectors.toList());
-
             allCells.stream()
                     .filter(cell -> cell.getPosition().getRow() == currentRow)
                     .forEach(cell -> result.append(cell.toString()).append(" "));
