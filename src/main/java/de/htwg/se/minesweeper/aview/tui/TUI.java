@@ -166,7 +166,7 @@ public class TUI implements IObserver {
             LOGGER.error("NOT A NUMBER!");
             return;
         }
-
+        //show this in every step? HELP_TEXT..
         LOGGER.info(getGridAsString());
 
         if ("".equals(lastUserInput)) {

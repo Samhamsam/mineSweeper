@@ -130,7 +130,7 @@ public class GUI extends JFrame implements ActionListener, IObserver, MouseListe
         } else if (e.getSource() == quit) {
             controller.quit();
         } else if (e.getSource() == help) {
-            controller.getHelpText(); // TODO ?
+            controller.setState(IController.State.HELP_TEXT);
         } else if (e.getSource() == settingsmenu) {
             showSettings();
         }
