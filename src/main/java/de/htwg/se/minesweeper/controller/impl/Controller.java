@@ -40,7 +40,7 @@ public class Controller extends Observable implements IController {
     @Override
     public void startNewGame(int numberOfRowsAndCols, int numberOfMines) {
         this.grid = new Grid(numberOfRowsAndCols, numberOfRowsAndCols, numberOfMines);
-        this.state = State.INFO_TEXT;
+        this.state = State.NEW_GAME;
         this.timeOfGameStartMills = System.currentTimeMillis();
         notifyObservers();
     }

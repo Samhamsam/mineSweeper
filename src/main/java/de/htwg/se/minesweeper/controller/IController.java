@@ -36,6 +36,7 @@ public interface IController extends IObservable {
     long getElapsedTimeSeconds();
 
     enum State {
+        NEW_GAME,
         INFO_TEXT,
         HELP_TEXT,
         GAME_WON,
