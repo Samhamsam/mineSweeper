@@ -50,7 +50,6 @@ public class Controller extends Observable implements IController {
         startNewGame(numberOfRowsAndCols, numberOfMines);
         state = State.CHANGE_SETTINGS_SUCCESS;
         notifyObservers();
-
     }
 
     @Override
@@ -83,7 +82,7 @@ public class Controller extends Observable implements IController {
             state = State.GAME_WON;
         }
 
-        notifyObservers();
+        setState(State.REVEAL_CELL);
     }
 
     private void setElapsedTime() {
@@ -98,7 +97,7 @@ public class Controller extends Observable implements IController {
         if (cell == null || getState() == State.GAME_LOST || getState() == State.GAME_WON) return;
 
         cell.setFlagged(!cell.isFlagged());
-        notifyObservers();
+        setState(State.TOGGLE_FLAG);
     }
 
     @Override

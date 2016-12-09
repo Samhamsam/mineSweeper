@@ -149,7 +149,7 @@ public class GUI extends JFrame implements ActionListener, IObserver, MouseListe
 
         switch (state) {
 
-            case INFO_TEXT:
+            case NEW_GAME:
                 setEnableButtons(true);
                 break;
 
