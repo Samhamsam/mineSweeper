@@ -63,6 +63,8 @@ public class Controller extends Observable implements IController {
         if (cell == null || cell.isRevealed()
                 || getState() == State.GAME_LOST || getState() == State.GAME_WON) return;
 
+        setState(State.REVEAL_CELL);
+
         cell.setRevealed(true);
 
         if (cell.hasMine()) {
@@ -81,8 +83,6 @@ public class Controller extends Observable implements IController {
             setElapsedTime();
             state = State.GAME_WON;
         }
-
-        setState(State.REVEAL_CELL);
     }
 
     private void setElapsedTime() {
